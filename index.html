@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>غرف الدردشة • منصتي</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Tajawal', sans-serif;
+    }
+
+  .message-sender{color:#ffffff!important;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
+.message-badge.owner + .message-sender,.message-item:has(.message-badge.owner) .message-sender{color:#4ade80!important;text-shadow:0 0 8px #22c55e;font-weight:800;}
+.message-badge.moderator + .message-sender,.message-item:has(.message-badge.moderator) .message-sender{color:#f87171!important;text-shadow:0 0 8px #ef4444;font-weight:800;}
+    body {
+      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+      min-height: 100vh;
+      color: #f8fafc;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ========== هيدر الغرف ========== */
+    .rooms-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 12px 16px;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rooms-header h2 {
+      font-size: 20px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rooms-header h2 i {
+      color: #8b5cf6;
+    }
+
+    .back-btn {
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 20px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #8b5cf6;
+    }
+
+    /* ========== مربع البحث ========== */
+    .search-section {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 12px 16px;
+      z-index: 998;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 30px;
+      padding: 5px 15px;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .search-wrapper i {
+      color: #8b5cf6;
+      margin-left: 10px;
+    }
+
+    .search-wrapper input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 12px 0;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .create-room-btn {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border: none;
+      color: white;
+      padding: 0 18px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    /* ========== قائمة الغرف ========== */
+    .rooms-container {
+      margin-top: 120px;
+      padding: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 30px;
+    }
+
+    .rooms-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .room-card {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border-radius: 20px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room-card.advanced {
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .room-card.advanced::before {
+      content: '✨';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 14px;
+      z-index: 1;
+    }
+
+    .room-image {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #2d3748, #1a202c);
+    }
+
+    .room-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .room-name {
+      font-weight: 800;
+      font-size: 15px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .room-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .room-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .room-members {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #8b5cf6;
+    }
+
+    .room-type-badge {
+      background: rgba(139, 92, 246, 0.2);
+      color: #8b5cf6;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    /* ========== غرفة الدردشة ========== */
+    .chat-room-view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2000;
+      display: none;
+      flex-direction: column;
+      background: #0f172a;
+    }
+
+    .chat-room-view.active {
+      display: flex;
+    }
+
+    .room-background {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.25;
+      z-index: 0;
+    }
+
+    .room-background::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.85) 100%);
+    }
+
+    .room-header {
+      position: relative;
+      z-index: 2;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(15px);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .room-info {
+      flex: 1;
+    }
+
+    .room-title {
+      font-weight: 800;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .room-subtitle {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .room-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    .room-actions i {
+      font-size: 18px;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    /* ========== بطاقة المالك ========== */
+    .owner-card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
+      border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+      margin-bottom: 0;
+    }
+
+    .owner-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .owner-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .owner-info {
+      flex: 1;
+    }
+
+    .owner-name {
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .owner-name i {
+      color: #fbbf24;
+      font-size: 14px;
+    }
+
+    .owner-badge {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #0f172a;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .owner-since {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    /* ========== منطقة الرسائل ========== */
+    .messages-area {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+    }
+
+    .message-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .message-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .message-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .message-content {
+      flex: 1;
+    }
+
+    .message-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    .message-sender {
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .message-badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 15px;
+      font-weight: 600;
+    }
+
+    .message-badge.owner {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #0f172a;
+    }
+
+    .message-badge.moderator {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .message-time {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    .message-text {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 14px;
+      border-radius: 18px;
+      border-top-right-radius: 5px;
+      font-size: 14px;
+      word-break: break-word;
+      backdrop-filter: blur(5px);
+      color: #f1f5f9;
+    }
+
+    .message-media {
+      margin-top: 8px;
+      max-width: 300px;
+    }
+
+    .message-media img {
+      max-width: 100%;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .message-media iframe {
+      width: 100%;
+      max-width: 300px;
+      height: 169px;
+      border-radius: 15px;
+      border: none;
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+
+    .message-item:hover .message-actions {
+      opacity: 1;
+    }
+
+    .message-actions i {
+      font-size: 12px;
+      color: #ef4444;
+      cursor: pointer;
+    }
+
+    /* ========== الأيقونات الخاصة ========== */
+    .special-icons {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 12px 10px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .special-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: rgba(255, 255, 255, 0.05);
+      border: 3px solid;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .special-icon:hover {
+      transform: scale(1.08);
+    }
+
+    .special-icon.occupied {
+      cursor: not-allowed;
+    }
+
+    .special-icon.occupied:hover {
+      transform: scale(1);
+    }
+
+    .special-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .special-icon .icon-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .special-icon .timer-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: #fbbf24;
+      color: #0f172a;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 20px;
+    }
+
+    .special-icon .reward-badge {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      background: #10b981;
+      color: white;
+      font-size: 8px;
+      padding: 2px 4px;
+      border-radius: 20px;
+    }
+
+    .special-icon.lion { border-color: #fbbf24; }
+    .special-icon.fish { border-color: #3b82f6; }
+    .special-icon.crown { border-color: #fbbf24; }
+    .special-icon.rainbow { border-color: #ec4899; }
+    .special-icon.tree { border-color: #10b981; }
+    .special-icon.dark { border-color: #94a3b8; }
+
+    /* ========== قوائم الأعضاء والمحظورين ========== */
+    .members-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 320px;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 3000;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .members-panel.active {
+      transform: translateX(0);
+    }
+
+    .panel-header {
+      padding: 20px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-header h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .close-panel {
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 18px;
+    }
+
+    .panel-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .panel-tabs {
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .panel-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .panel-tab.active {
+      background: #8b5cf6;
+    }
+
+    .banned-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ef4444;
+      color: white;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 20px;
+      min-width: 18px;
+    }
+
+    .member-item, .banned-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .member-item:hover, .banned-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .member-avatar, .banned-avatar {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .member-avatar img, .banned-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .member-info, .banned-info {
+      flex: 1;
+    }
+
+    .member-name, .banned-name {
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .member-role {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    .member-role.owner {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #0f172a;
+    }
+
+    .member-role.moderator {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    .member-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .member-actions i {
+      font-size: 14px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .member-actions i.fa-crown { color: #fbbf24; }
+    .member-actions i.fa-ban { color: #ef4444; }
+
+    .unban-btn {
+      color: #10b981;
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 15px;
+      background: rgba(16, 185, 129, 0.1);
+      font-size: 12px;
+    }
+
+    /* ========== الملف الشخصي المصغر ========== */
+    .profile-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1e293b;
+      border-radius: 25px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 5000;
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-popup.active {
+      display: block;
+    }
+
+    .profile-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 4900;
+      display: none;
+    }
+
+    .profile-popup-overlay.active {
+      display: block;
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      border: 4px solid;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .profile-id {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 15px;
+    }
+
+    .profile-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .profile-posts {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .profile-post {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    /* ========== شريط الإدخال ========== */
+    .input-area {
+      position: relative;
+      z-index: 2;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(15px);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .input-area input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 12px 18px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input-area button {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== نوافذ ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-sheet {
+      background: #1e293b;
+      width: 100%;
+      max-width: 450px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 35px 35px 0 0;
+      padding: 25px 20px;
+      position: fixed;
+      bottom: 0;
+      transform: translateY(100%);
+      transition: transform 0.3s;
+    }
+
+    .active .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .modal-header h3 {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      font-size: 14px;
+      color: white;
+      outline: none;
+    }
+
+    .image-selector {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .image-option {
+      aspect-ratio: 1;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid transparent;
+    }
+
+    .image-option.selected {
+      border-color: #8b5cf6;
+    }
+
+    .image-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* ========== إشعار ========== */
+    #toastMsg {
+      position: fixed;
+      bottom: 30px;
+      left: 20px;
+      right: 20px;
+      background: #1e293b;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 50px;
+      text-align: center;
+      z-index: 6000;
+      opacity: 0;
+      transition: 0.25s;
+      pointer-events: none;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    #toastMsg.show {
+      opacity: 1;
+      bottom: 40px;
+    }
+
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
+    }
+
+    .loading-spinner i {
+      font-size: 35px;
+      color: #8b5cf6;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: #64748b;
+    }
+
+    .empty-state i {
+      font-size: 50px;
+      opacity: 0.3;
+      margin-bottom: 15px;
+    }
+
+    .permissions-info {
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      margin: 15px 0;
+      border-right: 3px solid #8b5cf6;
+    }
+
+  
+    .permissions-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #8b5cf6;
+    }
+
+    .permission-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    .permission-item i.fa-check { color: #10b981; }
+    .permission-item i.fa-times { color: #ef4444; }
+  </style>
+</head>
+<body>
+
+<div class="rooms-header">
+  <div class="back-btn" onclick="goBack()">
+    <i class="fas fa-arrow-right"></i>
+  </div>
+  <h2><i class="fas fa-comments"></i> غرف الدردشة</h2>
+  <div class="header-actions">
+    <i class="fas fa-sync-alt" onclick="refreshRooms()"></i>
+  </div>
+</div>
+
+<div class="search-section">
+  <div class="search-wrapper">
+    <i class="fas fa-search"></i>
+    <input type="text" id="searchRoomsInput" placeholder="ابحث عن غرفة..." oninput="filterRooms()">
+  </div>
+  <button class="create-room-btn" onclick="openCreateRoomModal()">
+    <i class="fas fa-plus"></i> إنشاء
+  </button>
+</div>
+
+<div class="rooms-container" id="roomsContainer">
+  <div class="loading-spinner"><i class="fas fa-spinner"></i></div>
+</div>
+
+<!-- نافذة إنشاء غرفة -->
+<div class="modal-overlay" id="createRoomModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3>إنشاء غرفة جديدة</h3>
+      <button class="close-btn" onclick="closeCreateRoomModal()">&times;</button>
+    </div>
+    
+    <div class="form-group">
+      <label>اسم الغرفة</label>
+      <input type="text" id="roomName" placeholder="أدخل اسم الغرفة" maxlength="50">
+    </div>
+    
+    <div class="form-group">
+      <label>اختر صورة</label>
+      <div class="image-selector" id="imageSelector"></div>
+    </div>
+    
+    <div class="form-group">
+      <label>الوصف</label>
+      <textarea id="roomDesc" rows="2" placeholder="وصف مختصر للغرفة"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label>السعة القصوى</label>
+      <select id="roomCapacity">
+        <option value="10">10 أعضاء</option>
+        <option value="25">25 عضو</option>
+        <option value="50">50 عضو</option>
+        <option value="100">100 عضو</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>رسالة ترحيب</label>
+      <input type="text" id="welcomeMessage" placeholder="رسالة ترحيب بالأعضاء الجدد">
+    </div>
+    
+    <div class="form-group">
+      <label>رمز سري (اختياري)</label>
+      <input type="text" id="roomPassword" placeholder="اتركه فارغاً للغرفة العامة">
+    </div>
+    
+    <div class="form-group">
+      <label>نوع الغرفة</label>
+      <select id="roomType" onchange="updateRoomPrice()">
+        <option value="normal">عادية - 25 ذهب</option>
+        <option value="advanced">متطورة - 50 ذهب</option>
+      </select>
+    </div>
+    
+    <div class="form-group" style="text-align: center;">
+      <span style="color: #fbbf24;" id="roomPrice">25</span>
+      <span style="color: #fbbf24;"><i class="fas fa-coins"></i> ذهب</span>
+    </div>
+    
+    <button class="btn-submit" onclick="createRoom()">إنشاء الغرفة</button>
+  </div>
+</div>
+
+<!-- نافذة الرمز السري -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal-sheet" style="max-width: 350px;">
+    <div class="modal-header">
+      <h3>غرفة خاصة</h3>
+      <button class="close-btn" onclick="closePasswordModal()">&times;</button>
+    </div>
+    <p style="color: #94a3b8; margin-bottom: 20px;">هذه الغرفة محمية برمز سري</p>
+    <div class="form-group">
+      <label>الرمز السري</label>
+      <input type="password" id="roomPasswordInput" placeholder="أدخل الرمز السري">
+    </div>
+    <input type="hidden" id="targetRoomId">
+    <button class="btn-submit" onclick="joinWithPassword()">دخول</button>
+  </div>
+</div>
+
+<!-- نافذة إعدادات الغرفة -->
+<div class="modal-overlay" id="roomSettingsModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3><i class="fas fa-cog"></i> إعدادات الغرفة</h3>
+      <button class="close-btn" onclick="closeRoomSettingsModal()">&times;</button>
+    </div>
+    
+    <div class="permissions-info">
+      <div class="permissions-title"><i class="fas fa-crown"></i> صلاحيات المالك</div>
+      <div class="permission-item"><i class="fas fa-check"></i> حذف أي رسالة</div>
+      <div class="permission-item"><i class="fas fa-check"></i> حظر أي عضو</div>
+      <div class="permission-item"><i class="fas fa-check"></i> تعيين 3 مشرفين</div>
+      <div class="permission-item"><i class="fas fa-check"></i> تغيير خلفية الغرفة</div>
+      <div class="permission-item"><i class="fas fa-check"></i> حذف الغرفة</div>
+    </div>
+    
+    <div class="permissions-info" style="border-right-color: #3b82f6;">
+      <div class="permissions-title"><i class="fas fa-shield-alt"></i> صلاحيات المشرف</div>
+      <div class="permission-item"><i class="fas fa-check"></i> حذف رسائل الأعضاء (عدا المالك)</div>
+      <div class="permission-item"><i class="fas fa-check"></i> حظر الأعضاء (عدا المالك والمشرفين)</div>
+      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن حظر المالك</div>
+      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن تعيين مشرفين</div>
+      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن تغيير الخلفية</div>
+    </div>
+    
+    <div class="form-group">
+      <label>رابط صورة الخلفية</label>
+      <input type="text" id="backgroundUrl" placeholder="أدخل رابط الصورة">
+    </div>
+    
+    <button class="btn-submit" onclick="updateRoomBackground()">حفظ التغييرات</button>
+    
+    <button class="btn-submit" style="background: #ef4444; margin-top: 10px;" onclick="deleteRoom()">
+      <i class="fas fa-trash"></i> حذف الغرفة
+    </button>
+  </div>
+</div>
+
+<!-- لوحة الأعضاء والمحظورين -->
+<div class="members-panel" id="membersPanel">
+  <div class="panel-header">
+    <h4><i class="fas fa-users"></i> إدارة الأعضاء</h4>
+    <i class="fas fa-times close-panel" onclick="toggleMembersPanel()"></i>
+  </div>
+  <div class="panel-tabs">
+    <div class="panel-tab active" onclick="switchPanelTab('members')">
+      <i class="fas fa-user"></i> الأعضاء
+    </div>
+    <div class="panel-tab" onclick="switchPanelTab('banned')">
+      <i class="fas fa-ban"></i> المحظورون
+      <span class="banned-count" id="bannedCount">0</span>
+    </div>
+  </div>
+  <div class="panel-list" id="membersList"></div>
+</div>
+
+<!-- الملف الشخصي المصغر -->
+<div class="profile-popup-overlay" id="profilePopupOverlay" onclick="closeProfilePopup()"></div>
+<div class="profile-popup" id="profilePopup">
+  <div id="profilePopupContent"></div>
+</div>
+
+<!-- غرفة الدردشة -->
+<div class="chat-room-view" id="chatRoomView">
+  <div class="room-background" id="roomBackground"></div>
+  
+  <div class="room-header">
+    <div class="back-btn" onclick="leaveRoom()">
+      <i class="fas fa-arrow-right"></i>
+    </div>
+    <div class="room-info">
+      <div class="room-title" id="currentRoomTitle">
+        <span>اسم الغرفة</span>
+        <span class="room-type-badge" id="currentRoomType">عادية</span>
+      </div>
+      <div class="room-subtitle" id="currentRoomSubtitle">0 عضو متواجد</div>
+    </div>
+    <div class="room-actions">
+      <i class="fas fa-users" onclick="toggleMembersPanel()" title="الأعضاء والمحظورون"></i>
+      <i class="fas fa-cog" onclick="openRoomSettingsModal()" id="roomSettingsBtn" style="display: none;" title="الإعدادات"></i>
+    </div>
+  </div>
+  
+  <!-- بطاقة المالك -->
+  <div class="owner-card" id="ownerCard" style="display: none;">
+    <div class="owner-avatar" id="ownerAvatar">
+      <span>👑</span>
+    </div>
+    <div class="owner-info">
+      <div class="owner-name" id="ownerName">
+        <span>اسم المالك</span>
+        <i class="fas fa-crown"></i>
+      </div>
+      <div class="owner-since" id="ownerSince">مالك الغرفة</div>
+    </div>
+    <span class="owner-badge"><i class="fas fa-star"></i> المالك</span>
+  </div>
+  
+  <!-- الأيقونات الخاصة -->
+  <div class="special-icons" id="specialIcons" style="display: none;"></div>
+  
+  <div class="messages-area" id="messagesArea">
+    <div class="empty-state">
+      <i class="fas fa-comment-dots"></i>
+      <p>لا توجد رسائل بعد</p>
+    </div>
+  </div>
+  
+  <div class="input-area">
+    <input type="text" id="messageInput" placeholder="اكتب رسالتك..." onkeypress="handleMessageKeyPress(event)">
+    <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<div id="toastMsg"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, arrayUnion, arrayRemove, increment, where, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDYKCCTcurNcJslrNKqdiJCoIIK-YZArB4",
+    authDomain: "sbaq-fc46f.firebaseapp.com",
+    projectId: "sbaq-fc46f",
+    storageBucket: "sbaq-fc46f.firebasestorage.app",
+    appId: "1:1026865750415:web:0ee39a717bcafaa0d06bfa"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const roomImages = [
+    'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg',
+    'https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg',
+    'https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg',
+    'https://images.pexels.com/photos/15286/pexels-photo.jpg',
+    'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg',
+    'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg',
+    'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg',
+    'https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg',
+    'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg',
+    'https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg'
+  ];
+
+  const iconTypes = ['lion', 'fish', 'crown', 'rainbow', 'tree', 'dark'];
+  const iconNames = { lion: 'أسد', fish: 'سمكة', crown: 'تاج', rainbow: 'قوس قزح', tree: 'شجرة', dark: 'ظلام' };
+
+  let currentUser = null;
+  let currentUserData = null;
+  let resources = { gold: 0 };
+  let rooms = [];
+  let currentRoom = null;
+  let currentRoomId = null;
+  let unsubscribeMessages = null;
+  let unsubscribeRoom = null;
+  let searchTerm = '';
+  let selectedImage = roomImages[0];
+  let currentPanelTab = 'members';
+  let bannedUsersData = [];
+
+  function showToast(msg, isSuccess = true) {
+    const t = document.getElementById('toastMsg');
+    if (!t) return;
+    t.textContent = msg;
+    t.style.background = isSuccess ? '#10b981' : '#ef4444';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // تعديل دالة الرجوع - بدون توجيه لصفحة 404
+  window.goBack = function() {
+    if (document.referrer && document.referrer.includes(window.location.hostname)) {
+      window.history.back();
+    } else {
+      showToast('لا توجد صفحة سابقة للرجوع إليها');
+    }
+  };
+
+  function extractYoutubeId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  }
+
+  function parseMessageText(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urls = text.match(urlRegex) || [];
+    
+    let mediaHtml = '';
+    let displayText = text;
+    
+    urls.forEach(url => {
+      if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+        mediaHtml += `<div class="message-media"><img src="${url}" onclick="window.open('${url}')" onerror="this.style.display='none'"></div>`;
+        displayText = displayText.replace(url, '');
+      } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        const videoId = extractYoutubeId(url);
+        if (videoId) {
+          mediaHtml += `<div class="message-media"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
+          displayText = displayText.replace(url, '');
+        }
+      }
+    });
+    
+    return { displayText: displayText.trim(), mediaHtml };
+  }
+
+  async function loadUserData(uid) {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) currentUserData = userDoc.data();
+      
+      const resDoc = await getDoc(doc(db, "resources", uid));
+      if (resDoc.exists()) resources = resDoc.data();
+    } catch (e) {}
+  }
+
+  async function loadBannedUsersData(bannedUids) {
+    bannedUsersData = [];
+    for (const uid of bannedUids) {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        bannedUsersData.push({ uid, ...userDoc.data() });
+      } else {
+        bannedUsersData.push({ uid, username: 'مستخدم محظور', emoji: '🚫' });
+      }
+    }
+  }
+
+  function subscribeToRooms() {
+    const roomsQuery = query(collection(db, "rooms"), orderBy("createdAt", "desc"));
+    onSnapshot(roomsQuery, (snapshot) => {
+      rooms = [];
+      snapshot.forEach(doc => rooms.push({ id: doc.id, ...doc.data() }));
+      renderRooms();
+    });
+  }
+
+  function renderRooms() {
+    const container = document.getElementById('roomsContainer');
+    let filtered = rooms.filter(r => 
+      (r.name || '').includes(searchTerm) || (r.description || '').includes(searchTerm)
+    );
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div class="empty-state"><i class="fas fa-comments"></i><p>لا توجد غرف</p></div>`;
+      return;
+    }
+
+    let html = '';
+    for (let i = 0; i < filtered.length; i += 2) {
+      html += '<div class="rooms-row">';
+      html += renderRoomCard(filtered[i]);
+      if (filtered[i + 1]) html += renderRoomCard(filtered[i + 1]);
+      html += '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  function renderRoomCard(room) {
+    return `
+      <div class="room-card ${room.type || 'normal'}" onclick="requestJoinRoom('${room.id}')">
+        <div class="room-image">
+          <img src="${room.image || roomImages[0]}" onerror="this.src='${roomImages[0]}'">
+        </div>
+        <div class="room-name">
+          ${room.name || 'غرفة'}
+          ${room.password ? '<i class="fas fa-lock"></i>' : ''}
+        </div>
+        <div class="room-desc">${room.description || 'غرفة للمحادثة'}</div>
+        <div class="room-footer">
+          <span class="room-members"><i class="fas fa-user"></i> ${(room.members || []).length}/${room.capacity || 50}</span>
+          <span class="room-type-badge ${room.type || 'normal'}">${room.type === 'advanced' ? 'متطورة ✨' : 'عادية'}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  window.filterRooms = () => {
+    searchTerm = document.getElementById('searchRoomsInput')?.value || '';
+    renderRooms();
+  };
+
+  window.refreshRooms = () => { renderRooms(); showToast('تم التحديث'); };
+
+  window.openCreateRoomModal = () => {
+    const selector = document.getElementById('imageSelector');
+    selector.innerHTML = roomImages.map(img => `
+      <div class="image-option ${selectedImage === img ? 'selected' : ''}" onclick="selectRoomImage('${img}')">
+        <img src="${img}" onerror="this.src='${roomImages[0]}'">
+      </div>
+    `).join('');
+    document.getElementById('createRoomModal')?.classList.add('active');
+  };
+
+  window.selectRoomImage = (img) => {
+    selectedImage = img;
+    document.querySelectorAll('.image-option').forEach(el => el.classList.remove('selected'));
+    event.target.closest('.image-option')?.classList.add('selected');
+  };
+
+  window.updateRoomPrice = () => {
+    document.getElementById('roomPrice').textContent = document.getElementById('roomType')?.value === 'normal' ? '25' : '50';
+  };
+
+  window.closeCreateRoomModal = () => document.getElementById('createRoomModal')?.classList.remove('active');
+
+  window.createRoom = async () => {
+    const name = document.getElementById('roomName')?.value.trim();
+    if (!name) { showToast('الرجاء إدخال اسم الغرفة', false); return; }
+    
+    const type = document.getElementById('roomType')?.value || 'normal';
+    const price = type === 'normal' ? 25 : 50;
+    
+    if ((resources.gold || 0) < price) { showToast('رصيد الذهب غير كافٍ', false); return; }
+
+    const room = {
+      name, image: selectedImage,
+      description: document.getElementById('roomDesc')?.value.trim() || '',
+      capacity: parseInt(document.getElementById('roomCapacity')?.value || '50'),
+      welcomeMessage: document.getElementById('welcomeMessage')?.value.trim() || 'مرحباً بك!',
+      password: document.getElementById('roomPassword')?.value.trim() || null,
+      type, ownerId: currentUser.uid, ownerName: currentUserData?.username || 'المالك',
+      ownerAvatar: currentUserData?.avatarUrl || null,
+      ownerAvatarType: currentUserData?.avatarType || 'emoji',
+      ownerEmoji: currentUserData?.emoji || '👑',
+      ownerColors: currentUserData?.colors || {},
+      moderators: [], bannedUsers: [],
+      members: [{
+        uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+        avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+        emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+        role: 'owner', joinedAt: Date.now()
+      }],
+      background: null, iconOccupants: {}, createdAt: Date.now()
+    };
+
+    await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-price) });
+    resources.gold -= price;
+    await addDoc(collection(db, "rooms"), room);
+    closeCreateRoomModal();
+    showToast('تم إنشاء الغرفة!');
+  };
+
+  window.requestJoinRoom = (roomId) => {
+    const room = rooms.find(r => r.id === roomId);
+    if (!room) return;
+    if ((room.members || []).length >= (room.capacity || 50)) { showToast('الغرفة ممتلئة', false); return; }
+    if ((room.bannedUsers || []).includes(currentUser.uid)) { showToast('أنت محظور من هذه الغرفة', false); return; }
+    
+    if (room.password) {
+      document.getElementById('targetRoomId').value = roomId;
+      document.getElementById('passwordModal')?.classList.add('active');
+    } else joinRoom(roomId);
+  };
+
+  window.closePasswordModal = () => document.getElementById('passwordModal')?.classList.remove('active');
+
+  window.joinWithPassword = () => {
+    const roomId = document.getElementById('targetRoomId')?.value;
+    const password = document.getElementById('roomPasswordInput')?.value;
+    const room = rooms.find(r => r.id === roomId);
+    if (room?.password === password) { closePasswordModal(); joinRoom(roomId); }
+    else showToast('الرمز السري غير صحيح', false);
+  };
+
+  async function joinRoom(roomId) {
+    const room = rooms.find(r => r.id === roomId);
+    if (!room) return;
+    
+    const existingMember = (room.members || []).find(m => m.uid === currentUser.uid);
+    if (!existingMember) {
+      await updateDoc(doc(db, "rooms", roomId), {
+        members: arrayUnion({
+          uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+          avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+          emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+          role: 'member', joinedAt: Date.now()
+        })
+      });
+    }
+    openChatRoom(roomId);
+  }
+
+  function openChatRoom(roomId) {
+    document.querySelector('.rooms-header').style.display = 'none';
+    document.querySelector('.search-section').style.display = 'none';
+    document.querySelector('.rooms-container').style.display = 'none';
+    
+    currentRoomId = roomId;
+    if (unsubscribeRoom) unsubscribeRoom();
+    unsubscribeRoom = onSnapshot(doc(db, "rooms", roomId), async (docSnap) => {
+      if (docSnap.exists()) {
+        currentRoom = { id: roomId, ...docSnap.data() };
+        await loadBannedUsersData(currentRoom.bannedUsers || []);
+        updateRoomUI();
+        renderSpecialIcons();
+        renderPanelList();
+        updateMembersCount();
+      }
+    });
+    
+    document.getElementById('chatRoomView')?.classList.add('active');
+    subscribeToMessages(roomId);
+  }
+
+  function updateRoomUI() {
+    if (!currentRoom) return;
+    document.getElementById('currentRoomTitle').innerHTML = `${currentRoom.name} <span class="room-type-badge ${currentRoom.type || 'normal'}">${currentRoom.type === 'advanced' ? 'متطورة' : 'عادية'}</span>`;
+    
+    const bgEl = document.getElementById('roomBackground');
+    if (currentRoom.background) bgEl.style.backgroundImage = `url('${currentRoom.background}')`;
+    else bgEl.style.backgroundImage = 'none';
+    
+    const isOwner = currentRoom.ownerId === currentUser.uid;
+    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+    document.getElementById('roomSettingsBtn').style.display = (isOwner || isModerator) ? 'block' : 'none';
+    
+    const ownerCard = document.getElementById('ownerCard');
+    const ownerAvatar = document.getElementById('ownerAvatar');
+    const ownerName = document.getElementById('ownerName');
+    
+    if (currentRoom.ownerAvatarType === 'image' && currentRoom.ownerAvatar) {
+      ownerAvatar.innerHTML = `<img src="${currentRoom.ownerAvatar}">`;
+    } else {
+      ownerAvatar.innerHTML = `<span>${currentRoom.ownerEmoji || '👑'}</span>`;
+    }
+    ownerAvatar.style.borderColor = currentRoom.ownerColors?.frame || '#fbbf24';
+    
+    ownerName.innerHTML = `
+      <span style="color: ${currentRoom.ownerColors?.name || '#f8fafc'};">${currentRoom.ownerName || 'المالك'}</span>
+      <i class="fas fa-crown"></i>
+    `;
+    
+    ownerCard.style.display = 'flex';
+  }
+
+  function renderSpecialIcons() {
+    const container = document.getElementById('specialIcons');
+    if (!container) return;
+    
+    const isAdvanced = currentRoom?.type === 'advanced';
+    container.style.display = isAdvanced ? 'flex' : 'none';
+    if (!isAdvanced) return;
+    
+    const occupants = currentRoom?.iconOccupants || {};
+    
+    container.innerHTML = iconTypes.map(type => {
+      const occupant = occupants[type];
+      const isOccupied = occupant && occupant.uid;
+      const isMe = isOccupied && occupant.uid === currentUser.uid;
+      const timeLeft = isMe ? Math.max(0, 3600 - Math.floor((Date.now() - occupant.joinedAt) / 1000)) : 0;
+      const earned = isMe ? Math.floor((Date.now() - occupant.joinedAt) / 3600000) : 0;
+      
+      return `
+        <div class="special-icon ${type} ${isOccupied ? 'occupied' : ''}" onclick="${isOccupied && !isMe ? '' : `handleIconClick('${type}')`}">
+          ${isOccupied ? `
+            ${occupant.avatar ? `<img src="${occupant.avatar}">` : `<div class="icon-content"><span>${occupant.emoji || '👤'}</span></div>`}
+          ` : `<i class="fas fa-${getIconFA(type)}"></i>`}
+          ${isMe ? `<span class="timer-badge">${formatTime(timeLeft)}</span><span class="reward-badge">+${earned}</span>` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  function getIconFA(type) {
+    const icons = { lion: 'paw', fish: 'fish', crown: 'crown', rainbow: 'rainbow', tree: 'tree', dark: 'moon' };
+    return icons[type] || 'star';
+  }
+
+  function formatTime(seconds) {
+    const m = Math.floor(seconds / 60), s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
+
+  window.handleIconClick = async (iconType) => {
+    if (!currentRoom || currentRoom.type !== 'advanced') return;
+    const occupants = currentRoom.iconOccupants || {};
+    const existing = occupants[iconType];
+    
+    if (existing) {
+      showToast('هذه الأيقونة محجوزة حالياً', false);
+      return;
+    }
+    
+    for (const [type, occupant] of Object.entries(occupants)) {
+      if (occupant?.uid === currentUser.uid) {
+        const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
+        if (earned > 0) {
+          await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
+          resources.gold += earned;
+          showToast(`ربحت ${earned} ذهب!`, true);
+        }
+        const newOccupants = { ...occupants };
+        delete newOccupants[type];
+        await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+        return;
+      }
+    }
+    
+    const newOccupants = { ...occupants };
+    newOccupants[iconType] = {
+      uid: currentUser.uid, name: currentUserData?.username,
+      avatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
+      emoji: currentUserData?.emoji, joinedAt: Date.now()
+    };
+    await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+    showToast(`انضممت إلى أيقونة ${iconNames[iconType]}!`, true);
+  };
+
+  function subscribeToMessages(roomId) {
+    if (unsubscribeMessages) unsubscribeMessages();
+    const msgQuery = query(collection(db, "rooms", roomId, "messages"), orderBy("timestamp", "asc"));
+    unsubscribeMessages = onSnapshot(msgQuery, (snapshot) => {
+      const area = document.getElementById('messagesArea');
+      if (snapshot.empty) {
+        area.innerHTML = `<div class="empty-state"><i class="fas fa-comment-dots"></i><p>لا توجد رسائل بعد</p></div>`;
+        return;
+      }
+      
+      let html = '';
+      snapshot.forEach(doc => {
+        const msg = doc.data();
+        const isOwner = currentRoom?.ownerId === currentUser.uid;
+        const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+        const canDelete = msg.uid === currentUser.uid || isOwner || (isModerator && msg.uid !== currentRoom?.ownerId);
+        
+        const parsed = parseMessageText(msg.text || '');
+        const isMsgOwner = msg.uid === currentRoom?.ownerId;
+        const isMsgModerator = (currentRoom?.moderators || []).includes(msg.uid);
+        
+        html += `
+          <div class="message-item">
+            <div class="message-avatar" style="border-color: ${msg.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${msg.uid}')">
+              ${msg.avatarType === 'image' && msg.avatar ? `<img src="${msg.avatar}">` : (msg.emoji || '👤')}
+            </div>
+            <div class="message-content">
+              <div class="message-header">
+                <span class="message-sender" style="color: ${msg.colors?.name || '#f8fafc'};" onclick="showMemberProfile('${msg.uid}')">${msg.name || 'مستخدم'}</span>
+                ${isMsgOwner ? '<span class="message-badge owner"><i class="fas fa-crown"></i> مالك</span>' : ''}
+                ${isMsgModerator && !isMsgOwner ? '<span class="message-badge moderator"><i class="fas fa-shield-alt"></i> مشرف</span>' : ''}
+                <span class="message-time">${msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+              </div>
+              ${parsed.displayText ? `<div class="message-text">${parsed.displayText}</div>` : ''}
+              ${parsed.mediaHtml}
+              ${canDelete ? `<div class="message-actions"><i class="fas fa-trash" onclick="deleteMessage('${doc.id}')"></i></div>` : ''}
+            </div>
+          </div>
+        `;
+      });
+      area.innerHTML = html;
+      area.scrollTop = area.scrollHeight;
+    });
+  }
+
+  window.sendMessage = async () => {
+    const input = document.getElementById('messageInput');
+    if (!input || !currentRoomId) return;
+    const text = input.value.trim();
+    if (!text) return;
+    
+    const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
+    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+      uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+      role: member?.role || 'member', text, timestamp: Date.now()
+    });
+    input.value = '';
+  };
+
+  window.handleMessageKeyPress = (e) => { if (e.key === 'Enter') sendMessage(); };
+
+  window.deleteMessage = async (messageId) => {
+    await deleteDoc(doc(db, "rooms", currentRoomId, "messages", messageId));
+  };
+
+  window.toggleMembersPanel = () => {
+    document.getElementById('membersPanel')?.classList.toggle('active');
+  };
+
+  window.switchPanelTab = (tab) => {
+    currentPanelTab = tab;
+    document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+    event.target.closest('.panel-tab').classList.add('active');
+    renderPanelList();
+  };
+
+  function renderPanelList() {
+    if (currentPanelTab === 'members') {
+      renderMembersList();
+    } else {
+      renderBannedList();
+    }
+  }
+
+  function renderMembersList() {
+    const list = document.getElementById('membersList');
+    const members = currentRoom?.members || [];
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    
+    list.innerHTML = members.map(m => {
+      const canPromote = isOwner && m.role === 'member' && (currentRoom.moderators || []).length < 3;
+      const canDemote = isOwner && m.role === 'moderator';
+      const canBan = (isOwner || isModerator) && m.uid !== currentUser.uid && m.role !== 'owner' && (!isModerator || m.role === 'member');
+      
+      return `
+        <div class="member-item" onclick="showMemberProfile('${m.uid}')">
+          <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};">
+            ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
+          </div>
+          <div class="member-info">
+            <div class="member-name" style="color: ${m.colors?.name || '#f8fafc'};">
+              ${m.name || 'مستخدم'}
+              ${m.role === 'owner' ? '<i class="fas fa-crown" style="color: #fbbf24;"></i>' : ''}
+            </div>
+            <span class="member-role ${m.role}">${m.role === 'owner' ? '👑 مالك' : (m.role === 'moderator' ? '🛡️ مشرف' : '👤 عضو')}</span>
+          </div>
+          <div class="member-actions" onclick="event.stopPropagation()">
+            ${canPromote ? `<i class="fas fa-crown" onclick="promoteToModerator('${m.uid}')" title="ترقية لمشرف"></i>` : ''}
+            ${canDemote ? `<i class="fas fa-level-down-alt" onclick="demoteFromModerator('${m.uid}')" title="إزالة من الإشراف" style="color: #fbbf24;"></i>` : ''}
+            ${canBan ? `<i class="fas fa-ban" onclick="banMember('${m.uid}')" title="حظر"></i>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderBannedList() {
+    const list = document.getElementById('membersList');
+    const bannedCount = bannedUsersData.length;
+    document.getElementById('bannedCount').textContent = bannedCount;
+    
+    if (bannedCount === 0) {
+      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-ban"></i><p>لا يوجد محظورون</p></div>`;
+      return;
+    }
+    
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    
+    list.innerHTML = bannedUsersData.map(user => {
+      const canUnban = isOwner || isModerator;
+      
+      return `
+        <div class="banned-item">
+          <div class="banned-avatar" style="border-color: ${user.colors?.frame || '#ef4444'};">
+            ${user.avatarType === 'image' && user.avatarUrl ? `<img src="${user.avatarUrl}">` : (user.emoji || '🚫')}
+          </div>
+          <div class="banned-info">
+            <div class="banned-name" style="color: ${user.colors?.name || '#f8fafc'};">
+              ${user.username || 'مستخدم محظور'}
+            </div>
+            <span style="font-size: 10px; color: #ef4444;">محظور</span>
+          </div>
+          ${canUnban ? `<span class="unban-btn" onclick="unbanMember('${user.uid}')"><i class="fas fa-undo"></i> إلغاء الحظر</span>` : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.promoteToModerator = async (uid) => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+    if ((currentRoom.moderators || []).length >= 3) { showToast('لا يمكن تعيين أكثر من 3 مشرفين', false); return; }
+    
+    const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'moderator' } : m);
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      members: updatedMembers,
+      moderators: arrayUnion(uid)
+    });
+    showToast('تمت الترقية إلى مشرف');
+  };
+
+  window.demoteFromModerator = async (uid) => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+    
+    const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'member' } : m);
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      members: updatedMembers,
+      moderators: arrayRemove(uid)
+    });
+    showToast('تمت إزالة المشرف');
+  };
+
+  window.banMember = async (uid) => {
+    if (!currentRoom) return;
+    const isOwner = currentRoom.ownerId === currentUser.uid;
+    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+    if (!isOwner && !isModerator) return;
+    
+    const targetMember = currentRoom.members.find(m => m.uid === uid);
+    if (targetMember?.role === 'owner') { showToast('لا يمكن حظر المالك', false); return; }
+    if (isModerator && targetMember?.role === 'moderator') { showToast('لا يمكن للمشرف حظر مشرف آخر', false); return; }
+    
+    const occupants = currentRoom.iconOccupants || {};
+    let newOccupants = { ...occupants };
+    let iconUpdated = false;
+    for (const [type, occupant] of Object.entries(occupants)) {
+      if (occupant?.uid === uid) {
+        delete newOccupants[type];
+        iconUpdated = true;
+      }
+    }
+    
+    const updateData = {
+      bannedUsers: arrayUnion(uid),
+      members: currentRoom.members.filter(m => m.uid !== uid)
+    };
+    if (iconUpdated) updateData.iconOccupants = newOccupants;
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), updateData);
+    showToast('تم حظر العضو');
+  };
+
+  window.unbanMember = async (uid) => {
+    if (!currentRoom) return;
+    const isOwner = currentRoom.ownerId === currentUser.uid;
+    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+    if (!isOwner && !isModerator) return;
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      bannedUsers: arrayRemove(uid)
+    });
+    showToast('تم إلغاء الحظر');
+  };
+
+  window.showMemberProfile = async (uid) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (!userDoc.exists()) { showToast('المستخدم غير موجود', false); return; }
+      
+      const user = userDoc.data();
+      const postsQuery = query(collection(db, "posts"), where("userId", "==", user.userId || uid));
+      const postsSnap = await getDocs(postsQuery);
+      const posts = [];
+      postsSnap.forEach(d => posts.push(d.data()));
+      
+      const content = document.getElementById('profilePopupContent');
+      content.innerHTML = `
+        <div class="profile-header">
+          <div class="profile-avatar" style="border-color: ${user.colors?.frame || '#8b5cf6'};">
+            ${user.avatarType === 'image' && user.avatarUrl ? `<img src="${user.avatarUrl}">` : (user.emoji || '👤')}
+          </div>
+          <div class="profile-name" style="color: ${user.colors?.name || '#f8fafc'};">${user.username || 'مستخدم'}</div>
+          <div class="profile-id" style="color: ${user.colors?.id || '#94a3b8'};">#${user.userId || uid.slice(0, 6)}</div>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-item">
+            <div class="stat-value">${posts.length}</div>
+            <div class="stat-label">منشور</div>
+          </div>
+        </div>
+        <div class="profile-posts">
+          <h5 style="margin-bottom: 10px;">آخر المنشورات</h5>
+          ${posts.slice(0, 5).map(p => `
+            <div class="profile-post">
+              <div style="color: ${p.colors?.text || '#cbd5e1'};">${p.content || ''}</div>
+              <small style="color: #64748b;">${p.timestamp ? new Date(p.timestamp).toLocaleDateString('ar-SA') : ''}</small>
+            </div>
+          `).join('')}
+          ${posts.length === 0 ? '<p style="color: #64748b;">لا توجد منشورات</p>' : ''}
+        </div>
+      `;
+      
+      document.getElementById('profilePopupOverlay')?.classList.add('active');
+      document.getElementById('profilePopup')?.classList.add('active');
+    } catch (e) {
+      console.error("خطأ في عرض الملف:", e);
+    }
+  };
+
+  window.closeProfilePopup = () => {
+    document.getElementById('profilePopupOverlay')?.classList.remove('active');
+    document.getElementById('profilePopup')?.classList.remove('active');
+  };
+
+  function updateMembersCount() {
+    const count = (currentRoom?.members || []).length;
+    document.getElementById('currentRoomSubtitle').textContent = `${count} عضو متواجد`;
+  }
+
+  window.openRoomSettingsModal = () => {
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    
+    document.getElementById('backgroundUrl').value = currentRoom?.background || '';
+    document.getElementById('backgroundUrl').disabled = !isOwner;
+    
+    const deleteBtn = document.querySelector('[onclick="deleteRoom()"]');
+    if (deleteBtn) deleteBtn.style.display = isOwner ? 'block' : 'none';
+    
+    document.getElementById('roomSettingsModal')?.classList.add('active');
+  };
+
+  window.closeRoomSettingsModal = () => {
+    document.getElementById('roomSettingsModal')?.classList.remove('active');
+  };
+
+  window.updateRoomBackground = async () => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
+      showToast('فقط المالك يمكنه تغيير الخلفية', false);
+      return;
+    }
+    
+    const bgUrl = document.getElementById('backgroundUrl')?.value.trim();
+    await updateDoc(doc(db, "rooms", currentRoomId), { background: bgUrl || null });
+    closeRoomSettingsModal();
+    showToast('تم تحديث الخلفية');
+  };
+
+  window.deleteRoom = async () => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+    if (!confirm('هل أنت متأكد من حذف الغرفة؟')) return;
+    
+    await deleteDoc(doc(db, "rooms", currentRoomId));
+    leaveRoom();
+    showToast('تم حذف الغرفة');
+  };
+
+  window.leaveRoom = async () => {
+    if (!currentRoomId) return;
+    
+    const occupants = currentRoom?.iconOccupants || {};
+    for (const [type, occupant] of Object.entries(occupants)) {
+      if (occupant?.uid === currentUser.uid) {
+        const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
+        if (earned > 0) await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
+        const newOccupants = { ...occupants };
+        delete newOccupants[type];
+        await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+      }
+    }
+    
+    const updatedMembers = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
+    await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers });
+    
+    document.querySelector('.rooms-header').style.display = 'flex';
+    document.querySelector('.search-section').style.display = 'flex';
+    document.querySelector('.rooms-container').style.display = 'block';
+    
+    document.getElementById('chatRoomView')?.classList.remove('active');
+    document.getElementById('membersPanel')?.classList.remove('active');
+    
+    if (unsubscribeMessages) unsubscribeMessages();
+    if (unsubscribeRoom) unsubscribeRoom();
+    currentRoom = null;
+    currentRoomId = null;
+  };
+
+  setInterval(() => { if (currentRoom?.type === 'advanced') renderSpecialIcons(); }, 1000);
+
+  // تعديل onAuthStateChanged - بدون توجيه لصفحة 404
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      await loadUserData(user.uid);
+      subscribeToRooms();
+    } else {
+      const container = document.getElementById('roomsContainer');
+      if (container) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-sign-in-alt"></i>
+            <p>يرجى تسجيل الدخول للوصول إلى الغرف</p>
+          </div>
+        `;
+      }
+    }
+  });
+</script>
+</body>
+</html>

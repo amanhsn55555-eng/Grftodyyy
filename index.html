@@ -13,9 +13,86 @@
       font-family: 'Segoe UI', 'Tajawal', sans-serif;
     }
 
-  .message-sender{color:#ffffff!important;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,0.3);}
-.message-badge.owner + .message-sender,.message-item:has(.message-badge.owner) .message-sender{color:#4ade80!important;text-shadow:0 0 8px #22c55e;font-weight:800;}
-.message-badge.moderator + .message-sender,.message-item:has(.message-badge.moderator) .message-sender{color:#f87171!important;text-shadow:0 0 8px #ef4444;font-weight:800;}
+    /* تأثيرات نارية وثلجية */
+    @keyframes fireGreen {
+      0% { text-shadow: 0 0 5px #22c55e, 0 0 10px #16a34a, 0 0 15px #15803d; }
+      25% { text-shadow: 0 0 10px #4ade80, 0 0 20px #22c55e, 0 0 30px #16a34a; }
+      50% { text-shadow: 0 0 15px #4ade80, 0 0 25px #22c55e, 0 0 35px #16a34a; }
+      75% { text-shadow: 0 0 10px #4ade80, 0 0 20px #22c55e, 0 0 30px #16a34a; }
+      100% { text-shadow: 0 0 5px #22c55e, 0 0 10px #16a34a, 0 0 15px #15803d; }
+    }
+    
+    @keyframes fireRed {
+      0% { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626, 0 0 15px #b91c1c; }
+      25% { text-shadow: 0 0 10px #f87171, 0 0 20px #ef4444, 0 0 30px #dc2626; }
+      50% { text-shadow: 0 0 15px #f87171, 0 0 25px #ef4444, 0 0 35px #dc2626; }
+      75% { text-shadow: 0 0 10px #f87171, 0 0 20px #ef4444, 0 0 30px #dc2626; }
+      100% { text-shadow: 0 0 5px #ef4444, 0 0 10px #dc2626, 0 0 15px #b91c1c; }
+    }
+    
+    @keyframes ice {
+      0% { text-shadow: 0 0 5px #bae6fd, 0 0 10px #7dd3fc, 0 0 15px #38bdf8; }
+      25% { text-shadow: 0 0 8px #e0f2fe, 0 0 15px #bae6fd, 0 0 20px #7dd3fc; }
+      50% { text-shadow: 0 0 15px #e0f2fe, 0 0 25px #bae6fd, 0 0 35px #7dd3fc; }
+      75% { text-shadow: 0 0 8px #e0f2fe, 0 0 15px #bae6fd, 0 0 20px #7dd3fc; }
+      100% { text-shadow: 0 0 5px #bae6fd, 0 0 10px #7dd3fc, 0 0 15px #38bdf8; }
+    }
+
+    .owner-name-effect { 
+      animation: fireGreen 1.5s infinite; 
+      font-weight: 800; 
+      display: inline-block;
+    }
+    
+    .moderator-name-effect { 
+      animation: fireRed 1.5s infinite; 
+      font-weight: 800; 
+      display: inline-block;
+    }
+    
+    .member-name-effect { 
+      animation: ice 2s infinite; 
+      display: inline-block;
+    }
+
+    /* تأثير خلفية الرسائل */
+    .message-text.owner-message {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(22, 163, 74, 0.1));
+      border: 1px solid rgba(74, 222, 128, 0.2);
+    }
+    
+    .message-text.moderator-message {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+    
+    .message-text.member-message {
+      background: linear-gradient(135deg, rgba(186, 230, 253, 0.1), rgba(125, 211, 252, 0.05));
+      border: 1px solid rgba(186, 230, 253, 0.15);
+    }
+
+    /* تأثير خلفية اسم المرسل */
+    .message-sender.owner-sender {
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.1));
+      padding: 2px 8px;
+      border-radius: 20px;
+      border-right: 3px solid #4ade80;
+    }
+    
+    .message-sender.moderator-sender {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(239, 68, 68, 0.1));
+      padding: 2px 8px;
+      border-radius: 20px;
+      border-right: 3px solid #f87171;
+    }
+    
+    .message-sender.member-sender {
+      background: linear-gradient(135deg, rgba(186, 230, 253, 0.15), rgba(125, 211, 252, 0.08));
+      padding: 2px 8px;
+      border-radius: 20px;
+      border-right: 3px solid #bae6fd;
+    }
+
     body {
       background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
       min-height: 100vh;
@@ -407,6 +484,7 @@
     .message-sender {
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.3s;
     }
 
     .message-badge {
@@ -432,7 +510,6 @@
     }
 
     .message-text {
-      background: rgba(0, 0, 0, 0.3);
       padding: 10px 14px;
       border-radius: 18px;
       border-top-right-radius: 5px;
@@ -477,6 +554,22 @@
       font-size: 12px;
       color: #ef4444;
       cursor: pointer;
+    }
+
+    /* أيقونة الهدية */
+    .gift-badge {
+      display: inline-block;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    
+    .gift-badge img {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid gold;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
 
     /* ========== الأيقونات الخاصة ========== */
@@ -1058,7 +1151,6 @@
       border-right: 3px solid #8b5cf6;
     }
 
-  
     .permissions-title {
       font-weight: 700;
       margin-bottom: 10px;
@@ -1076,6 +1168,70 @@
 
     .permission-item i.fa-check { color: #10b981; }
     .permission-item i.fa-times { color: #ef4444; }
+
+    /* إعدادات متقدمة */
+    .settings-tabs {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .settings-tab {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 30px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    .settings-tab.active {
+      background: #8b5cf6;
+    }
+    
+    .style-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    .gift-item {
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      position: relative;
+    }
+    
+    .gift-item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    
+    .gift-price {
+      font-size: 11px;
+      color: gold;
+    }
+
+    /* فلتر المراقبة */
+    .monitor-log {
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px 0;
+      border-right: 3px solid #ef4444;
+    }
   </style>
 </head>
 <body>
@@ -1181,42 +1337,112 @@
   </div>
 </div>
 
-<!-- نافذة إعدادات الغرفة -->
+<!-- نافذة إعدادات الغرفة المتقدمة -->
 <div class="modal-overlay" id="roomSettingsModal">
-  <div class="modal-sheet">
+  <div class="modal-sheet" style="max-width: 550px;">
     <div class="modal-header">
-      <h3><i class="fas fa-cog"></i> إعدادات الغرفة</h3>
+      <h3><i class="fas fa-sliders-h"></i> ضبط الغرفة</h3>
       <button class="close-btn" onclick="closeRoomSettingsModal()">&times;</button>
     </div>
     
-    <div class="permissions-info">
-      <div class="permissions-title"><i class="fas fa-crown"></i> صلاحيات المالك</div>
-      <div class="permission-item"><i class="fas fa-check"></i> حذف أي رسالة</div>
-      <div class="permission-item"><i class="fas fa-check"></i> حظر أي عضو</div>
-      <div class="permission-item"><i class="fas fa-check"></i> تعيين 3 مشرفين</div>
-      <div class="permission-item"><i class="fas fa-check"></i> تغيير خلفية الغرفة</div>
-      <div class="permission-item"><i class="fas fa-check"></i> حذف الغرفة</div>
+    <div class="settings-tabs">
+      <div class="settings-tab active" onclick="switchSettingsTab('general')">عام</div>
+      <div class="settings-tab" onclick="switchSettingsTab('styles')">تنسيق الخطوط</div>
+      <div class="settings-tab" onclick="switchSettingsTab('words')">فلتر الكلمات</div>
+      <div class="settings-tab" onclick="switchSettingsTab('shortcuts')">اختصارات</div>
+      <div class="settings-tab" onclick="switchSettingsTab('gifts')">الهدايا</div>
     </div>
-    
-    <div class="permissions-info" style="border-right-color: #3b82f6;">
-      <div class="permissions-title"><i class="fas fa-shield-alt"></i> صلاحيات المشرف</div>
-      <div class="permission-item"><i class="fas fa-check"></i> حذف رسائل الأعضاء (عدا المالك)</div>
-      <div class="permission-item"><i class="fas fa-check"></i> حظر الأعضاء (عدا المالك والمشرفين)</div>
-      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن حظر المالك</div>
-      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن تعيين مشرفين</div>
-      <div class="permission-item"><i class="fas fa-times"></i> لا يمكن تغيير الخلفية</div>
+
+    <div id="settingsTabGeneral">
+      <div class="form-group">
+        <label>رابط صورة الخلفية</label>
+        <input type="text" id="backgroundUrl" placeholder="أدخل رابط الصورة">
+      </div>
+      <button class="btn-submit" onclick="updateRoomBackground()">حفظ الخلفية</button>
+      <button class="btn-submit" style="background: #ef4444; margin-top: 10px;" onclick="deleteRoom()" id="deleteRoomBtn">
+        <i class="fas fa-trash"></i> حذف الغرفة
+      </button>
     </div>
-    
-    <div class="form-group">
-      <label>رابط صورة الخلفية</label>
-      <input type="text" id="backgroundUrl" placeholder="أدخل رابط الصورة">
+
+    <div id="settingsTabStyles" style="display: none;">
+      <div class="permissions-title"><i class="fas fa-paint-brush"></i> تنسيق أسماء الأعضاء</div>
+      <div class="style-row">
+        <label style="width: 80px;">المالك</label>
+        <input type="color" id="ownerNameColor" value="#4ade80">
+        <input type="number" id="ownerNameSize" value="16" min="10" max="30" style="width: 70px;"> px
+      </div>
+      <div class="style-row">
+        <label style="width: 80px;">المشرف</label>
+        <input type="color" id="modNameColor" value="#f87171">
+        <input type="number" id="modNameSize" value="15" min="10" max="30" style="width: 70px;"> px
+      </div>
+      <div class="style-row">
+        <label style="width: 80px;">العضو</label>
+        <input type="color" id="memberNameColor" value="#bae6fd">
+        <input type="number" id="memberNameSize" value="14" min="10" max="30" style="width: 70px;"> px
+      </div>
+      <div class="style-row">
+        <label>نوع الخط</label>
+        <select id="globalFontFamily">
+          <option value="'Segoe UI', 'Tajawal'">افتراضي</option>
+          <option value="'Arial', sans-serif">Arial</option>
+          <option value="'Courier New', monospace">Courier</option>
+          <option value="'Times New Roman', serif">Times New Roman</option>
+        </select>
+      </div>
+      <button class="btn-submit" onclick="saveTextStyles()">حفظ التنسيقات</button>
     </div>
-    
-    <button class="btn-submit" onclick="updateRoomBackground()">حفظ التغييرات</button>
-    
-    <button class="btn-submit" style="background: #ef4444; margin-top: 10px;" onclick="deleteRoom()">
-      <i class="fas fa-trash"></i> حذف الغرفة
-    </button>
+
+    <div id="settingsTabWords" style="display: none;">
+      <div class="form-group">
+        <label><i class="fas fa-ban" style="color: #ef4444;"></i> كلمة محظورة (ممنوعة)</label>
+        <div style="display: flex; gap: 5px;">
+          <input type="text" id="newBannedWord" placeholder="أدخل كلمة">
+          <button class="btn-submit" style="width: auto; padding: 10px;" onclick="addBannedWord()">إضافة</button>
+        </div>
+      </div>
+      <div id="bannedWordsList" style="margin-bottom: 20px;"></div>
+      
+      <div class="form-group">
+        <label><i class="fas fa-eye" style="color: #fbbf24;"></i> كلمة مراقبة (تظهر للمشرفين)</label>
+        <div style="display: flex; gap: 5px;">
+          <input type="text" id="newMonitoredWord" placeholder="أدخل كلمة">
+          <button class="btn-submit" style="width: auto; padding: 10px;" onclick="addMonitoredWord()">إضافة</button>
+        </div>
+      </div>
+      <div id="monitoredWordsList"></div>
+      <div id="monitorLogs" style="margin-top: 15px;"></div>
+    </div>
+
+    <div id="settingsTabShortcuts" style="display: none;">
+      <div class="form-group">
+        <label>الاختصار (مثال: /مرحبا)</label>
+        <input type="text" id="newShortcutKey" placeholder="مثال: /مرحبا">
+      </div>
+      <div class="form-group">
+        <label>النص الكامل</label>
+        <textarea id="newShortcutValue" rows="2" placeholder="النص الذي سيظهر بدل الاختصار"></textarea>
+      </div>
+      <button class="btn-submit" onclick="addShortcut()">إضافة اختصار</button>
+      <div id="shortcutsList" style="margin-top: 15px;"></div>
+    </div>
+
+    <div id="settingsTabGifts" style="display: none;">
+      <div class="form-group">
+        <label>اسم الهدية</label>
+        <input type="text" id="giftName" placeholder="مثال: وردة">
+      </div>
+      <div class="form-group">
+        <label>رابط الصورة</label>
+        <input type="text" id="giftImageUrl" placeholder="رابط صورة الهدية">
+      </div>
+      <div class="form-group">
+        <label>السعر (ذهب)</label>
+        <input type="number" id="giftPrice" value="10" min="1">
+      </div>
+      <button class="btn-submit" onclick="addGift()">إضافة هدية</button>
+      <div id="giftsList" style="margin-top: 15px;"></div>
+    </div>
   </div>
 </div>
 
@@ -1244,6 +1470,18 @@
   <div id="profilePopupContent"></div>
 </div>
 
+<!-- نافذة اختيار مستلم الهدية -->
+<div class="modal-overlay" id="giftRecipientModal">
+  <div class="modal-sheet">
+    <div class="modal-header">
+      <h3 id="giftModalTitle">اختر هدية</h3>
+      <button class="close-btn" onclick="closeGiftRecipientModal()">&times;</button>
+    </div>
+    <div id="recipientList" class="panel-list" style="max-height: 300px;"></div>
+    <input type="hidden" id="selectedGiftId">
+  </div>
+</div>
+
 <!-- غرفة الدردشة -->
 <div class="chat-room-view" id="chatRoomView">
   <div class="room-background" id="roomBackground"></div>
@@ -1260,6 +1498,7 @@
       <div class="room-subtitle" id="currentRoomSubtitle">0 عضو متواجد</div>
     </div>
     <div class="room-actions">
+      <i class="fas fa-gift" onclick="openGiftPanel()" title="الهدايا"></i>
       <i class="fas fa-users" onclick="toggleMembersPanel()" title="الأعضاء والمحظورون"></i>
       <i class="fas fa-cog" onclick="openRoomSettingsModal()" id="roomSettingsBtn" style="display: none;" title="الإعدادات"></i>
     </div>
@@ -1343,6 +1582,8 @@
   let selectedImage = roomImages[0];
   let currentPanelTab = 'members';
   let bannedUsersData = [];
+  let currentSettingsTab = 'general';
+  let monitorLogs = [];
 
   function showToast(msg, isSuccess = true) {
     const t = document.getElementById('toastMsg');
@@ -1353,7 +1594,6 @@
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 
-  // تعديل دالة الرجوع - بدون توجيه لصفحة 404
   window.goBack = function() {
     if (document.referrer && document.referrer.includes(window.location.hostname)) {
       window.history.back();
@@ -1398,7 +1638,9 @@
       
       const resDoc = await getDoc(doc(db, "resources", uid));
       if (resDoc.exists()) resources = resDoc.data();
-    } catch (e) {}
+    } catch (e) {
+      console.error("خطأ في تحميل بيانات المستخدم:", e);
+    }
   }
 
   async function loadBannedUsersData(bannedUids) {
@@ -1467,7 +1709,10 @@
     renderRooms();
   };
 
-  window.refreshRooms = () => { renderRooms(); showToast('تم التحديث'); };
+  window.refreshRooms = () => { 
+    renderRooms(); 
+    showToast('تم التحديث'); 
+  };
 
   window.openCreateRoomModal = () => {
     const selector = document.getElementById('imageSelector');
@@ -1493,32 +1738,62 @@
 
   window.createRoom = async () => {
     const name = document.getElementById('roomName')?.value.trim();
-    if (!name) { showToast('الرجاء إدخال اسم الغرفة', false); return; }
+    if (!name) { 
+      showToast('الرجاء إدخال اسم الغرفة', false); 
+      return; 
+    }
     
     const type = document.getElementById('roomType')?.value || 'normal';
     const price = type === 'normal' ? 25 : 50;
     
-    if ((resources.gold || 0) < price) { showToast('رصيد الذهب غير كافٍ', false); return; }
+    if ((resources.gold || 0) < price) { 
+      showToast('رصيد الذهب غير كافٍ', false); 
+      return; 
+    }
 
     const room = {
-      name, image: selectedImage,
+      name, 
+      image: selectedImage,
       description: document.getElementById('roomDesc')?.value.trim() || '',
       capacity: parseInt(document.getElementById('roomCapacity')?.value || '50'),
       welcomeMessage: document.getElementById('welcomeMessage')?.value.trim() || 'مرحباً بك!',
       password: document.getElementById('roomPassword')?.value.trim() || null,
-      type, ownerId: currentUser.uid, ownerName: currentUserData?.username || 'المالك',
+      type, 
+      ownerId: currentUser.uid, 
+      ownerName: currentUserData?.username || 'المالك',
       ownerAvatar: currentUserData?.avatarUrl || null,
       ownerAvatarType: currentUserData?.avatarType || 'emoji',
       ownerEmoji: currentUserData?.emoji || '👑',
       ownerColors: currentUserData?.colors || {},
-      moderators: [], bannedUsers: [],
+      moderators: [], 
+      bannedUsers: [],
       members: [{
-        uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
-        avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
-        emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
-        role: 'owner', joinedAt: Date.now()
+        uid: currentUser.uid, 
+        name: currentUserData?.username || 'مستخدم',
+        avatar: currentUserData?.avatarUrl || '', 
+        avatarType: currentUserData?.avatarType || 'emoji',
+        emoji: currentUserData?.emoji || '👤', 
+        colors: currentUserData?.colors || {},
+        role: 'owner', 
+        joinedAt: Date.now()
       }],
-      background: null, iconOccupants: {}, createdAt: Date.now()
+      background: null, 
+      iconOccupants: {}, 
+      createdAt: Date.now(),
+      textStyles: {
+        ownerColor: '#4ade80',
+        ownerSize: 16,
+        modColor: '#f87171',
+        modSize: 15,
+        memberColor: '#bae6fd',
+        memberSize: 14,
+        fontFamily: "'Segoe UI', 'Tajawal'"
+      },
+      bannedWords: [],
+      monitoredWords: [],
+      shortcuts: {},
+      gifts: [],
+      monitorLogs: []
     };
 
     await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-price) });
@@ -1531,13 +1806,21 @@
   window.requestJoinRoom = (roomId) => {
     const room = rooms.find(r => r.id === roomId);
     if (!room) return;
-    if ((room.members || []).length >= (room.capacity || 50)) { showToast('الغرفة ممتلئة', false); return; }
-    if ((room.bannedUsers || []).includes(currentUser.uid)) { showToast('أنت محظور من هذه الغرفة', false); return; }
+    if ((room.members || []).length >= (room.capacity || 50)) { 
+      showToast('الغرفة ممتلئة', false); 
+      return; 
+    }
+    if ((room.bannedUsers || []).includes(currentUser.uid)) { 
+      showToast('أنت محظور من هذه الغرفة', false); 
+      return; 
+    }
     
     if (room.password) {
       document.getElementById('targetRoomId').value = roomId;
       document.getElementById('passwordModal')?.classList.add('active');
-    } else joinRoom(roomId);
+    } else {
+      joinRoom(roomId);
+    }
   };
 
   window.closePasswordModal = () => document.getElementById('passwordModal')?.classList.remove('active');
@@ -1546,8 +1829,12 @@
     const roomId = document.getElementById('targetRoomId')?.value;
     const password = document.getElementById('roomPasswordInput')?.value;
     const room = rooms.find(r => r.id === roomId);
-    if (room?.password === password) { closePasswordModal(); joinRoom(roomId); }
-    else showToast('الرمز السري غير صحيح', false);
+    if (room?.password === password) { 
+      closePasswordModal(); 
+      joinRoom(roomId); 
+    } else {
+      showToast('الرمز السري غير صحيح', false);
+    }
   };
 
   async function joinRoom(roomId) {
@@ -1558,10 +1845,14 @@
     if (!existingMember) {
       await updateDoc(doc(db, "rooms", roomId), {
         members: arrayUnion({
-          uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
-          avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
-          emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
-          role: 'member', joinedAt: Date.now()
+          uid: currentUser.uid, 
+          name: currentUserData?.username || 'مستخدم',
+          avatar: currentUserData?.avatarUrl || '', 
+          avatarType: currentUserData?.avatarType || 'emoji',
+          emoji: currentUserData?.emoji || '👤', 
+          colors: currentUserData?.colors || {},
+          role: 'member', 
+          joinedAt: Date.now()
         })
       });
     }
@@ -1579,10 +1870,12 @@
       if (docSnap.exists()) {
         currentRoom = { id: roomId, ...docSnap.data() };
         await loadBannedUsersData(currentRoom.bannedUsers || []);
+        monitorLogs = currentRoom.monitorLogs || [];
         updateRoomUI();
         renderSpecialIcons();
         renderPanelList();
         updateMembersCount();
+        loadSettingsValues();
       }
     });
     
@@ -1613,8 +1906,9 @@
     }
     ownerAvatar.style.borderColor = currentRoom.ownerColors?.frame || '#fbbf24';
     
+    const styles = currentRoom.textStyles || {};
     ownerName.innerHTML = `
-      <span style="color: ${currentRoom.ownerColors?.name || '#f8fafc'};">${currentRoom.ownerName || 'المالك'}</span>
+      <span class="owner-name-effect" style="color: ${styles.ownerColor || '#4ade80'}; font-size: ${styles.ownerSize || 16}px; font-family: ${styles.fontFamily};">${currentRoom.ownerName || 'المالك'}</span>
       <i class="fas fa-crown"></i>
     `;
     
@@ -1686,9 +1980,11 @@
     
     const newOccupants = { ...occupants };
     newOccupants[iconType] = {
-      uid: currentUser.uid, name: currentUserData?.username,
+      uid: currentUser.uid, 
+      name: currentUserData?.username,
       avatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
-      emoji: currentUserData?.emoji, joinedAt: Date.now()
+      emoji: currentUserData?.emoji, 
+      joinedAt: Date.now()
     };
     await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
     showToast(`انضممت إلى أيقونة ${iconNames[iconType]}!`, true);
@@ -1705,6 +2001,8 @@
       }
       
       let html = '';
+      const styles = currentRoom?.textStyles || {};
+      
       snapshot.forEach(doc => {
         const msg = doc.data();
         const isOwner = currentRoom?.ownerId === currentUser.uid;
@@ -1715,6 +2013,27 @@
         const isMsgOwner = msg.uid === currentRoom?.ownerId;
         const isMsgModerator = (currentRoom?.moderators || []).includes(msg.uid);
         
+        // تحديد التأثيرات حسب الرتبة
+        let nameEffectClass = 'member-name-effect';
+        let senderClass = 'member-sender';
+        let messageClass = 'member-message';
+        let nameColor = styles.memberColor || '#bae6fd';
+        let nameSize = styles.memberSize || 14;
+        
+        if (isMsgOwner) {
+          nameEffectClass = 'owner-name-effect';
+          senderClass = 'owner-sender';
+          messageClass = 'owner-message';
+          nameColor = styles.ownerColor || '#4ade80';
+          nameSize = styles.ownerSize || 16;
+        } else if (isMsgModerator) {
+          nameEffectClass = 'moderator-name-effect';
+          senderClass = 'moderator-sender';
+          messageClass = 'moderator-message';
+          nameColor = styles.modColor || '#f87171';
+          nameSize = styles.modSize || 15;
+        }
+        
         html += `
           <div class="message-item">
             <div class="message-avatar" style="border-color: ${msg.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${msg.uid}')">
@@ -1722,12 +2041,13 @@
             </div>
             <div class="message-content">
               <div class="message-header">
-                <span class="message-sender" style="color: ${msg.colors?.name || '#f8fafc'};" onclick="showMemberProfile('${msg.uid}')">${msg.name || 'مستخدم'}</span>
+                <span class="message-sender ${nameEffectClass} ${senderClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};" onclick="showMemberProfile('${msg.uid}')">${msg.name || 'مستخدم'}</span>
                 ${isMsgOwner ? '<span class="message-badge owner"><i class="fas fa-crown"></i> مالك</span>' : ''}
                 ${isMsgModerator && !isMsgOwner ? '<span class="message-badge moderator"><i class="fas fa-shield-alt"></i> مشرف</span>' : ''}
                 <span class="message-time">${msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                ${msg.gift ? `<span class="gift-badge"><img src="${msg.gift.image}" title="${msg.gift.name}"></span>` : ''}
               </div>
-              ${parsed.displayText ? `<div class="message-text">${parsed.displayText}</div>` : ''}
+              ${parsed.displayText ? `<div class="message-text ${messageClass}">${parsed.displayText}</div>` : ''}
               ${parsed.mediaHtml}
               ${canDelete ? `<div class="message-actions"><i class="fas fa-trash" onclick="deleteMessage('${doc.id}')"></i></div>` : ''}
             </div>
@@ -1742,20 +2062,78 @@
   window.sendMessage = async () => {
     const input = document.getElementById('messageInput');
     if (!input || !currentRoomId) return;
-    const text = input.value.trim();
+    let text = input.value.trim();
     if (!text) return;
     
+    // تطبيق الاختصارات
+    const shortcuts = currentRoom?.shortcuts || {};
+    for (const [key, value] of Object.entries(shortcuts)) {
+      const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+      text = text.replace(regex, value);
+    }
+    
+    // فلتر الكلمات المحظورة
+    const bannedWords = currentRoom?.bannedWords || [];
+    const lowerText = text.toLowerCase();
+    for (const word of bannedWords) {
+      if (lowerText.includes(word.toLowerCase())) {
+        showToast(`رسالتك تحتوي على كلمة محظورة: "${word}"`, false);
+        return;
+      }
+    }
+    
+    // فلتر الكلمات المراقبة
+    const monitoredWords = currentRoom?.monitoredWords || [];
+    let hasMonitoredWord = false;
+    let detectedWords = [];
+    
+    for (const word of monitoredWords) {
+      if (lowerText.includes(word.toLowerCase())) {
+        hasMonitoredWord = true;
+        detectedWords.push(word);
+      }
+    }
+    
     const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
+    const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
+    
+    // إذا كانت هناك كلمة مراقبة والمستخدم ليس من الطاقم
+    if (hasMonitoredWord && !isStaff) {
+      const logEntry = {
+        userId: currentUser.uid,
+        userName: currentUserData?.username || 'مستخدم',
+        userAvatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
+        userEmoji: currentUserData?.emoji || '👤',
+        message: text,
+        detectedWords: detectedWords,
+        timestamp: Date.now()
+      };
+      
+      // إضافة السجل إلى قاعدة البيانات
+      const updatedLogs = [...(currentRoom.monitorLogs || []), logEntry].slice(-50);
+      await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
+      
+      showToast(`رسالتك تحتوي على كلمة مراقبة وتم إعلام المشرفين`, false);
+    }
+    
     await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-      uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
-      avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
-      emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
-      role: member?.role || 'member', text, timestamp: Date.now()
+      uid: currentUser.uid, 
+      name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '', 
+      avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤', 
+      colors: currentUserData?.colors || {},
+      role: member?.role || 'member', 
+      text, 
+      timestamp: Date.now()
     });
+    
     input.value = '';
   };
 
-  window.handleMessageKeyPress = (e) => { if (e.key === 'Enter') sendMessage(); };
+  window.handleMessageKeyPress = (e) => { 
+    if (e.key === 'Enter') sendMessage(); 
+  };
 
   window.deleteMessage = async (messageId) => {
     await deleteDoc(doc(db, "rooms", currentRoomId, "messages", messageId));
@@ -1785,11 +2163,26 @@
     const members = currentRoom?.members || [];
     const isOwner = currentRoom?.ownerId === currentUser.uid;
     const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    const styles = currentRoom?.textStyles || {};
     
     list.innerHTML = members.map(m => {
       const canPromote = isOwner && m.role === 'member' && (currentRoom.moderators || []).length < 3;
       const canDemote = isOwner && m.role === 'moderator';
       const canBan = (isOwner || isModerator) && m.uid !== currentUser.uid && m.role !== 'owner' && (!isModerator || m.role === 'member');
+      
+      let nameEffectClass = 'member-name-effect';
+      let nameColor = styles.memberColor || '#bae6fd';
+      let nameSize = styles.memberSize || 14;
+      
+      if (m.role === 'owner') {
+        nameEffectClass = 'owner-name-effect';
+        nameColor = styles.ownerColor || '#4ade80';
+        nameSize = styles.ownerSize || 16;
+      } else if (m.role === 'moderator') {
+        nameEffectClass = 'moderator-name-effect';
+        nameColor = styles.modColor || '#f87171';
+        nameSize = styles.modSize || 15;
+      }
       
       return `
         <div class="member-item" onclick="showMemberProfile('${m.uid}')">
@@ -1797,7 +2190,7 @@
             ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
           </div>
           <div class="member-info">
-            <div class="member-name" style="color: ${m.colors?.name || '#f8fafc'};">
+            <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
               ${m.name || 'مستخدم'}
               ${m.role === 'owner' ? '<i class="fas fa-crown" style="color: #fbbf24;"></i>' : ''}
             </div>
@@ -1848,7 +2241,10 @@
 
   window.promoteToModerator = async (uid) => {
     if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
-    if ((currentRoom.moderators || []).length >= 3) { showToast('لا يمكن تعيين أكثر من 3 مشرفين', false); return; }
+    if ((currentRoom.moderators || []).length >= 3) { 
+      showToast('لا يمكن تعيين أكثر من 3 مشرفين', false); 
+      return; 
+    }
     
     const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'moderator' } : m);
     await updateDoc(doc(db, "rooms", currentRoomId), {
@@ -1876,8 +2272,14 @@
     if (!isOwner && !isModerator) return;
     
     const targetMember = currentRoom.members.find(m => m.uid === uid);
-    if (targetMember?.role === 'owner') { showToast('لا يمكن حظر المالك', false); return; }
-    if (isModerator && targetMember?.role === 'moderator') { showToast('لا يمكن للمشرف حظر مشرف آخر', false); return; }
+    if (targetMember?.role === 'owner') { 
+      showToast('لا يمكن حظر المالك', false); 
+      return; 
+    }
+    if (isModerator && targetMember?.role === 'moderator') { 
+      showToast('لا يمكن للمشرف حظر مشرف آخر', false); 
+      return; 
+    }
     
     const occupants = currentRoom.iconOccupants || {};
     let newOccupants = { ...occupants };
@@ -1914,7 +2316,10 @@
   window.showMemberProfile = async (uid) => {
     try {
       const userDoc = await getDoc(doc(db, "users", uid));
-      if (!userDoc.exists()) { showToast('المستخدم غير موجود', false); return; }
+      if (!userDoc.exists()) { 
+        showToast('المستخدم غير موجود', false); 
+        return; 
+      }
       
       const user = userDoc.data();
       const postsQuery = query(collection(db, "posts"), where("userId", "==", user.userId || uid));
@@ -1968,18 +2373,54 @@
 
   window.openRoomSettingsModal = () => {
     const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    
+    if (!isOwner && !isModerator) {
+      showToast('ليس لديك صلاحية للوصول إلى الإعدادات', false);
+      return;
+    }
     
     document.getElementById('backgroundUrl').value = currentRoom?.background || '';
     document.getElementById('backgroundUrl').disabled = !isOwner;
     
-    const deleteBtn = document.querySelector('[onclick="deleteRoom()"]');
+    const deleteBtn = document.getElementById('deleteRoomBtn');
     if (deleteBtn) deleteBtn.style.display = isOwner ? 'block' : 'none';
+    
+    loadSettingsValues();
     
     document.getElementById('roomSettingsModal')?.classList.add('active');
   };
 
   window.closeRoomSettingsModal = () => {
     document.getElementById('roomSettingsModal')?.classList.remove('active');
+  };
+
+  function loadSettingsValues() {
+    const styles = currentRoom?.textStyles || {};
+    document.getElementById('ownerNameColor').value = styles.ownerColor || '#4ade80';
+    document.getElementById('ownerNameSize').value = styles.ownerSize || 16;
+    document.getElementById('modNameColor').value = styles.modColor || '#f87171';
+    document.getElementById('modNameSize').value = styles.modSize || 15;
+    document.getElementById('memberNameColor').value = styles.memberColor || '#bae6fd';
+    document.getElementById('memberNameSize').value = styles.memberSize || 14;
+    document.getElementById('globalFontFamily').value = styles.fontFamily || "'Segoe UI', 'Tajawal'";
+    
+    renderWordsLists();
+    renderShortcutsList();
+    renderGiftsList();
+    renderMonitorLogs();
+  }
+
+  window.switchSettingsTab = (tab) => {
+    currentSettingsTab = tab;
+    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const tabs = ['general', 'styles', 'words', 'shortcuts', 'gifts'];
+    tabs.forEach(t => {
+      const el = document.getElementById('settingsTab' + t.charAt(0).toUpperCase() + t.slice(1));
+      if (el) el.style.display = t === tab ? 'block' : 'none';
+    });
   };
 
   window.updateRoomBackground = async () => {
@@ -1994,9 +2435,343 @@
     showToast('تم تحديث الخلفية');
   };
 
+  window.saveTextStyles = async () => {
+    if (!currentRoom || (currentUser.uid !== currentRoom.ownerId && !(currentRoom.moderators || []).includes(currentUser.uid))) {
+      showToast('ليس لديك صلاحية لتعديل التنسيقات', false);
+      return;
+    }
+    
+    const styles = {
+      ownerColor: document.getElementById('ownerNameColor').value,
+      ownerSize: parseInt(document.getElementById('ownerNameSize').value),
+      modColor: document.getElementById('modNameColor').value,
+      modSize: parseInt(document.getElementById('modNameSize').value),
+      memberColor: document.getElementById('memberNameColor').value,
+      memberSize: parseInt(document.getElementById('memberNameSize').value),
+      fontFamily: document.getElementById('globalFontFamily').value
+    };
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), { textStyles: styles });
+    showToast('تم حفظ التنسيقات');
+  };
+
+  window.addBannedWord = async () => {
+    const word = document.getElementById('newBannedWord').value.trim();
+    if (!word) return;
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      bannedWords: arrayUnion(word)
+    });
+    document.getElementById('newBannedWord').value = '';
+    showToast('تمت إضافة الكلمة المحظورة');
+  };
+
+  window.addMonitoredWord = async () => {
+    const word = document.getElementById('newMonitoredWord').value.trim();
+    if (!word) return;
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      monitoredWords: arrayUnion(word)
+    });
+    document.getElementById('newMonitoredWord').value = '';
+    showToast('تمت إضافة كلمة المراقبة');
+  };
+
+  function renderWordsLists() {
+    const bannedWords = currentRoom?.bannedWords || [];
+    const monitoredWords = currentRoom?.monitoredWords || [];
+    
+    const bannedContainer = document.getElementById('bannedWordsList');
+    bannedContainer.innerHTML = bannedWords.map(word => `
+      <div style="display: flex; justify-content: space-between; background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #ef4444;">
+        <span style="color: #fca5a5;">🚫 ${word}</span>
+        <i class="fas fa-times" style="cursor: pointer; color: #ef4444;" onclick="removeWord('banned', '${word}')"></i>
+      </div>
+    `).join('');
+    
+    const monitoredContainer = document.getElementById('monitoredWordsList');
+    monitoredContainer.innerHTML = monitoredWords.map(word => `
+      <div style="display: flex; justify-content: space-between; background: rgba(251, 191, 36, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #fbbf24;">
+        <span style="color: #fde68a;">👁️ ${word}</span>
+        <i class="fas fa-times" style="cursor: pointer; color: #fbbf24;" onclick="removeWord('monitored', '${word}')"></i>
+      </div>
+    `).join('');
+  }
+
+  window.removeWord = async (type, word) => {
+    const field = type === 'banned' ? 'bannedWords' : 'monitoredWords';
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      [field]: arrayRemove(word)
+    });
+    showToast('تم حذف الكلمة');
+  };
+
+  function renderMonitorLogs() {
+    const logs = currentRoom?.monitorLogs || [];
+    const container = document.getElementById('monitorLogs');
+    
+    if (logs.length === 0) {
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد سجلات مراقبة</p>';
+      return;
+    }
+    
+    const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
+    if (!isStaff) {
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">المشرفون فقط يمكنهم رؤية سجلات المراقبة</p>';
+      return;
+    }
+    
+    container.innerHTML = `
+      <div class="permissions-title"><i class="fas fa-history"></i> سجل المراقبة</div>
+      ${logs.slice(-10).reverse().map(log => `
+        <div class="monitor-log">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
+            <span>${log.userEmoji || '👤'}</span>
+            <span style="font-weight: 600;">${log.userName}</span>
+            <span style="font-size: 10px; color: #94a3b8;">${new Date(log.timestamp).toLocaleTimeString('ar-SA')}</span>
+          </div>
+          <div style="margin-bottom: 5px;">${log.message}</div>
+          <div style="font-size: 11px; color: #fbbf24;">
+            الكلمات المكتشفة: ${log.detectedWords.join('، ')}
+          </div>
+        </div>
+      `).join('')}
+    `;
+  }
+
+  window.addShortcut = async () => {
+    const key = document.getElementById('newShortcutKey').value.trim();
+    const value = document.getElementById('newShortcutValue').value.trim();
+    
+    if (!key || !value) {
+      showToast('الرجاء إدخال الاختصار والنص الكامل', false);
+      return;
+    }
+    
+    const shortcuts = { ...(currentRoom.shortcuts || {}) };
+    shortcuts[key] = value;
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
+    document.getElementById('newShortcutKey').value = '';
+    document.getElementById('newShortcutValue').value = '';
+    showToast('تم إضافة الاختصار');
+  };
+
+  function renderShortcutsList() {
+    const shortcuts = currentRoom?.shortcuts || {};
+    const container = document.getElementById('shortcutsList');
+    
+    if (Object.keys(shortcuts).length === 0) {
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد اختصارات</p>';
+      return;
+    }
+    
+    container.innerHTML = Object.entries(shortcuts).map(([key, value]) => `
+      <div style="display: flex; justify-content: space-between; background: rgba(139, 92, 246, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #8b5cf6;">
+        <div>
+          <span style="color: #c4b5fd;">${key}</span>
+          <span style="color: #94a3b8; margin: 0 5px;">→</span>
+          <span style="color: #e2e8f0;">${value}</span>
+        </div>
+        <i class="fas fa-trash" style="cursor: pointer; color: #ef4444;" onclick="deleteShortcut('${key}')"></i>
+      </div>
+    `).join('');
+  }
+
+  window.deleteShortcut = async (key) => {
+    const shortcuts = { ...currentRoom.shortcuts };
+    delete shortcuts[key];
+    await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
+    showToast('تم حذف الاختصار');
+  };
+
+  window.addGift = async () => {
+    const name = document.getElementById('giftName').value.trim();
+    const image = document.getElementById('giftImageUrl').value.trim();
+    const price = parseInt(document.getElementById('giftPrice').value);
+    
+    if (!name || !image || !price) {
+      showToast('الرجاء إدخال جميع بيانات الهدية', false);
+      return;
+    }
+    
+    const gift = {
+      id: Date.now().toString(),
+      name,
+      image,
+      price,
+      createdAt: Date.now()
+    };
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      gifts: arrayUnion(gift)
+    });
+    
+    document.getElementById('giftName').value = '';
+    document.getElementById('giftImageUrl').value = '';
+    document.getElementById('giftPrice').value = '10';
+    showToast('تم إضافة الهدية');
+  };
+
+  function renderGiftsList() {
+    const gifts = currentRoom?.gifts || [];
+    const container = document.getElementById('giftsList');
+    
+    if (gifts.length === 0) {
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد هدايا</p>';
+      return;
+    }
+    
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    const canDelete = isOwner || isModerator;
+    
+    container.innerHTML = `
+      <div class="gifts-grid">
+        ${gifts.map(gift => `
+          <div class="gift-item" style="position: relative;">
+            <img src="${gift.image}" onerror="this.src='https://via.placeholder.com/100?text=🎁'">
+            <div class="gift-price">${gift.price} <i class="fas fa-coins"></i></div>
+            <div style="font-size: 10px; margin-top: 5px;">${gift.name}</div>
+            ${canDelete ? `<i class="fas fa-trash" style="position: absolute; top: 2px; right: 2px; color: #ef4444; cursor: pointer; background: rgba(0,0,0,0.5); padding: 3px; border-radius: 50%;" onclick="deleteGift('${gift.id}')"></i>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  window.deleteGift = async (giftId) => {
+    const updatedGifts = (currentRoom.gifts || []).filter(g => g.id !== giftId);
+    await updateDoc(doc(db, "rooms", currentRoomId), { gifts: updatedGifts });
+    showToast('تم حذف الهدية');
+  };
+
+  window.openGiftPanel = () => {
+    const gifts = currentRoom?.gifts || [];
+    if (gifts.length === 0) {
+      showToast('لا توجد هدايا متاحة', false);
+      return;
+    }
+    
+    const modal = document.getElementById('giftRecipientModal');
+    document.getElementById('giftModalTitle').textContent = 'اختر هدية';
+    
+    const container = document.getElementById('recipientList');
+    container.innerHTML = `
+      <div class="gifts-grid">
+        ${gifts.map(gift => `
+          <div class="gift-item" onclick="selectGiftForRecipient('${gift.id}')">
+            <img src="${gift.image}" onerror="this.src='https://via.placeholder.com/100?text=🎁'">
+            <div class="gift-price">${gift.price} <i class="fas fa-coins"></i></div>
+            <div style="font-size: 10px; margin-top: 5px;">${gift.name}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    
+    modal.classList.add('active');
+  };
+
+  window.selectGiftForRecipient = (giftId) => {
+    document.getElementById('selectedGiftId').value = giftId;
+    const gift = currentRoom.gifts.find(g => g.id === giftId);
+    
+    const members = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
+    
+    if (members.length === 0) {
+      showToast('لا يوجد أعضاء آخرين في الغرفة', false);
+      return;
+    }
+    
+    document.getElementById('giftModalTitle').textContent = `اختر من تهدي ${gift.name}`;
+    
+    const container = document.getElementById('recipientList');
+    const styles = currentRoom?.textStyles || {};
+    
+    container.innerHTML = members.map(m => {
+      let nameEffectClass = 'member-name-effect';
+      let nameColor = styles.memberColor || '#bae6fd';
+      let nameSize = styles.memberSize || 14;
+      
+      if (m.role === 'owner') {
+        nameEffectClass = 'owner-name-effect';
+        nameColor = styles.ownerColor || '#4ade80';
+        nameSize = styles.ownerSize || 16;
+      } else if (m.role === 'moderator') {
+        nameEffectClass = 'moderator-name-effect';
+        nameColor = styles.modColor || '#f87171';
+        nameSize = styles.modSize || 15;
+      }
+      
+      return `
+        <div class="member-item" onclick="sendGiftToMember('${m.uid}')">
+          <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};">
+            ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
+          </div>
+          <div class="member-info">
+            <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
+              ${m.name || 'مستخدم'}
+            </div>
+            <span class="member-role ${m.role}">${m.role === 'owner' ? 'مالك' : (m.role === 'moderator' ? 'مشرف' : 'عضو')}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  };
+
+  window.sendGiftToMember = async (targetUid) => {
+    const giftId = document.getElementById('selectedGiftId').value;
+    const gift = currentRoom.gifts.find(g => g.id === giftId);
+    
+    if (!gift) {
+      showToast('الهدية غير موجودة', false);
+      return;
+    }
+    
+    const targetMember = currentRoom.members.find(m => m.uid === targetUid);
+    if (!targetMember) {
+      showToast('العضو غير موجود', false);
+      return;
+    }
+    
+    if (resources.gold < gift.price) {
+      showToast('رصيدك غير كافٍ لإرسال هذه الهدية', false);
+      return;
+    }
+    
+    // خصم الذهب من المرسل
+    await updateDoc(doc(db, "resources", currentUser.uid), {
+      gold: increment(-gift.price)
+    });
+    resources.gold -= gift.price;
+    
+    // إضافة رسالة الهدية
+    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+      uid: currentUser.uid,
+      name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '',
+      avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤',
+      colors: currentUserData?.colors || {},
+      text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
+      gift: {
+        name: gift.name,
+        image: gift.image
+      },
+      timestamp: Date.now()
+    });
+    
+    closeGiftRecipientModal();
+    showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
+  };
+
+  window.closeGiftRecipientModal = () => {
+    document.getElementById('giftRecipientModal').classList.remove('active');
+  };
+
   window.deleteRoom = async () => {
     if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
-    if (!confirm('هل أنت متأكد من حذف الغرفة؟')) return;
+    if (!confirm('هل أنت متأكد من حذف الغرفة؟ لا يمكن التراجع عن هذا الإجراء.')) return;
     
     await deleteDoc(doc(db, "rooms", currentRoomId));
     leaveRoom();
@@ -2006,20 +2781,26 @@
   window.leaveRoom = async () => {
     if (!currentRoomId) return;
     
+    // معالجة الأيقونات الخاصة
     const occupants = currentRoom?.iconOccupants || {};
     for (const [type, occupant] of Object.entries(occupants)) {
       if (occupant?.uid === currentUser.uid) {
         const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
-        if (earned > 0) await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
+        if (earned > 0) {
+          await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
+          resources.gold += earned;
+        }
         const newOccupants = { ...occupants };
         delete newOccupants[type];
         await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
       }
     }
     
+    // إزالة العضو من الغرفة
     const updatedMembers = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
     await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers });
     
+    // إعادة عرض واجهة الغرف
     document.querySelector('.rooms-header').style.display = 'flex';
     document.querySelector('.search-section').style.display = 'flex';
     document.querySelector('.rooms-container').style.display = 'block';
@@ -2033,9 +2814,14 @@
     currentRoomId = null;
   };
 
-  setInterval(() => { if (currentRoom?.type === 'advanced') renderSpecialIcons(); }, 1000);
+  // تحديث المؤقتات كل ثانية
+  setInterval(() => {
+    if (currentRoom?.type === 'advanced') {
+      renderSpecialIcons();
+    }
+  }, 1000);
 
-  // تعديل onAuthStateChanged - بدون توجيه لصفحة 404
+  // تهيئة المصادقة
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;

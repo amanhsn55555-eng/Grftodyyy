@@ -13,7 +13,58 @@
       font-family: 'Segoe UI', 'Tajawal', sans-serif;
     }
 
+  
     /* تأثيرات نارية وثلجية */
+  .room-card[style*="border-image"] {
+    border-radius: 30px !important;
+    overflow: hidden !important;
+    padding: 8px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    position: relative !important;
+}
+
+.room-card[style*="border-image"]::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-image: inherit !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-radius: 30px !important;
+    z-index: -1 !important;
+}
+
+.room-card[style*="border-image"] .room-image {
+    border-radius: 50% !important;
+    width: 80% !important;
+    margin: 10px auto !important;
+    aspect-ratio: 1/1 !important;
+    border: 3px solid rgba(255,255,255,0.3) !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+.room-card[style*="border-image"] .room-image img {
+    border-radius: 50% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+.room-card[style*="border-image"] .room-name,
+.room-card[style*="border-image"] .room-desc,
+.room-card[style*="border-image"] .room-footer {
+    background: rgba(15, 23, 42, 0.8) !important;
+    padding: 5px 10px !important;
+    border-radius: 20px !important;
+    margin: 5px 0 !important;
+    backdrop-filter: blur(5px) !important;
+}
+  
+  
     @keyframes fireGreen {
       0% { text-shadow: 0 0 5px #22c55e, 0 0 10px #16a34a, 0 0 15px #15803d; }
       25% { text-shadow: 0 0 10px #4ade80, 0 0 20px #22c55e, 0 0 30px #16a34a; }
@@ -37,6 +88,31 @@
       75% { text-shadow: 0 0 8px #e0f2fe, 0 0 15px #bae6fd, 0 0 20px #7dd3fc; }
       100% { text-shadow: 0 0 5px #bae6fd, 0 0 10px #7dd3fc, 0 0 15px #38bdf8; }
     }
+
+    /* إطارات متحركة للغرفة */
+    @keyframes frame1 { 0% { box-shadow: 0 0 0 3px #fbbf24, 0 0 20px #f59e0b; } 50% { box-shadow: 0 0 0 3px #f59e0b, 0 0 30px #fbbf24; } 100% { box-shadow: 0 0 0 3px #fbbf24, 0 0 20px #f59e0b; } }
+    @keyframes frame2 { 0% { box-shadow: 0 0 0 3px #a78bfa, 0 0 20px #8b5cf6; } 50% { box-shadow: 0 0 0 3px #c4b5fd, 0 0 30px #a78bfa; } 100% { box-shadow: 0 0 0 3px #a78bfa, 0 0 20px #8b5cf6; } }
+    @keyframes frame3 { 0% { box-shadow: 0 0 0 3px #34d399, 0 0 20px #10b981; } 50% { box-shadow: 0 0 0 3px #6ee7b7, 0 0 30px #34d399; } 100% { box-shadow: 0 0 0 3px #34d399, 0 0 20px #10b981; } }
+    @keyframes frame4 { 0% { box-shadow: 0 0 0 3px #f472b6, 0 0 20px #ec4899; } 50% { box-shadow: 0 0 0 3px #fbcfe8, 0 0 30px #f472b6; } 100% { box-shadow: 0 0 0 3px #f472b6, 0 0 20px #ec4899; } }
+    @keyframes frame5 { 0% { box-shadow: 0 0 0 3px #60a5fa, 0 0 20px #3b82f6; } 50% { box-shadow: 0 0 0 3px #93c5fd, 0 0 30px #60a5fa; } 100% { box-shadow: 0 0 0 3px #60a5fa, 0 0 20px #3b82f6; } }
+    @keyframes frame6 { 0% { box-shadow: 0 0 0 3px #f87171, 0 0 20px #ef4444; } 50% { box-shadow: 0 0 0 3px #fca5a5, 0 0 30px #f87171; } 100% { box-shadow: 0 0 0 3px #f87171, 0 0 20px #ef4444; } }
+
+    .room-card.frame1 { animation: frame1 1.5s infinite; }
+    .room-card.frame2 { animation: frame2 1.5s infinite; }
+    .room-card.frame3 { animation: frame3 1.5s infinite; }
+    .room-card.frame4 { animation: frame4 1.5s infinite; }
+    .room-card.frame5 { animation: frame5 1.5s infinite; }
+    .room-card.frame6 { animation: frame6 1.5s infinite; }
+
+    /* تأثيرات الإيموجي المتحركة */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
+    @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-20px); } 60% { transform: translateY(-10px); } }
+    @keyframes spin { from { opacity: 0; transform: rotate(0deg); } to { opacity: 1; transform: rotate(360deg); } }
+    @keyframes pulse { 0% { opacity: 0; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
 
     .owner-name-effect { 
       animation: fireGreen 1.5s infinite; 
@@ -71,7 +147,6 @@
       border: 1px solid rgba(186, 230, 253, 0.15);
     }
 
-    /* تأثير خلفية اسم المرسل */
     .message-sender.owner-sender {
       background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.1));
       padding: 2px 8px;
@@ -103,7 +178,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* ========== هيدر الغرف ========== */
     .rooms-header {
       position: fixed;
       top: 0;
@@ -111,9 +185,9 @@
       right: 0;
       background: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(20px);
-      padding: 12px 16px;
+      padding: 6px 6px;
       z-index: 999;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       border-bottom: 1px solid rgba(139, 92, 246, 0.3);
       display: flex;
       align-items: center;
@@ -121,7 +195,7 @@
     }
 
     .rooms-header h2 {
-      font-size: 20px;
+      font-size: 15px;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -143,19 +217,18 @@
       color: #8b5cf6;
     }
 
-    /* ========== مربع البحث ========== */
     .search-section {
       position: fixed;
-      top: 60px;
+      top: 39px;
       left: 0;
       right: 0;
       background: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(20px);
-      padding: 12px 16px;
+      padding: 2px 6px;
       z-index: 998;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
-      gap: 10px;
+      gap: 1px;
     }
 
     .search-wrapper {
@@ -164,20 +237,20 @@
       align-items: center;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 30px;
-      padding: 5px 15px;
+      padding: 5px 5px;
       border: 1px solid rgba(139, 92, 246, 0.2);
     }
 
     .search-wrapper i {
       color: #8b5cf6;
-      margin-left: 10px;
+      margin-left: 1px;
     }
 
     .search-wrapper input {
       flex: 1;
       background: transparent;
       border: none;
-      padding: 12px 0;
+      padding:2px 0;
       color: white;
       font-size: 14px;
       outline: none;
@@ -198,7 +271,6 @@
       white-space: nowrap;
     }
 
-    /* ========== قائمة الغرف ========== */
     .rooms-container {
       margin-top: 120px;
       padding: 12px;
@@ -295,7 +367,6 @@
       font-weight: 600;
     }
 
-    /* ========== غرفة الدردشة ========== */
     .chat-room-view {
       position: fixed;
       top: 0;
@@ -370,7 +441,6 @@
       transition: all 0.2s;
     }
 
-    /* ========== بطاقة المالك ========== */
     .owner-card {
       position: relative;
       z-index: 2;
@@ -433,7 +503,6 @@
       color: #94a3b8;
     }
 
-    /* ========== منطقة الرسائل ========== */
     .messages-area {
       position: relative;
       z-index: 1;
@@ -556,7 +625,22 @@
       cursor: pointer;
     }
 
-    /* أيقونة الهدية */
+    .gift-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      margin: 0 3px;
+    }
+    
+    .gift-inline img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid gold;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
     .gift-badge {
       display: inline-block;
       margin-right: 5px;
@@ -572,7 +656,6 @@
       box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
 
-    /* ========== الأيقونات الخاصة ========== */
     .special-icons {
       position: relative;
       z-index: 2;
@@ -659,7 +742,6 @@
     .special-icon.tree { border-color: #10b981; }
     .special-icon.dark { border-color: #94a3b8; }
 
-    /* ========== قوائم الأعضاء والمحظورين ========== */
     .members-panel {
       position: fixed;
       top: 0;
@@ -828,7 +910,16 @@
       font-size: 12px;
     }
 
-    /* ========== الملف الشخصي المصغر ========== */
+    .detect-accounts-btn {
+      color: #60a5fa;
+      cursor: pointer;
+      padding: 5px 8px;
+      border-radius: 15px;
+      background: rgba(96, 165, 250, 0.1);
+      font-size: 11px;
+      margin-left: 5px;
+    }
+
     .profile-popup {
       position: fixed;
       top: 50%;
@@ -935,7 +1026,6 @@
       margin-bottom: 10px;
     }
 
-    /* ========== شريط الإدخال ========== */
     .input-area {
       position: relative;
       z-index: 2;
@@ -973,7 +1063,74 @@
       justify-content: center;
     }
 
-    /* ========== نوافذ ========== */
+    .emoji-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fbbf24;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .emoji-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .emoji-panel {
+      position: absolute;
+      bottom: 70px;
+      right: 16px;
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 15px;
+      width: 280px;
+      max-height: 350px;
+      overflow-y: auto;
+      z-index: 10;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      display: none;
+    }
+
+    .emoji-panel.active {
+      display: block;
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .emoji-item {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 24px;
+      transition: all 0.2s;
+    }
+
+    .emoji-item:hover {
+      background: rgba(139, 92, 246, 0.3);
+      transform: scale(1.05);
+    }
+
+    .emoji-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -1089,7 +1246,6 @@
       cursor: pointer;
     }
 
-    /* ========== إشعار ========== */
     #toastMsg {
       position: fixed;
       bottom: 30px;
@@ -1169,7 +1325,6 @@
     .permission-item i.fa-check { color: #10b981; }
     .permission-item i.fa-times { color: #ef4444; }
 
-    /* إعدادات متقدمة */
     .settings-tabs {
       display: flex;
       gap: 5px;
@@ -1224,13 +1379,166 @@
       color: gold;
     }
 
-    /* فلتر المراقبة */
     .monitor-log {
       background: rgba(239, 68, 68, 0.1);
       border-radius: 10px;
       padding: 10px;
       margin: 10px 0;
       border-right: 3px solid #ef4444;
+    }
+
+    .monitor-message-item {
+      background: rgba(251, 191, 36, 0.1);
+      border-radius: 15px;
+      padding: 12px;
+      margin: 10px 0;
+      border-right: 3px solid #fbbf24;
+    }
+
+    .ip-info-popup {
+      background: #1e293b;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+    }
+    
+    .ip-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .ip-accounts-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .ip-account-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+      margin-bottom: 8px;
+    }
+
+    .shortcut-shape-selector {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .shape-option {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+    
+    .shape-option.selected {
+      border-color: #8b5cf6;
+    }
+
+    .frames-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+    
+    .frame-preview {
+      aspect-ratio: 1;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.2s;
+      position: relative;
+    }
+    
+    .frame-preview.selected {
+      border-color: #8b5cf6;
+    }
+
+    .announcement-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 25px;
+      max-width: 400px;
+      width: 90%;
+      z-index: 7000;
+      border: 2px solid #fbbf24;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      text-align: center;
+      display: none;
+    }
+
+    .announcement-popup.active {
+      display: block;
+    }
+
+    .announcement-image {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .announcement-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fbbf24;
+    }
+
+    .announcement-desc {
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    .announcement-close {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .announcement-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 6900;
+      display: none;
+    }
+
+    .announcement-overlay.active {
+      display: block;
+    }
+
+    /* تأثيرات الإيموجي */
+    .floating-emoji {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -1351,6 +1659,9 @@
       <div class="settings-tab" onclick="switchSettingsTab('words')">فلتر الكلمات</div>
       <div class="settings-tab" onclick="switchSettingsTab('shortcuts')">اختصارات</div>
       <div class="settings-tab" onclick="switchSettingsTab('gifts')">الهدايا</div>
+      <div class="settings-tab" onclick="switchSettingsTab('frame')">الإطار</div>
+      <div class="settings-tab" onclick="switchSettingsTab('emoji')">إيموجي</div>
+      <div class="settings-tab" onclick="switchSettingsTab('announcement')">إعلان</div>
     </div>
 
     <div id="settingsTabGeneral">
@@ -1358,7 +1669,27 @@
         <label>رابط صورة الخلفية</label>
         <input type="text" id="backgroundUrl" placeholder="أدخل رابط الصورة">
       </div>
-      <button class="btn-submit" onclick="updateRoomBackground()">حفظ الخلفية</button>
+      <div class="form-group">
+        <label>رابط صورة الغرفة (تظهر في الواجهة)</label>
+        <input type="text" id="roomImageUrl" placeholder="رابط صورة الغرفة">
+      </div>
+      <div class="form-group">
+        <label>اسم الغرفة</label>
+        <input type="text" id="editRoomName" placeholder="اسم الغرفة">
+      </div>
+      <div class="form-group">
+        <label>الوصف</label>
+        <textarea id="editRoomDesc" rows="2" placeholder="وصف الغرفة"></textarea>
+      </div>
+      <div class="form-group">
+        <label>السعة القصوى</label>
+        <input type="number" id="editRoomCapacity" min="1" max="200" value="50">
+      </div>
+      <div class="form-group">
+        <label>رسالة الترحيب</label>
+        <input type="text" id="editWelcomeMessage" placeholder="رسالة ترحيب">
+      </div>
+      <button class="btn-submit" onclick="saveGeneralSettings()">حفظ التغييرات</button>
       <button class="btn-submit" style="background: #ef4444; margin-top: 10px;" onclick="deleteRoom()" id="deleteRoomBtn">
         <i class="fas fa-trash"></i> حذف الغرفة
       </button>
@@ -1411,7 +1742,11 @@
         </div>
       </div>
       <div id="monitoredWordsList"></div>
-      <div id="monitorLogs" style="margin-top: 15px;"></div>
+      
+      <div class="permissions-title" style="margin-top: 20px; cursor: pointer;" onclick="toggleMonitorMessages()">
+        <i class="fas fa-history"></i> سجل المراقبة <i class="fas fa-chevron-down"></i>
+      </div>
+      <div id="monitorMessagesContainer" style="max-height: 300px; overflow-y: auto; display: none;"></div>
     </div>
 
     <div id="settingsTabShortcuts" style="display: none;">
@@ -1423,6 +1758,28 @@
         <label>النص الكامل</label>
         <textarea id="newShortcutValue" rows="2" placeholder="النص الذي سيظهر بدل الاختصار"></textarea>
       </div>
+      
+      <div class="form-group">
+        <label>أو رابط صورة مصغرة</label>
+        <input type="text" id="shortcutImageUrl" placeholder="رابط الصورة">
+      </div>
+      
+      <div class="form-group">
+        <label>شكل الصورة</label>
+        <div class="shortcut-shape-selector">
+          <div class="shape-option square selected" onclick="selectShortcutShape('square')">
+            <i class="fas fa-square"></i>
+          </div>
+          <div class="shape-option rectangle" onclick="selectShortcutShape('rectangle')">
+            <i class="fas fa-stop"></i>
+          </div>
+          <div class="shape-option circle" onclick="selectShortcutShape('circle')">
+            <i class="fas fa-circle"></i>
+          </div>
+        </div>
+        <input type="hidden" id="shortcutShape" value="square">
+      </div>
+      
       <button class="btn-submit" onclick="addShortcut()">إضافة اختصار</button>
       <div id="shortcutsList" style="margin-top: 15px;"></div>
     </div>
@@ -1443,6 +1800,77 @@
       <button class="btn-submit" onclick="addGift()">إضافة هدية</button>
       <div id="giftsList" style="margin-top: 15px;"></div>
     </div>
+
+    <div id="settingsTabFrame" style="display: none;">
+      <div class="permissions-title"><i class="fas fa-border-all"></i> اختر إطار الغرفة</div>
+      <div class="frames-grid" id="framesGrid"></div>
+      
+      <div class="form-group" style="margin-top: 20px;">
+        <label>أو رابط صورة إطار مخصص</label>
+        <input type="text" id="customFrameUrl" placeholder="رابط صورة الإطار">
+        <small style="color: #94a3b8;">سيتم تطبيق الإطار كصورة حول الغرفة</small>
+      </div>
+      <button class="btn-submit" onclick="saveRoomFrame()">حفظ الإطار</button>
+    </div>
+
+    <div id="settingsTabEmoji" style="display: none;">
+      <div class="permissions-title"><i class="fas fa-smile"></i> إضافة إيموجي</div>
+      <div class="form-group">
+        <label>نوع الإيموجي</label>
+        <select id="emojiType">
+          <option value="text">نص إيموجي</option>
+          <option value="image">رابط صورة</option>
+        </select>
+      </div>
+      <div class="form-group" id="emojiTextGroup">
+        <label>الإيموجي</label>
+        <input type="text" id="emojiText" placeholder="مثال: 😊">
+      </div>
+      <div class="form-group" id="emojiImageGroup" style="display: none;">
+        <label>رابط الصورة</label>
+        <input type="text" id="emojiImageUrl" placeholder="رابط الصورة">
+      </div>
+      <div class="form-group">
+        <label>العرض (بكسل)</label>
+        <input type="number" id="emojiWidth" value="40" min="10" max="200">
+      </div>
+      <div class="form-group">
+        <label>الارتفاع (بكسل)</label>
+        <input type="number" id="emojiHeight" value="40" min="10" max="200">
+      </div>
+      <div class="form-group">
+        <label>تأثير الظهور</label>
+        <select id="emojiAnimation">
+          <option value="fade">تلاشي</option>
+          <option value="slideUp">صعود من الأسفل</option>
+          <option value="slideDown">نزول من الأعلى</option>
+          <option value="zoom">تكبير</option>
+          <option value="bounce">ارتداد</option>
+          <option value="spin">دوران</option>
+          <option value="pulse">نبض</option>
+          <option value="shake">اهتزاز</option>
+        </select>
+      </div>
+      <button class="btn-submit" onclick="addEmoji()">إضافة إيموجي</button>
+      <div id="emojisList" style="margin-top: 15px;"></div>
+    </div>
+
+    <div id="settingsTabAnnouncement" style="display: none;">
+      <div class="permissions-title"><i class="fas fa-bullhorn"></i> إعلان لجميع الغرف</div>
+      <div class="form-group">
+        <label>عنوان الإعلان</label>
+        <input type="text" id="announcementTitle" placeholder="عنوان الإعلان">
+      </div>
+      <div class="form-group">
+        <label>وصف الإعلان</label>
+        <textarea id="announcementDesc" rows="3" placeholder="وصف الإعلان"></textarea>
+      </div>
+      <div class="form-group">
+        <label>رابط الصورة</label>
+        <input type="text" id="announcementImage" placeholder="رابط الصورة">
+      </div>
+      <button class="btn-submit" onclick="publishAnnouncement()">نشر الإعلان</button>
+    </div>
   </div>
 </div>
 
@@ -1460,8 +1888,22 @@
       <i class="fas fa-ban"></i> المحظورون
       <span class="banned-count" id="bannedCount">0</span>
     </div>
+    <div class="panel-tab" onclick="switchPanelTab('ipDetect')">
+      <i class="fas fa-network-wired"></i> كشف IP
+    </div>
   </div>
   <div class="panel-list" id="membersList"></div>
+</div>
+
+<!-- نافذة معلومات IP والحسابات المرتبطة -->
+<div class="modal-overlay" id="ipInfoModal">
+  <div class="ip-info-popup">
+    <div class="modal-header">
+      <h3><i class="fas fa-network-wired"></i> الحسابات المرتبطة</h3>
+      <button class="close-btn" onclick="closeIpInfoModal()">&times;</button>
+    </div>
+    <div id="ipInfoContent"></div>
+  </div>
 </div>
 
 <!-- الملف الشخصي المصغر -->
@@ -1480,6 +1922,15 @@
     <div id="recipientList" class="panel-list" style="max-height: 300px;"></div>
     <input type="hidden" id="selectedGiftId">
   </div>
+</div>
+
+<!-- نافذة الإعلان -->
+<div class="announcement-overlay" id="announcementOverlay" onclick="closeAnnouncement()"></div>
+<div class="announcement-popup" id="announcementPopup">
+  <img id="announcementPopupImage" class="announcement-image" src="" style="display: none;">
+  <div class="announcement-title" id="announcementPopupTitle"></div>
+  <div class="announcement-desc" id="announcementPopupDesc"></div>
+  <button class="announcement-close" onclick="closeAnnouncement()">حسناً</button>
 </div>
 
 <!-- غرفة الدردشة -->
@@ -1504,7 +1955,6 @@
     </div>
   </div>
   
-  <!-- بطاقة المالك -->
   <div class="owner-card" id="ownerCard" style="display: none;">
     <div class="owner-avatar" id="ownerAvatar">
       <span>👑</span>
@@ -1519,7 +1969,6 @@
     <span class="owner-badge"><i class="fas fa-star"></i> المالك</span>
   </div>
   
-  <!-- الأيقونات الخاصة -->
   <div class="special-icons" id="specialIcons" style="display: none;"></div>
   
   <div class="messages-area" id="messagesArea">
@@ -1530,8 +1979,14 @@
   </div>
   
   <div class="input-area">
+    <button class="emoji-btn" onclick="toggleEmojiPanel()">
+      <i class="fas fa-smile"></i>
+    </button>
     <input type="text" id="messageInput" placeholder="اكتب رسالتك..." onkeypress="handleMessageKeyPress(event)">
     <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    <div class="emoji-panel" id="emojiPanel">
+      <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
   </div>
 </div>
 
@@ -1570,6 +2025,8 @@
   const iconTypes = ['lion', 'fish', 'crown', 'rainbow', 'tree', 'dark'];
   const iconNames = { lion: 'أسد', fish: 'سمكة', crown: 'تاج', rainbow: 'قوس قزح', tree: 'شجرة', dark: 'ظلام' };
 
+  const frameNames = ['ذهبي', 'بنفسجي', 'زمردي', 'وردي', 'أزرق', 'أحمر'];
+
   let currentUser = null;
   let currentUserData = null;
   let resources = { gold: 0 };
@@ -1583,7 +2040,10 @@
   let currentPanelTab = 'members';
   let bannedUsersData = [];
   let currentSettingsTab = 'general';
-  let monitorLogs = [];
+  let selectedFrame = 1;
+  let selectedShortcutShape = 'square';
+  let showMonitorMessages = false;
+  let globalAnnouncement = null;
 
   function showToast(msg, isSuccess = true) {
     const t = document.getElementById('toastMsg');
@@ -1655,6 +2115,72 @@
     }
   }
 
+// ========== استبدال كامل للدوال الثلاث ==========
+
+// متغير لتخزين الإعلانات المغلقة
+let dismissedAnnouncements = JSON.parse(localStorage.getItem('dismissedAnnouncements') || '[]');
+
+// تحميل الإعلان
+async function loadGlobalAnnouncement() {
+  try {
+    const annDoc = await getDoc(doc(db, "settings", "announcement"));
+    if (annDoc.exists()) {
+      globalAnnouncement = annDoc.data();
+      const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+      if (globalAnnouncement.active && !dismissedAnnouncements.includes(annId)) {
+        showAnnouncementPopup();
+      }
+    }
+  } catch (e) {}
+}
+
+// عرض الإعلان
+function showAnnouncementPopup() {
+  if (!globalAnnouncement) return;
+  const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+  if (dismissedAnnouncements.includes(annId)) return;
+  
+  document.getElementById('announcementPopupTitle').textContent = globalAnnouncement.title || '';
+  document.getElementById('announcementPopupDesc').textContent = globalAnnouncement.description || '';
+  const img = document.getElementById('announcementPopupImage');
+  if (globalAnnouncement.image) {
+    img.src = globalAnnouncement.image;
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
+  }
+  document.getElementById('announcementOverlay').classList.add('active');
+  document.getElementById('announcementPopup').classList.add('active');
+}
+
+// إغلاق الإعلان وحفظه
+window.closeAnnouncement = () => {
+  if (globalAnnouncement) {
+    const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+    if (!dismissedAnnouncements.includes(annId)) {
+      dismissedAnnouncements.push(annId);
+      localStorage.setItem('dismissedAnnouncements', JSON.stringify(dismissedAnnouncements));
+    }
+  }
+  document.getElementById('announcementOverlay').classList.remove('active');
+  document.getElementById('announcementPopup').classList.remove('active');
+};
+
+// الاستماع للإعلانات الجديدة (أضف هذه الدالة واستدعها في onAuthStateChanged)
+  
+function listenForAnnouncements() {
+  onSnapshot(doc(db, "settings", "announcement"), (docSnap) => {
+    if (docSnap.exists()) {
+      const newAnn = docSnap.data();
+      const annId = newAnn.id || newAnn.createdAt;
+      if (newAnn.active && !dismissedAnnouncements.includes(annId)) {
+        globalAnnouncement = newAnn;
+        showAnnouncementPopup();
+      }
+    }
+  });
+}
+
   function subscribeToRooms() {
     const roomsQuery = query(collection(db, "rooms"), orderBy("createdAt", "desc"));
     onSnapshot(roomsQuery, (snapshot) => {
@@ -1686,10 +2212,14 @@
   }
 
   function renderRoomCard(room) {
+    const frameClass = room.frame ? `frame${room.frame}` : '';
+    const customFrameStyle = room.customFrame ? `box-shadow: 0 0 0 3px transparent; border-image: url('${room.customFrame}') 30 round;` : '';
+    const imageUrl = room.roomImage || room.image || roomImages[0];
+    
     return `
-      <div class="room-card ${room.type || 'normal'}" onclick="requestJoinRoom('${room.id}')">
+      <div class="room-card ${room.type || 'normal'} ${frameClass}" style="${customFrameStyle}" onclick="requestJoinRoom('${room.id}')">
         <div class="room-image">
-          <img src="${room.image || roomImages[0]}" onerror="this.src='${roomImages[0]}'">
+          <img src="${imageUrl}" onerror="this.src='${roomImages[0]}'">
         </div>
         <div class="room-name">
           ${room.name || 'غرفة'}
@@ -1754,6 +2284,7 @@
     const room = {
       name, 
       image: selectedImage,
+      roomImage: selectedImage,
       description: document.getElementById('roomDesc')?.value.trim() || '',
       capacity: parseInt(document.getElementById('roomCapacity')?.value || '50'),
       welcomeMessage: document.getElementById('welcomeMessage')?.value.trim() || 'مرحباً بك!',
@@ -1793,7 +2324,10 @@
       monitoredWords: [],
       shortcuts: {},
       gifts: [],
-      monitorLogs: []
+      monitorLogs: [],
+      frame: 1,
+      customFrame: null,
+      emojis: []
     };
 
     await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-price) });
@@ -1843,6 +2377,15 @@
     
     const existingMember = (room.members || []).find(m => m.uid === currentUser.uid);
     if (!existingMember) {
+      let userIP = 'غير معروف';
+      let deviceInfo = 'غير معروف';
+      try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        userIP = ipData.ip;
+        deviceInfo = navigator.userAgent;
+      } catch (e) {}
+      
       await updateDoc(doc(db, "rooms", roomId), {
         members: arrayUnion({
           uid: currentUser.uid, 
@@ -1852,9 +2395,15 @@
           emoji: currentUserData?.emoji || '👤', 
           colors: currentUserData?.colors || {},
           role: 'member', 
-          joinedAt: Date.now()
+          joinedAt: Date.now(),
+          ip: userIP,
+          device: deviceInfo
         })
       });
+      
+      if (userIP !== 'غير معروف') {
+        await updateDoc(doc(db, "users", currentUser.uid), { ip: userIP, device: deviceInfo });
+      }
     }
     openChatRoom(roomId);
   }
@@ -1870,12 +2419,12 @@
       if (docSnap.exists()) {
         currentRoom = { id: roomId, ...docSnap.data() };
         await loadBannedUsersData(currentRoom.bannedUsers || []);
-        monitorLogs = currentRoom.monitorLogs || [];
         updateRoomUI();
         renderSpecialIcons();
         renderPanelList();
         updateMembersCount();
         loadSettingsValues();
+        renderEmojiPanel();
       }
     });
     
@@ -2013,7 +2562,6 @@
         const isMsgOwner = msg.uid === currentRoom?.ownerId;
         const isMsgModerator = (currentRoom?.moderators || []).includes(msg.uid);
         
-        // تحديد التأثيرات حسب الرتبة
         let nameEffectClass = 'member-name-effect';
         let senderClass = 'member-sender';
         let messageClass = 'member-message';
@@ -2034,6 +2582,21 @@
           nameSize = styles.modSize || 15;
         }
         
+        let messageContent = parsed.displayText;
+        const shortcuts = currentRoom?.shortcuts || {};
+        for (const [key, value] of Object.entries(shortcuts)) {
+          if (typeof value === 'object' && value.type === 'image') {
+            const shapeStyle = value.shape === 'circle' ? 'border-radius: 50%;' : 
+                              (value.shape === 'rectangle' ? 'border-radius: 5px; width: 60px;' : 'border-radius: 5px;');
+            const replacement = `<img src="${value.url}" style="width: 40px; height: 40px; object-fit: cover; ${shapeStyle} margin: 0 3px; vertical-align: middle;">`;
+            const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+            messageContent = messageContent.replace(regex, replacement);
+          } else {
+            const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+            messageContent = messageContent.replace(regex, value);
+          }
+        }
+        
         html += `
           <div class="message-item">
             <div class="message-avatar" style="border-color: ${msg.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${msg.uid}')">
@@ -2044,10 +2607,12 @@
                 <span class="message-sender ${nameEffectClass} ${senderClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};" onclick="showMemberProfile('${msg.uid}')">${msg.name || 'مستخدم'}</span>
                 ${isMsgOwner ? '<span class="message-badge owner"><i class="fas fa-crown"></i> مالك</span>' : ''}
                 ${isMsgModerator && !isMsgOwner ? '<span class="message-badge moderator"><i class="fas fa-shield-alt"></i> مشرف</span>' : ''}
+        
                 <span class="message-time">${msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
-                ${msg.gift ? `<span class="gift-badge"><img src="${msg.gift.image}" title="${msg.gift.name}"></span>` : ''}
-              </div>
-              ${parsed.displayText ? `<div class="message-text ${messageClass}">${parsed.displayText}</div>` : ''}
+        
+                ${msg.gift ? `<span class="gift-inline"><img src="${msg.gift.image}" title="${msg.gift.name} من ${msg.gift.fromName || ''} إلى ${msg.gift.toName || ''}"></span>` : ''}
+        </div>
+              ${messageContent ? `<div class="message-text ${messageClass}">${messageContent}</div>` : ''}
               ${parsed.mediaHtml}
               ${canDelete ? `<div class="message-actions"><i class="fas fa-trash" onclick="deleteMessage('${doc.id}')"></i></div>` : ''}
             </div>
@@ -2065,14 +2630,14 @@
     let text = input.value.trim();
     if (!text) return;
     
-    // تطبيق الاختصارات
     const shortcuts = currentRoom?.shortcuts || {};
     for (const [key, value] of Object.entries(shortcuts)) {
-      const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-      text = text.replace(regex, value);
+      if (typeof value === 'string') {
+        const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+        text = text.replace(regex, value);
+      }
     }
     
-    // فلتر الكلمات المحظورة
     const bannedWords = currentRoom?.bannedWords || [];
     const lowerText = text.toLowerCase();
     for (const word of bannedWords) {
@@ -2082,7 +2647,6 @@
       }
     }
     
-    // فلتر الكلمات المراقبة
     const monitoredWords = currentRoom?.monitoredWords || [];
     let hasMonitoredWord = false;
     let detectedWords = [];
@@ -2097,8 +2661,7 @@
     const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
     const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
     
-    // إذا كانت هناك كلمة مراقبة والمستخدم ليس من الطاقم
-    if (hasMonitoredWord && !isStaff) {
+    if (hasMonitoredWord) {
       const logEntry = {
         userId: currentUser.uid,
         userName: currentUserData?.username || 'مستخدم',
@@ -2106,14 +2669,16 @@
         userEmoji: currentUserData?.emoji || '👤',
         message: text,
         detectedWords: detectedWords,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        fullMessage: true
       };
       
-      // إضافة السجل إلى قاعدة البيانات
       const updatedLogs = [...(currentRoom.monitorLogs || []), logEntry].slice(-50);
       await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
       
-      showToast(`رسالتك تحتوي على كلمة مراقبة وتم إعلام المشرفين`, false);
+      if (!isStaff) {
+        showToast(`رسالتك تحتوي على كلمة مراقبة وتم إعلام المشرفين`, false);
+      }
     }
     
     await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
@@ -2139,6 +2704,80 @@
     await deleteDoc(doc(db, "rooms", currentRoomId, "messages", messageId));
   };
 
+  window.toggleEmojiPanel = () => {
+    document.getElementById('emojiPanel').classList.toggle('active');
+  };
+
+  function renderEmojiPanel() {
+    const grid = document.getElementById('emojiGrid');
+    const emojis = currentRoom?.emojis || [];
+    
+    let html = '';
+    emojis.forEach((emoji, index) => {
+      if (emoji.type === 'text') {
+        html += `<div class="emoji-item" onclick="sendEmoji(${index})">${emoji.value}</div>`;
+      } else {
+        html += `<div class="emoji-item" onclick="sendEmoji(${index})"><img src="${emoji.value}" style="width: 100%; height: 100%; object-fit: contain;"></div>`;
+      }
+    });
+    
+    if (emojis.length === 0) {
+      html = '<div style="grid-column: span 4; text-align: center; color: #64748b; padding: 20px;">لا توجد إيموجيات</div>';
+    }
+    
+    grid.innerHTML = html;
+  }
+
+  window.sendEmoji = (index) => {
+    const emojis = currentRoom?.emojis || [];
+    const emoji = emojis[index];
+    if (!emoji) return;
+    
+    const input = document.getElementById('messageInput');
+    if (emoji.type === 'text') {
+      input.value += emoji.value;
+    }
+    
+    document.getElementById('emojiPanel').classList.remove('active');
+    
+    // عرض تأثير الإيموجي
+    showEmojiEffect(emoji);
+  };
+
+  function showEmojiEffect(emoji) {
+    const effectDiv = document.createElement('div');
+    effectDiv.className = 'floating-emoji';
+    
+    const content = emoji.type === 'text' ? emoji.value : `<img src="${emoji.value}" style="width: ${emoji.width}px; height: ${emoji.height}px;">`;
+    effectDiv.innerHTML = content;
+    
+    effectDiv.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+    effectDiv.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+    effectDiv.style.fontSize = emoji.width + 'px';
+    effectDiv.style.position = 'fixed';
+    effectDiv.style.zIndex = '9999';
+    effectDiv.style.pointerEvents = 'none';
+    
+    const animationMap = {
+      fade: 'fadeIn 1s ease-out',
+      slideUp: 'slideUp 1s ease-out',
+      slideDown: 'slideDown 1s ease-out',
+      zoom: 'zoomIn 0.8s ease-out',
+      bounce: 'bounce 1s ease-out',
+      spin: 'spin 1s ease-out',
+      pulse: 'pulse 1s ease-out',
+      shake: 'shake 0.5s ease-out'
+    };
+    
+    effectDiv.style.animation = animationMap[emoji.animation] || 'fadeIn 1s ease-out';
+    
+    document.body.appendChild(effectDiv);
+    
+    setTimeout(() => {
+      effectDiv.remove();
+    }, 2000);
+  }
+
   window.toggleMembersPanel = () => {
     document.getElementById('membersPanel')?.classList.toggle('active');
   };
@@ -2153,8 +2792,10 @@
   function renderPanelList() {
     if (currentPanelTab === 'members') {
       renderMembersList();
-    } else {
+    } else if (currentPanelTab === 'banned') {
       renderBannedList();
+    } else if (currentPanelTab === 'ipDetect') {
+      renderIPDetectList();
     }
   }
 
@@ -2238,6 +2879,160 @@
       `;
     }).join('');
   }
+
+  function renderIPDetectList() {
+    const list = document.getElementById('membersList');
+    const members = currentRoom?.members || [];
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    
+    if (!isOwner && !isModerator) {
+      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-lock"></i><p>المشرفون فقط يمكنهم كشف IP</p></div>`;
+      return;
+    }
+    
+    if (members.length === 0) {
+      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-user"></i><p>لا يوجد أعضاء</p></div>`;
+      return;
+    }
+    
+    const styles = currentRoom?.textStyles || {};
+    
+    list.innerHTML = `
+      <div style="padding: 10px; margin-bottom: 10px; background: rgba(96, 165, 250, 0.1); border-radius: 10px; border-right: 3px solid #60a5fa;">
+        <i class="fas fa-info-circle"></i> اضغط على أيقونة العين لكشف الحسابات المرتبطة بنفس IP
+      </div>
+      ${members.map(m => {
+        let nameEffectClass = 'member-name-effect';
+        let nameColor = styles.memberColor || '#bae6fd';
+        let nameSize = styles.memberSize || 14;
+        
+        if (m.role === 'owner') {
+          nameEffectClass = 'owner-name-effect';
+          nameColor = styles.ownerColor || '#4ade80';
+          nameSize = styles.ownerSize || 16;
+        } else if (m.role === 'moderator') {
+          nameEffectClass = 'moderator-name-effect';
+          nameColor = styles.modColor || '#f87171';
+          nameSize = styles.modSize || 15;
+        }
+        
+        return `
+          <div class="member-item">
+            <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};">
+              ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
+            </div>
+            <div class="member-info">
+              <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
+                ${m.name || 'مستخدم'}
+                ${m.role === 'owner' ? '<i class="fas fa-crown" style="color: #fbbf24;"></i>' : ''}
+              </div>
+              <span class="member-role ${m.role}">${m.role === 'owner' ? 'مالك' : (m.role === 'moderator' ? 'مشرف' : 'عضو')}</span>
+            </div>
+            <div class="member-actions" onclick="event.stopPropagation()">
+              <i class="fas fa-eye detect-accounts-btn" onclick="detectAccountsByIP('${m.uid}')" title="كشف الحسابات المرتبطة"></i>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    `;
+  }
+
+  window.detectAccountsByIP = async (uid) => {
+    const member = currentRoom?.members?.find(m => m.uid === uid);
+    if (!member) {
+      showToast('العضو غير موجود', false);
+      return;
+    }
+    
+    let memberIP = member.ip;
+    let memberDevice = member.device;
+    
+    if (!memberIP) {
+      try {
+        const userDoc = await getDoc(doc(db, "users", uid));
+        if (userDoc.exists()) {
+          memberIP = userDoc.data().ip;
+          memberDevice = userDoc.data().device;
+        }
+      } catch (e) {}
+    }
+    
+    if (!memberIP || memberIP === 'غير معروف') {
+      showToast('لم يتم العثور على IP لهذا العضو', false);
+      return;
+    }
+    
+    // البحث عن جميع المستخدمين بنفس IP
+    const usersSnap = await getDocs(collection(db, "users"));
+    const sameIPUsers = [];
+    const sameDeviceUsers = [];
+    
+    usersSnap.forEach(doc => {
+      const userData = doc.data();
+      if (userData.ip === memberIP) {
+        sameIPUsers.push({ uid: doc.id, ...userData });
+      }
+      if (memberDevice && userData.device === memberDevice) {
+        sameDeviceUsers.push({ uid: doc.id, ...userData });
+      }
+    });
+    
+    const content = document.getElementById('ipInfoContent');
+    const memberName = member.name || 'مستخدم';
+    
+    content.innerHTML = `
+      <div class="ip-header">
+        <div class="member-avatar" style="border-color: ${member.colors?.frame || '#8b5cf6'}; width: 50px; height: 50px; font-size: 25px;">
+          ${member.avatarType === 'image' && member.avatar ? `<img src="${member.avatar}">` : (member.emoji || '👤')}
+        </div>
+        <div>
+          <div style="font-weight: 800; font-size: 18px;">${memberName}</div>
+          <div style="color: #94a3b8; font-size: 12px;">IP: ${memberIP}</div>
+          <div style="color: #94a3b8; font-size: 10px;">الجهاز: ${(memberDevice || 'غير معروف').substring(0, 30)}...</div>
+        </div>
+      </div>
+      
+      <div class="permissions-title"><i class="fas fa-network-wired"></i> حسابات بنفس IP (${sameIPUsers.length})</div>
+      <div class="ip-accounts-list" style="max-height: 200px;">
+        ${sameIPUsers.map(acc => `
+          <div class="ip-account-item">
+            <div class="member-avatar" style="border-color: ${acc.colors?.frame || '#8b5cf6'}; width: 35px; height: 35px; font-size: 18px;">
+              ${acc.avatarType === 'image' && acc.avatarUrl ? `<img src="${acc.avatarUrl}">` : (acc.emoji || '👤')}
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600;">${acc.username || 'مستخدم'}</div>
+              <div style="font-size: 10px; color: #94a3b8;">ID: ${acc.uid?.substring(0, 8)}...</div>
+            </div>
+            ${acc.uid === uid ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px;">الحالي</span>' : ''}
+          </div>
+        `).join('')}
+      </div>
+      
+      <div class="permissions-title" style="margin-top: 15px;"><i class="fas fa-mobile-alt"></i> حسابات بنفس الجهاز (${sameDeviceUsers.length})</div>
+      <div class="ip-accounts-list" style="max-height: 150px;">
+        ${sameDeviceUsers.map(acc => `
+          <div class="ip-account-item">
+            <div class="member-avatar" style="border-color: ${acc.colors?.frame || '#8b5cf6'}; width: 35px; height: 35px; font-size: 18px;">
+              ${acc.avatarType === 'image' && acc.avatarUrl ? `<img src="${acc.avatarUrl}">` : (acc.emoji || '👤')}
+            </div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600;">${acc.username || 'مستخدم'}</div>
+              <div style="font-size: 10px; color: #94a3b8;">ID: ${acc.uid?.substring(0, 8)}...</div>
+            </div>
+            ${acc.uid === uid ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px;">الحالي</span>' : ''}
+          </div>
+        `).join('')}
+      </div>
+      <button class="btn-submit" style="margin-top: 20px;" onclick="closeIpInfoModal()">إغلاق</button>
+    `;
+    
+    document.getElementById('ipInfoModal')?.classList.add('active');
+  };
+
+  window.closeIpInfoModal = () => {
+    document.getElementById('ipInfoModal')?.classList.remove('active');
+  };
 
   window.promoteToModerator = async (uid) => {
     if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
@@ -2381,10 +3176,31 @@
     }
     
     document.getElementById('backgroundUrl').value = currentRoom?.background || '';
-    document.getElementById('backgroundUrl').disabled = !isOwner;
+    document.getElementById('roomImageUrl').value = currentRoom?.roomImage || currentRoom?.image || '';
+    document.getElementById('editRoomName').value = currentRoom?.name || '';
+    document.getElementById('editRoomDesc').value = currentRoom?.description || '';
+    document.getElementById('editRoomCapacity').value = currentRoom?.capacity || 50;
+    document.getElementById('editWelcomeMessage').value = currentRoom?.welcomeMessage || '';
+    
+    const isOwnerOnly = !isOwner;
+    document.getElementById('backgroundUrl').disabled = isOwnerOnly;
+    document.getElementById('roomImageUrl').disabled = isOwnerOnly;
+    document.getElementById('editRoomName').disabled = isOwnerOnly;
+    document.getElementById('editRoomDesc').disabled = isOwnerOnly;
+    document.getElementById('editRoomCapacity').disabled = isOwnerOnly;
+    document.getElementById('editWelcomeMessage').disabled = isOwnerOnly;
     
     const deleteBtn = document.getElementById('deleteRoomBtn');
     if (deleteBtn) deleteBtn.style.display = isOwner ? 'block' : 'none';
+    
+    const announcementTab = document.querySelector('[onclick*="announcement"]');
+    if (announcementTab) {
+      announcementTab.style.display = (currentUserData?.email === 'ad5@5.com') ? 'block' : 'none';
+    }
+    
+    selectedFrame = currentRoom?.frame || 1;
+    document.getElementById('customFrameUrl').value = currentRoom?.customFrame || '';
+    renderFramesGrid();
     
     loadSettingsValues();
     
@@ -2393,6 +3209,59 @@
 
   window.closeRoomSettingsModal = () => {
     document.getElementById('roomSettingsModal')?.classList.remove('active');
+  };
+
+  function renderFramesGrid() {
+    const grid = document.getElementById('framesGrid');
+    grid.innerHTML = frameNames.map((name, index) => {
+      const frameNum = index + 1;
+      return `
+        <div class="frame-preview frame${frameNum} ${selectedFrame === frameNum ? 'selected' : ''}" onclick="selectFrame(${frameNum})">
+          <span style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; font-size: 12px;">${name}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.selectFrame = (frameNum) => {
+    selectedFrame = frameNum;
+    renderFramesGrid();
+  };
+
+  window.saveRoomFrame = async () => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
+      showToast('فقط المالك يمكنه تغيير الإطار', false);
+      return;
+    }
+    
+    const customFrame = document.getElementById('customFrameUrl').value.trim();
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), { 
+      frame: selectedFrame,
+      customFrame: customFrame || null
+    });
+    closeRoomSettingsModal();
+    showToast('تم حفظ الإطار');
+  };
+
+  window.saveGeneralSettings = async () => {
+    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
+      showToast('فقط المالك يمكنه تعديل الإعدادات', false);
+      return;
+    }
+    
+    const updates = {
+      background: document.getElementById('backgroundUrl').value.trim() || null,
+      roomImage: document.getElementById('roomImageUrl').value.trim() || currentRoom.image,
+      name: document.getElementById('editRoomName').value.trim(),
+      description: document.getElementById('editRoomDesc').value.trim(),
+      capacity: parseInt(document.getElementById('editRoomCapacity').value),
+      welcomeMessage: document.getElementById('editWelcomeMessage').value.trim()
+    };
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), updates);
+    closeRoomSettingsModal();
+    showToast('تم حفظ التغييرات');
   };
 
   function loadSettingsValues() {
@@ -2408,7 +3277,8 @@
     renderWordsLists();
     renderShortcutsList();
     renderGiftsList();
-    renderMonitorLogs();
+    renderMonitorMessages();
+    renderEmojisList();
   }
 
   window.switchSettingsTab = (tab) => {
@@ -2416,23 +3286,18 @@
     document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
     
-    const tabs = ['general', 'styles', 'words', 'shortcuts', 'gifts'];
+    const tabs = ['general', 'styles', 'words', 'shortcuts', 'gifts', 'frame', 'emoji', 'announcement'];
     tabs.forEach(t => {
       const el = document.getElementById('settingsTab' + t.charAt(0).toUpperCase() + t.slice(1));
       if (el) el.style.display = t === tab ? 'block' : 'none';
     });
-  };
-
-  window.updateRoomBackground = async () => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
-      showToast('فقط المالك يمكنه تغيير الخلفية', false);
-      return;
-    }
     
-    const bgUrl = document.getElementById('backgroundUrl')?.value.trim();
-    await updateDoc(doc(db, "rooms", currentRoomId), { background: bgUrl || null });
-    closeRoomSettingsModal();
-    showToast('تم تحديث الخلفية');
+    if (tab === 'emoji') {
+      document.getElementById('emojiType').addEventListener('change', (e) => {
+        document.getElementById('emojiTextGroup').style.display = e.target.value === 'text' ? 'block' : 'none';
+        document.getElementById('emojiImageGroup').style.display = e.target.value === 'image' ? 'block' : 'none';
+      });
+    }
   };
 
   window.saveTextStyles = async () => {
@@ -2506,56 +3371,90 @@
     showToast('تم حذف الكلمة');
   };
 
-  function renderMonitorLogs() {
+  window.toggleMonitorMessages = () => {
+    showMonitorMessages = !showMonitorMessages;
+    document.getElementById('monitorMessagesContainer').style.display = showMonitorMessages ? 'block' : 'none';
+  };
+
+  function renderMonitorMessages() {
     const logs = currentRoom?.monitorLogs || [];
-    const container = document.getElementById('monitorLogs');
+    const container = document.getElementById('monitorMessagesContainer');
     
     if (logs.length === 0) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد سجلات مراقبة</p>';
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد رسائل مراقبة</p>';
       return;
     }
     
     const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
     if (!isStaff) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">المشرفون فقط يمكنهم رؤية سجلات المراقبة</p>';
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">المشرفون فقط يمكنهم رؤية رسائل المراقبة</p>';
       return;
     }
     
-    container.innerHTML = `
-      <div class="permissions-title"><i class="fas fa-history"></i> سجل المراقبة</div>
-      ${logs.slice(-10).reverse().map(log => `
-        <div class="monitor-log">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 5px;">
-            <span>${log.userEmoji || '👤'}</span>
-            <span style="font-weight: 600;">${log.userName}</span>
-            <span style="font-size: 10px; color: #94a3b8;">${new Date(log.timestamp).toLocaleTimeString('ar-SA')}</span>
-          </div>
-          <div style="margin-bottom: 5px;">${log.message}</div>
-          <div style="font-size: 11px; color: #fbbf24;">
-            الكلمات المكتشفة: ${log.detectedWords.join('، ')}
-          </div>
+    container.innerHTML = logs.slice(-20).reverse().map(log => `
+      <div class="monitor-message-item">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+          <span>${log.userEmoji || '👤'}</span>
+          <span style="font-weight: 600;">${log.userName}</span>
+          <span style="font-size: 10px; color: #94a3b8;">${new Date(log.timestamp).toLocaleTimeString('ar-SA')}</span>
+          <i class="fas fa-trash" style="margin-right: auto; cursor: pointer; color: #ef4444;" onclick="deleteMonitorLog(${log.timestamp})"></i>
         </div>
-      `).join('')}
-    `;
+        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 5px;">${log.message}</div>
+        <div style="font-size: 11px; color: #fbbf24;">
+          الكلمات المكتشفة: ${log.detectedWords.join('، ')}
+        </div>
+      </div>
+    `).join('');
   }
+
+  window.deleteMonitorLog = async (timestamp) => {
+    const updatedLogs = (currentRoom.monitorLogs || []).filter(log => log.timestamp !== timestamp);
+    await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
+    showToast('تم حذف السجل');
+  };
+
+  window.selectShortcutShape = (shape) => {
+    selectedShortcutShape = shape;
+    document.querySelectorAll('.shape-option').forEach(el => el.classList.remove('selected'));
+    event.target.closest('.shape-option').classList.add('selected');
+    document.getElementById('shortcutShape').value = shape;
+  };
 
   window.addShortcut = async () => {
     const key = document.getElementById('newShortcutKey').value.trim();
     const value = document.getElementById('newShortcutValue').value.trim();
+    const imageUrl = document.getElementById('shortcutImageUrl').value.trim();
+    const shape = document.getElementById('shortcutShape').value;
     
-    if (!key || !value) {
-      showToast('الرجاء إدخال الاختصار والنص الكامل', false);
+    if (!key) {
+      showToast('الرجاء إدخال الاختصار', false);
+      return;
+    }
+    
+    if (!value && !imageUrl) {
+      showToast('الرجاء إدخال النص أو رابط الصورة', false);
       return;
     }
     
     const shortcuts = { ...(currentRoom.shortcuts || {}) };
-    shortcuts[key] = value;
+    
+    if (imageUrl) {
+      shortcuts[key] = {
+        type: 'image',
+        url: imageUrl,
+        shape: shape
+      };
+    } else {
+      shortcuts[key] = value;
+    }
     
     await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
     document.getElementById('newShortcutKey').value = '';
     document.getElementById('newShortcutValue').value = '';
+    document.getElementById('shortcutImageUrl').value = '';
     showToast('تم إضافة الاختصار');
   };
+
 
   function renderShortcutsList() {
     const shortcuts = currentRoom?.shortcuts || {};
@@ -2566,16 +3465,23 @@
       return;
     }
     
-    container.innerHTML = Object.entries(shortcuts).map(([key, value]) => `
-      <div style="display: flex; justify-content: space-between; background: rgba(139, 92, 246, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #8b5cf6;">
-        <div>
-          <span style="color: #c4b5fd;">${key}</span>
-          <span style="color: #94a3b8; margin: 0 5px;">→</span>
-          <span style="color: #e2e8f0;">${value}</span>
+    container.innerHTML = Object.entries(shortcuts).map(([key, value]) => {
+      const isImage = typeof value === 'object' && value.type === 'image';
+      const displayValue = isImage ? 
+        `<img src="${value.url}" style="width: 30px; height: 30px; object-fit: cover; ${value.shape === 'circle' ? 'border-radius: 50%;' : (value.shape === 'rectangle' ? 'border-radius: 5px; width: 45px;' : 'border-radius: 5px;')}">` : 
+        value;
+      
+      return `
+        <div style="display: flex; justify-content: space-between; background: rgba(139, 92, 246, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #8b5cf6;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="color: #c4b5fd;">${key}</span>
+            <span style="color: #94a3b8;">→</span>
+            <span style="color: #e2e8f0; display: flex; align-items: center;">${displayValue}</span>
+          </div>
+          <i class="fas fa-trash" style="cursor: pointer; color: #ef4444;" onclick="deleteShortcut('${key}')"></i>
         </div>
-        <i class="fas fa-trash" style="cursor: pointer; color: #ef4444;" onclick="deleteShortcut('${key}')"></i>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   window.deleteShortcut = async (key) => {
@@ -2644,6 +3550,97 @@
     const updatedGifts = (currentRoom.gifts || []).filter(g => g.id !== giftId);
     await updateDoc(doc(db, "rooms", currentRoomId), { gifts: updatedGifts });
     showToast('تم حذف الهدية');
+  };
+
+  window.addEmoji = async () => {
+    const type = document.getElementById('emojiType').value;
+    const value = type === 'text' ? document.getElementById('emojiText').value.trim() : document.getElementById('emojiImageUrl').value.trim();
+    const width = parseInt(document.getElementById('emojiWidth').value);
+    const height = parseInt(document.getElementById('emojiHeight').value);
+    const animation = document.getElementById('emojiAnimation').value;
+    
+    if (!value) {
+      showToast('الرجاء إدخال الإيموجي', false);
+      return;
+    }
+    
+    const emoji = { type, value, width, height, animation };
+    
+    await updateDoc(doc(db, "rooms", currentRoomId), {
+      emojis: arrayUnion(emoji)
+    });
+    
+    document.getElementById('emojiText').value = '';
+    document.getElementById('emojiImageUrl').value = '';
+    showToast('تم إضافة الإيموجي');
+  };
+
+  function renderEmojisList() {
+    const emojis = currentRoom?.emojis || [];
+    const container = document.getElementById('emojisList');
+    
+    if (emojis.length === 0) {
+      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد إيموجيات</p>';
+      return;
+    }
+    
+    const isOwner = currentRoom?.ownerId === currentUser.uid;
+    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+    const canDelete = isOwner || isModerator;
+    
+    container.innerHTML = `
+      <div class="gifts-grid">
+        ${emojis.map((emoji, index) => `
+          <div class="gift-item" style="position: relative;">
+            ${emoji.type === 'text' ? `<span style="font-size: 30px;">${emoji.value}</span>` : `<img src="${emoji.value}" style="width: 100%; aspect-ratio: 1; object-fit: contain;">`}
+            <div style="font-size: 9px; margin-top: 5px;">${emoji.width}x${emoji.height}</div>
+            ${canDelete ? `<i class="fas fa-trash" style="position: absolute; top: 2px; right: 2px; color: #ef4444; cursor: pointer; background: rgba(0,0,0,0.5); padding: 3px; border-radius: 50%;" onclick="deleteEmoji(${index})"></i>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  window.deleteEmoji = async (index) => {
+    const emojis = currentRoom.emojis || [];
+    emojis.splice(index, 1);
+    await updateDoc(doc(db, "rooms", currentRoomId), { emojis });
+    showToast('تم حذف الإيموجي');
+  };
+
+  window.publishAnnouncement = async () => {
+    if (currentUserData?.email !== 'ad5@5.com') {
+      showToast('غير مصرح لك بنشر إعلانات', false);
+      return;
+    }
+    
+    const title = document.getElementById('announcementTitle').value.trim();
+    const description = document.getElementById('announcementDesc').value.trim();
+    const image = document.getElementById('announcementImage').value.trim();
+    
+    if (!title) {
+      showToast('الرجاء إدخال عنوان الإعلان', false);
+      return;
+    }
+    
+    const announcement = {
+      id: Date.now().toString(),
+      title,
+      description,
+      image: image || null,
+      active: true,
+      createdAt: Date.now(),
+      createdBy: currentUser.uid
+    };
+    
+    await setDoc(doc(db, "settings", "announcement"), announcement);
+    
+    document.getElementById('announcementTitle').value = '';
+    document.getElementById('announcementDesc').value = '';
+    document.getElementById('announcementImage').value = '';
+    
+    closeRoomSettingsModal();
+    showToast('تم نشر الإعلان لجميع الغرف');
   };
 
   window.openGiftPanel = () => {
@@ -2719,55 +3716,69 @@
     }).join('');
   };
 
-  window.sendGiftToMember = async (targetUid) => {
-    const giftId = document.getElementById('selectedGiftId').value;
-    const gift = currentRoom.gifts.find(g => g.id === giftId);
-    
-    if (!gift) {
-      showToast('الهدية غير موجودة', false);
-      return;
-    }
-    
-    const targetMember = currentRoom.members.find(m => m.uid === targetUid);
-    if (!targetMember) {
-      showToast('العضو غير موجود', false);
-      return;
-    }
-    
-    if (resources.gold < gift.price) {
-      showToast('رصيدك غير كافٍ لإرسال هذه الهدية', false);
-      return;
-    }
-    
-    // خصم الذهب من المرسل
-    await updateDoc(doc(db, "resources", currentUser.uid), {
-      gold: increment(-gift.price)
-    });
-    resources.gold -= gift.price;
-    
-    // إضافة رسالة الهدية
-    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-      uid: currentUser.uid,
-      name: currentUserData?.username || 'مستخدم',
-      avatar: currentUserData?.avatarUrl || '',
-      avatarType: currentUserData?.avatarType || 'emoji',
-      emoji: currentUserData?.emoji || '👤',
-      colors: currentUserData?.colors || {},
-      text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
-      gift: {
-        name: gift.name,
-        image: gift.image
-      },
-      timestamp: Date.now()
-    });
-    
-    closeGiftRecipientModal();
-    showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
-  };
+// ========== استبدل دالة sendGiftToMember بهذه ==========
 
-  window.closeGiftRecipientModal = () => {
-    document.getElementById('giftRecipientModal').classList.remove('active');
-  };
+window.sendGiftToMember = async (targetUid) => {
+  const giftId = document.getElementById('selectedGiftId').value;
+  const gift = currentRoom.gifts.find(g => g.id === giftId);
+  
+  if (!gift) {
+    showToast('الهدية غير موجودة', false);
+    return;
+  }
+  
+  const targetMember = currentRoom.members.find(m => m.uid === targetUid);
+  if (!targetMember) {
+    showToast('العضو غير موجود', false);
+    return;
+  }
+  
+  if (targetUid === currentUser.uid) {
+    showToast('لا يمكنك إرسال هدية لنفسك', false);
+    return;
+  }
+  
+  if (resources.gold < gift.price) {
+    showToast('رصيدك غير كاف', false);
+    return;
+  }
+  
+  // خصم من المرسل
+  await updateDoc(doc(db, "resources", currentUser.uid), {
+    gold: increment(-gift.price)
+  });
+  resources.gold -= gift.price;
+  
+  // إضافة للمستلم
+  const targetRef = doc(db, "resources", targetUid);
+  const targetSnap = await getDoc(targetRef);
+  if (targetSnap.exists()) {
+    await updateDoc(targetRef, { gold: increment(gift.price) });
+  } else {
+    await setDoc(targetRef, { gold: gift.price });
+  }
+  
+  // إرسال الرسالة
+  await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+    uid: currentUser.uid,
+    name: currentUserData?.username || 'مستخدم',
+    avatar: currentUserData?.avatarUrl || '',
+    avatarType: currentUserData?.avatarType || 'emoji',
+    emoji: currentUserData?.emoji || '👤',
+    colors: currentUserData?.colors || {},
+    text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
+    gift: {
+      name: gift.name,
+      image: gift.image,
+      toName: targetMember.name
+    },
+    timestamp: Date.now()
+  });
+  
+  // إغلاق النافذة
+  document.getElementById('giftRecipientModal').classList.remove('active');
+  showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
+};
 
   window.deleteRoom = async () => {
     if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
@@ -2781,7 +3792,6 @@
   window.leaveRoom = async () => {
     if (!currentRoomId) return;
     
-    // معالجة الأيقونات الخاصة
     const occupants = currentRoom?.iconOccupants || {};
     for (const [type, occupant] of Object.entries(occupants)) {
       if (occupant?.uid === currentUser.uid) {
@@ -2796,17 +3806,16 @@
       }
     }
     
-    // إزالة العضو من الغرفة
     const updatedMembers = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
     await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers });
     
-    // إعادة عرض واجهة الغرف
     document.querySelector('.rooms-header').style.display = 'flex';
     document.querySelector('.search-section').style.display = 'flex';
     document.querySelector('.rooms-container').style.display = 'block';
     
     document.getElementById('chatRoomView')?.classList.remove('active');
     document.getElementById('membersPanel')?.classList.remove('active');
+    document.getElementById('emojiPanel')?.classList.remove('active');
     
     if (unsubscribeMessages) unsubscribeMessages();
     if (unsubscribeRoom) unsubscribeRoom();
@@ -2814,18 +3823,19 @@
     currentRoomId = null;
   };
 
-  // تحديث المؤقتات كل ثانية
   setInterval(() => {
     if (currentRoom?.type === 'advanced') {
       renderSpecialIcons();
     }
   }, 1000);
 
-  // تهيئة المصادقة
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
       await loadUserData(user.uid);
+      await loadGlobalAnnouncement();
+      
+      listenForAnnouncements();
       subscribeToRooms();
     } else {
       const container = document.getElementById('roomsContainer');
@@ -2839,6 +3849,7 @@
       }
     }
   });
+  
 </script>
 </body>
 </html>

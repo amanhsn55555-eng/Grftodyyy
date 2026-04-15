@@ -13,58 +13,56 @@
       font-family: 'Segoe UI', 'Tajawal', sans-serif;
     }
 
-  
     /* تأثيرات نارية وثلجية */
-  .room-card[style*="border-image"] {
-    border-radius: 30px !important;
-    overflow: hidden !important;
-    padding: 8px !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    position: relative !important;
-}
+    .room-card[style*="border-image"] {
+      border-radius: 30px !important;
+      overflow: hidden !important;
+      padding: 8px !important;
+      background: transparent !important;
+      backdrop-filter: none !important;
+      position: relative !important;
+    }
 
-.room-card[style*="border-image"]::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background-image: inherit !important;
-    background-size: cover !important;
-    background-position: center !important;
-    border-radius: 30px !important;
-    z-index: -1 !important;
-}
+    .room-card[style*="border-image"]::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      background-image: inherit !important;
+      background-size: cover !important;
+      background-position: center !important;
+      border-radius: 30px !important;
+      z-index: -1 !important;
+    }
 
-.room-card[style*="border-image"] .room-image {
-    border-radius: 50% !important;
-    width: 80% !important;
-    margin: 10px auto !important;
-    aspect-ratio: 1/1 !important;
-    border: 3px solid rgba(255,255,255,0.3) !important;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
-}
+    .room-card[style*="border-image"] .room-image {
+      border-radius: 50% !important;
+      width: 80% !important;
+      margin: 10px auto !important;
+      aspect-ratio: 1/1 !important;
+      border: 3px solid rgba(255,255,255,0.3) !important;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+    }
 
-.room-card[style*="border-image"] .room-image img {
-    border-radius: 50% !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-}
+    .room-card[style*="border-image"] .room-image img {
+      border-radius: 50% !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
 
-.room-card[style*="border-image"] .room-name,
-.room-card[style*="border-image"] .room-desc,
-.room-card[style*="border-image"] .room-footer {
-    background: rgba(15, 23, 42, 0.8) !important;
-    padding: 5px 10px !important;
-    border-radius: 20px !important;
-    margin: 5px 0 !important;
-    backdrop-filter: blur(5px) !important;
-}
-  
-  
+    .room-card[style*="border-image"] .room-name,
+    .room-card[style*="border-image"] .room-desc,
+    .room-card[style*="border-image"] .room-footer {
+      background: rgba(15, 23, 42, 0.8) !important;
+      padding: 5px 10px !important;
+      border-radius: 20px !important;
+      margin: 5px 0 !important;
+      backdrop-filter: blur(5px) !important;
+    }
+
     @keyframes fireGreen {
       0% { text-shadow: 0 0 5px #22c55e, 0 0 10px #16a34a, 0 0 15px #15803d; }
       25% { text-shadow: 0 0 10px #4ade80, 0 0 20px #22c55e, 0 0 30px #16a34a; }
@@ -1534,11 +1532,28 @@
       display: block;
     }
 
-    /* تأثيرات الإيموجي */
     .floating-emoji {
       position: fixed;
       pointer-events: none;
       z-index: 9999;
+    }
+
+    .announcement-creator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 15px 0;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 15px;
+    }
+    
+    .announcement-creator img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fbbf24;
     }
   </style>
 </head>
@@ -1869,6 +1884,10 @@
         <label>رابط الصورة</label>
         <input type="text" id="announcementImage" placeholder="رابط الصورة">
       </div>
+      <div class="form-group">
+        <label>رابط فيديو يوتيوب</label>
+        <input type="text" id="announcementVideo" placeholder="رابط فيديو يوتيوب">
+      </div>
       <button class="btn-submit" onclick="publishAnnouncement()">نشر الإعلان</button>
     </div>
   </div>
@@ -1928,8 +1947,14 @@
 <div class="announcement-overlay" id="announcementOverlay" onclick="closeAnnouncement()"></div>
 <div class="announcement-popup" id="announcementPopup">
   <img id="announcementPopupImage" class="announcement-image" src="" style="display: none;">
+  <div id="announcementPopupVideo" style="display: none; margin-bottom: 15px;"></div>
   <div class="announcement-title" id="announcementPopupTitle"></div>
   <div class="announcement-desc" id="announcementPopupDesc"></div>
+  <div class="announcement-creator" id="announcementPopupCreator" style="display: none;">
+    <img id="announcementCreatorAvatar" src="" style="display: none;">
+    <span id="announcementCreatorEmoji">👤</span>
+    <span id="announcementCreatorName">المعلن</span>
+  </div>
   <button class="announcement-close" onclick="closeAnnouncement()">حسناً</button>
 </div>
 
@@ -2115,71 +2140,99 @@
     }
   }
 
-// ========== استبدال كامل للدوال الثلاث ==========
+  let dismissedAnnouncements = JSON.parse(localStorage.getItem('dismissedAnnouncements') || '[]');
 
-// متغير لتخزين الإعلانات المغلقة
-let dismissedAnnouncements = JSON.parse(localStorage.getItem('dismissedAnnouncements') || '[]');
-
-// تحميل الإعلان
-async function loadGlobalAnnouncement() {
-  try {
-    const annDoc = await getDoc(doc(db, "settings", "announcement"));
-    if (annDoc.exists()) {
-      globalAnnouncement = annDoc.data();
-      const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-      if (globalAnnouncement.active && !dismissedAnnouncements.includes(annId)) {
-        showAnnouncementPopup();
+  async function loadGlobalAnnouncement() {
+    try {
+      const annDoc = await getDoc(doc(db, "settings", "announcement"));
+      if (annDoc.exists()) {
+        globalAnnouncement = annDoc.data();
+        const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+        if (globalAnnouncement.active && !dismissedAnnouncements.includes(annId)) {
+          showAnnouncementPopup();
+        }
       }
-    }
-  } catch (e) {}
-}
-
-// عرض الإعلان
-function showAnnouncementPopup() {
-  if (!globalAnnouncement) return;
-  const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-  if (dismissedAnnouncements.includes(annId)) return;
-  
-  document.getElementById('announcementPopupTitle').textContent = globalAnnouncement.title || '';
-  document.getElementById('announcementPopupDesc').textContent = globalAnnouncement.description || '';
-  const img = document.getElementById('announcementPopupImage');
-  if (globalAnnouncement.image) {
-    img.src = globalAnnouncement.image;
-    img.style.display = 'block';
-  } else {
-    img.style.display = 'none';
+    } catch (e) {}
   }
-  document.getElementById('announcementOverlay').classList.add('active');
-  document.getElementById('announcementPopup').classList.add('active');
-}
 
-// إغلاق الإعلان وحفظه
-window.closeAnnouncement = () => {
-  if (globalAnnouncement) {
+  function showAnnouncementPopup() {
+    if (!globalAnnouncement) return;
     const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-    if (!dismissedAnnouncements.includes(annId)) {
-      dismissedAnnouncements.push(annId);
-      localStorage.setItem('dismissedAnnouncements', JSON.stringify(dismissedAnnouncements));
+    if (dismissedAnnouncements.includes(annId)) return;
+    
+    document.getElementById('announcementPopupTitle').textContent = globalAnnouncement.title || '';
+    document.getElementById('announcementPopupDesc').textContent = globalAnnouncement.description || '';
+    
+    const img = document.getElementById('announcementPopupImage');
+    if (globalAnnouncement.image) {
+      img.src = globalAnnouncement.image;
+      img.style.display = 'block';
+    } else {
+      img.style.display = 'none';
     }
+    
+    const videoContainer = document.getElementById('announcementPopupVideo');
+    if (globalAnnouncement.video) {
+      const videoId = extractYoutubeId(globalAnnouncement.video);
+      if (videoId) {
+        videoContainer.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius: 15px;"></iframe>`;
+        videoContainer.style.display = 'block';
+      } else {
+        videoContainer.style.display = 'none';
+      }
+    } else {
+      videoContainer.style.display = 'none';
+    }
+    
+    const creatorDiv = document.getElementById('announcementPopupCreator');
+    const creatorAvatar = document.getElementById('announcementCreatorAvatar');
+    const creatorEmoji = document.getElementById('announcementCreatorEmoji');
+    const creatorName = document.getElementById('announcementCreatorName');
+    
+    if (globalAnnouncement.createdByData) {
+      creatorDiv.style.display = 'flex';
+      creatorName.textContent = globalAnnouncement.createdByData.username || 'المعلن';
+      if (globalAnnouncement.createdByData.avatarType === 'image' && globalAnnouncement.createdByData.avatarUrl) {
+        creatorAvatar.src = globalAnnouncement.createdByData.avatarUrl;
+        creatorAvatar.style.display = 'block';
+        creatorEmoji.style.display = 'none';
+      } else {
+        creatorAvatar.style.display = 'none';
+        creatorEmoji.textContent = globalAnnouncement.createdByData.emoji || '👤';
+        creatorEmoji.style.display = 'inline';
+      }
+    } else {
+      creatorDiv.style.display = 'none';
+    }
+    
+    document.getElementById('announcementOverlay').classList.add('active');
+    document.getElementById('announcementPopup').classList.add('active');
   }
-  document.getElementById('announcementOverlay').classList.remove('active');
-  document.getElementById('announcementPopup').classList.remove('active');
-};
 
-// الاستماع للإعلانات الجديدة (أضف هذه الدالة واستدعها في onAuthStateChanged)
-  
-function listenForAnnouncements() {
-  onSnapshot(doc(db, "settings", "announcement"), (docSnap) => {
-    if (docSnap.exists()) {
-      const newAnn = docSnap.data();
-      const annId = newAnn.id || newAnn.createdAt;
-      if (newAnn.active && !dismissedAnnouncements.includes(annId)) {
-        globalAnnouncement = newAnn;
-        showAnnouncementPopup();
+  window.closeAnnouncement = () => {
+    if (globalAnnouncement) {
+      const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+      if (!dismissedAnnouncements.includes(annId)) {
+        dismissedAnnouncements.push(annId);
+        localStorage.setItem('dismissedAnnouncements', JSON.stringify(dismissedAnnouncements));
       }
     }
-  });
-}
+    document.getElementById('announcementOverlay').classList.remove('active');
+    document.getElementById('announcementPopup').classList.remove('active');
+  };
+
+  function listenForAnnouncements() {
+    onSnapshot(doc(db, "settings", "announcement"), (docSnap) => {
+      if (docSnap.exists()) {
+        const newAnn = docSnap.data();
+        const annId = newAnn.id || newAnn.createdAt;
+        if (newAnn.active && !dismissedAnnouncements.includes(annId)) {
+          globalAnnouncement = newAnn;
+          showAnnouncementPopup();
+        }
+      }
+    });
+  }
 
   function subscribeToRooms() {
     const roomsQuery = query(collection(db, "rooms"), orderBy("createdAt", "desc"));
@@ -2728,7 +2781,7 @@ function listenForAnnouncements() {
     grid.innerHTML = html;
   }
 
-  window.sendEmoji = (index) => {
+  window.sendEmoji = async (index) => {
     const emojis = currentRoom?.emojis || [];
     const emoji = emojis[index];
     if (!emoji) return;
@@ -2740,8 +2793,26 @@ function listenForAnnouncements() {
     
     document.getElementById('emojiPanel').classList.remove('active');
     
-    // عرض تأثير الإيموجي
+    // عرض تأثير الإيموجي للجميع ثم إخفاؤه بعد 4 ثوانٍ للإيموجي الصوري
     showEmojiEffect(emoji);
+    
+    // إذا كان إيموجي صوري، لا نحفظه كرسالة
+    if (emoji.type === 'image') {
+      return;
+    }
+    
+    // إيموجي نصي: نحفظه كرسالة عادية بعد التأثير
+    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+      uid: currentUser.uid, 
+      name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '', 
+      avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤', 
+      colors: currentUserData?.colors || {},
+      role: (currentRoom?.members || []).find(m => m.uid === currentUser.uid)?.role || 'member', 
+      text: emoji.value, 
+      timestamp: Date.now()
+    });
   };
 
   function showEmojiEffect(emoji) {
@@ -2773,9 +2844,11 @@ function listenForAnnouncements() {
     
     document.body.appendChild(effectDiv);
     
+    const duration = emoji.type === 'image' ? 4000 : 2000;
+    
     setTimeout(() => {
       effectDiv.remove();
-    }, 2000);
+    }, duration);
   }
 
   window.toggleMembersPanel = () => {
@@ -2963,7 +3036,6 @@ function listenForAnnouncements() {
       return;
     }
     
-    // البحث عن جميع المستخدمين بنفس IP
     const usersSnap = await getDocs(collection(db, "users"));
     const sameIPUsers = [];
     const sameDeviceUsers = [];
@@ -3455,7 +3527,6 @@ function listenForAnnouncements() {
     showToast('تم إضافة الاختصار');
   };
 
-
   function renderShortcutsList() {
     const shortcuts = currentRoom?.shortcuts || {};
     const container = document.getElementById('shortcutsList');
@@ -3617,6 +3688,7 @@ function listenForAnnouncements() {
     const title = document.getElementById('announcementTitle').value.trim();
     const description = document.getElementById('announcementDesc').value.trim();
     const image = document.getElementById('announcementImage').value.trim();
+    const video = document.getElementById('announcementVideo').value.trim();
     
     if (!title) {
       showToast('الرجاء إدخال عنوان الإعلان', false);
@@ -3628,9 +3700,16 @@ function listenForAnnouncements() {
       title,
       description,
       image: image || null,
+      video: video || null,
       active: true,
       createdAt: Date.now(),
-      createdBy: currentUser.uid
+      createdBy: currentUser.uid,
+      createdByData: {
+        username: currentUserData?.username || 'المعلن',
+        avatarUrl: currentUserData?.avatarUrl || null,
+        avatarType: currentUserData?.avatarType || 'emoji',
+        emoji: currentUserData?.emoji || '👤'
+      }
     };
     
     await setDoc(doc(db, "settings", "announcement"), announcement);
@@ -3638,6 +3717,7 @@ function listenForAnnouncements() {
     document.getElementById('announcementTitle').value = '';
     document.getElementById('announcementDesc').value = '';
     document.getElementById('announcementImage').value = '';
+    document.getElementById('announcementVideo').value = '';
     
     closeRoomSettingsModal();
     showToast('تم نشر الإعلان لجميع الغرف');
@@ -3667,6 +3747,10 @@ function listenForAnnouncements() {
     `;
     
     modal.classList.add('active');
+  };
+
+  window.closeGiftRecipientModal = () => {
+    document.getElementById('giftRecipientModal')?.classList.remove('active');
   };
 
   window.selectGiftForRecipient = (giftId) => {
@@ -3716,69 +3800,100 @@ function listenForAnnouncements() {
     }).join('');
   };
 
-// ========== استبدل دالة sendGiftToMember بهذه ==========
-
-window.sendGiftToMember = async (targetUid) => {
-  const giftId = document.getElementById('selectedGiftId').value;
-  const gift = currentRoom.gifts.find(g => g.id === giftId);
-  
-  if (!gift) {
-    showToast('الهدية غير موجودة', false);
-    return;
-  }
-  
-  const targetMember = currentRoom.members.find(m => m.uid === targetUid);
-  if (!targetMember) {
-    showToast('العضو غير موجود', false);
-    return;
-  }
-  
-  if (targetUid === currentUser.uid) {
-    showToast('لا يمكنك إرسال هدية لنفسك', false);
-    return;
-  }
-  
-  if (resources.gold < gift.price) {
-    showToast('رصيدك غير كاف', false);
-    return;
-  }
-  
-  // خصم من المرسل
-  await updateDoc(doc(db, "resources", currentUser.uid), {
-    gold: increment(-gift.price)
-  });
-  resources.gold -= gift.price;
-  
-  // إضافة للمستلم
-  const targetRef = doc(db, "resources", targetUid);
-  const targetSnap = await getDoc(targetRef);
-  if (targetSnap.exists()) {
-    await updateDoc(targetRef, { gold: increment(gift.price) });
-  } else {
-    await setDoc(targetRef, { gold: gift.price });
-  }
-  
-  // إرسال الرسالة
-  await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-    uid: currentUser.uid,
-    name: currentUserData?.username || 'مستخدم',
-    avatar: currentUserData?.avatarUrl || '',
-    avatarType: currentUserData?.avatarType || 'emoji',
-    emoji: currentUserData?.emoji || '👤',
-    colors: currentUserData?.colors || {},
-    text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
-    gift: {
-      name: gift.name,
-      image: gift.image,
-      toName: targetMember.name
-    },
-    timestamp: Date.now()
-  });
-  
-  // إغلاق النافذة
-  document.getElementById('giftRecipientModal').classList.remove('active');
-  showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
-};
+  window.sendGiftToMember = async (targetUid) => {
+    const giftId = document.getElementById('selectedGiftId').value;
+    const gift = currentRoom.gifts.find(g => g.id === giftId);
+    
+    if (!gift) {
+      showToast('الهدية غير موجودة', false);
+      return;
+    }
+    
+    const targetMember = currentRoom.members.find(m => m.uid === targetUid);
+    if (!targetMember) {
+      showToast('العضو غير موجود', false);
+      return;
+    }
+    
+    if (targetUid === currentUser.uid) {
+      showToast('لا يمكنك إرسال هدية لنفسك', false);
+      return;
+    }
+    
+    if (resources.gold < gift.price) {
+      showToast('رصيدك غير كاف', false);
+      return;
+    }
+    
+    // خصم من المرسل
+    await updateDoc(doc(db, "resources", currentUser.uid), {
+      gold: increment(-gift.price)
+    });
+    resources.gold -= gift.price;
+    
+    // توزيع العملات: 40% للمستلم، 40% لمالك الغرفة، 20% لصاحب البريد ad5@5.com
+    const recipientAmount = Math.floor(gift.price * 0.4);
+    const ownerAmount = Math.floor(gift.price * 0.4);
+    const adminAmount = gift.price - recipientAmount - ownerAmount; // الباقي (20%)
+    
+    // إضافة للمستلم
+    const targetRef = doc(db, "resources", targetUid);
+    const targetSnap = await getDoc(targetRef);
+    if (targetSnap.exists()) {
+      await updateDoc(targetRef, { gold: increment(recipientAmount) });
+    } else {
+      await setDoc(targetRef, { gold: recipentAmount });
+    }
+    
+    // إضافة لمالك الغرفة
+    const ownerRef = doc(db, "resources", currentRoom.ownerId);
+    const ownerSnap = await getDoc(ownerRef);
+    if (ownerSnap.exists()) {
+      await updateDoc(ownerRef, { gold: increment(ownerAmount) });
+    } else {
+      await setDoc(ownerRef, { gold: ownerAmount });
+    }
+    
+    // إضافة لصاحب البريد ad5@5.com (نحتاج uid الخاص به)
+    try {
+      const adminQuery = query(collection(db, "users"), where("email", "==", "ad5@5.com"));
+      const adminSnap = await getDocs(adminQuery);
+      if (!adminSnap.empty) {
+        const adminUid = adminSnap.docs[0].id;
+        const adminRef = doc(db, "resources", adminUid);
+        const adminResSnap = await getDoc(adminRef);
+        if (adminResSnap.exists()) {
+          await updateDoc(adminRef, { gold: increment(adminAmount) });
+        } else {
+          await setDoc(adminRef, { gold: adminAmount });
+        }
+      }
+    } catch (e) {
+      console.error("خطأ في إضافة الذهب للمسؤول:", e);
+    }
+    
+    // إرسال الرسالة
+    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+      uid: currentUser.uid,
+      name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '',
+      avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤',
+      colors: currentUserData?.colors || {},
+      text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
+      gift: {
+        name: gift.name,
+        image: gift.image,
+        fromName: currentUserData?.username || 'مستخدم',
+        toName: targetMember.name
+      },
+      timestamp: Date.now()
+    });
+    
+    // إغلاق النافذة
+    document.getElementById('giftRecipientModal').classList.remove('active');
+    showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
+  };
 
   window.deleteRoom = async () => {
     if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
@@ -3849,7 +3964,6 @@ window.sendGiftToMember = async (targetUid) => {
       }
     }
   });
-  
 </script>
 </body>
 </html>

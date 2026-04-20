@@ -2081,14 +2081,15 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
   import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, arrayUnion, arrayRemove, increment, where, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDYKCCTcurNcJslrNKqdiJCoIIK-YZArB4",
-    authDomain: "sbaq-fc46f.firebaseapp.com",
-    projectId: "sbaq-fc46f",
-    storageBucket: "sbaq-fc46f.firebasestorage.app",
-    appId: "1:1026865750415:web:0ee39a717bcafaa0d06bfa"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCPBrZMo6IYCwCDYV3HEfNcUmLUITR6VRc",
+  authDomain: "elahbes.firebaseapp.com",
+  projectId: "elahbes",
+  storageBucket: "elahbes.firebasestorage.app",
+  messagingSenderId: "800207969145",
+  appId: "1:800207969145:web:aa19b725d1c92dd48fada8",
+  measurementId: "G-EFT566SJMP"
+};
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -4348,6 +4349,7 @@ async function sendGiftNotification(targetUid, gift, senderName, senderAvatar, s
   window.closeModal = (id) => document.getElementById(id)?.classList.remove('active');
   window.openModal = (id) => document.getElementById(id)?.classList.add('active');
 
+  
   </script>
 </body>
 </html>

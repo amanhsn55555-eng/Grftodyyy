@@ -6,6 +6,160 @@
   <title>غرف الدردشة • منصتي</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+  /* عكس اتجاه الغرفة بالكامل - يصبح المحتوى من اليسار إلى اليمين */
+.chat-room-view,
+.chat-room-view * {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+/* إعادة ضبط النصوص العربية لتظهر بشكل صحيح */
+.chat-room-view .message-text,
+.chat-room-view .room-title span:first-child,
+.chat-room-view .room-subtitle,
+.chat-room-view .owner-name span,
+.chat-room-view input,
+.chat-room-view textarea {
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+/* عكس مكان الأزرار والعناصر */
+.chat-room-view .room-header {
+    flex-direction: row-reverse !important;
+}
+
+.chat-room-view .back-btn {
+    margin-right: 0 !important;
+    margin-left: 10px !important;
+}
+
+.chat-room-view .back-btn i {
+    transform: scaleX(-1) !important;
+}
+
+.chat-room-view .room-actions {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+.chat-room-view .owner-card {
+    flex-direction: row !important;
+}
+
+.chat-room-view .owner-avatar {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
+}
+
+.chat-room-view .message-item {
+    flex-direction: row !important;
+}
+
+.chat-room-view .message-avatar {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
+}
+
+.chat-room-view .message-content {
+    align-items: flex-start !important;
+}
+
+.chat-room-view .message-header {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+}
+
+.chat-room-view .message-text {
+    border-top-right-radius: 18px !important;
+    border-top-left-radius: 5px !important;
+}
+
+/* عكس صندوق الإدخال */
+.chat-room-view .input-area {
+    flex-direction: row-reverse !important;
+}
+
+.chat-room-view .emoji-btn {
+    margin-right: 0 !important;
+    margin-left: 5px !important;
+}
+
+.chat-room-view .input-area button:last-child {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+}
+
+/* عكس لوحة الأعضاء الجانبية */
+.members-panel {
+    right: auto !important;
+    left: 0 !important;
+    transform: translateX(-100%) !important;
+    border-left: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.members-panel.active {
+    transform: translateX(0) !important;
+}
+
+/* عكس اتجاه أيقونة القفل */
+.room-name i.fa-lock {
+    margin-right: 0 !important;
+    margin-left: 5px !important;
+}
+
+/* تصحيح اتجاه الإيموجي والرموز */
+.chat-room-view .room-type-badge {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+}
+
+/* عكس اتجاه شارة المالك والمشرف */
+.message-badge {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+}
+
+/* تصحيح مظهر رسائل النظام (انضمام/مغادرة) */
+.chat-room-view div[style*="justify-content:center"] > div {
+    flex-direction: row !important;
+}
+
+.chat-room-view div[style*="justify-content:center"] span:first-child {
+    margin-right: 0 !important;
+    margin-left: 5px !important;
+}
+  /* خلفية شفافة لفقاعات الرسائل في الغرفة */
+.message-text {
+    background: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(251, 191, 36, 0.2) !important;
+    border-radius: 18px !important;
+    border-top-right-radius: 5px !important;
+    padding: 12px 16px !important;
+    color: #f1f5f9 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* تحسين مظهر رسائل المالك مع الحفاظ على الشفافية */
+.message-text.owner-message {
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: rgba(74, 222, 128, 0.3) !important;
+}
+
+/* تحسين مظهر رسائل المشرف مع الحفاظ على الشفافية */
+.message-text.moderator-message {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(248, 113, 113, 0.3) !important;
+}
+
+/* تحسين مظهر رسائل العضو مع الحفاظ على الشفافية */
+.message-text.member-message {
+    background: rgba(186, 230, 253, 0.1) !important;
+    border-color: rgba(186, 230, 253, 0.2) !important;
+}
   #createRoomModal .modal-sheet{background:linear-gradient(145deg,#1a1a2e,#0f172a)!important;border-radius:30px 30px 0 0!important;box-shadow:0 -5px 30px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(251,191,36,0.2)!important;border-top:3px solid #fbbf24!important}#createRoomModal .modal-header h3{color:#fbbf24!important;text-shadow:0 0 15px gold!important}#createRoomModal .form-group label{color:#e2e8f0!important}#createRoomModal input,#createRoomModal textarea,#createRoomModal select{background:#0f172a!important;border:1px solid rgba(251,191,36,0.3)!important;color:#fff!important;border-radius:15px!important;box-shadow:inset 2px 2px 5px #000,0 0 10px rgba(251,191,36,0.1)!important}#createRoomModal .btn-submit{background:linear-gradient(145deg,#fbbf24,#d97706)!important;box-shadow:0 5px 15px rgba(251,191,36,0.3),inset 0 1px 0 #fff!important;border-radius:40px!important;font-weight:800!important;color:#0f172a!important}#createRoomModal .image-option{border-radius:15px!important;border:2px solid transparent!important}#createRoomModal .image-option.selected{border-color:#fbbf24!important;box-shadow:0 0 20px gold!important}#createRoomModal .close-btn{background:rgba(239,68,68,0.2)!important;color:#ef4444!important}
   .room-card{position:relative!important;overflow:hidden!important}.room-card::after{content:""!important;position:absolute!important;bottom:0!important;left:0!important;width:100%!important;height:3px!important;background:linear-gradient(90deg,transparent,#22c55e,transparent)!important;animation:onlineGlow 2s infinite!important}.room-card.inactive::after{background:linear-gradient(90deg,transparent,#fbbf24,transparent)!important;animation:none!important}@keyframes onlineGlow{0%,100%{opacity:0.5}50%{opacity:1}}
     * {
@@ -1615,6 +1769,93 @@
       object-fit: cover;
       border: 2px solid #fbbf24;
     }
+    /* ========== نظام الإطارات والصور (نفس الأثرياء) ========== */
+.avatar-wrapper {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-frame {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  background-image: url('https://iili.io/BrLrf6v.gif');
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.avatar-frame.custom-frame {
+  background-image: none !important;
+}
+
+.avatar-frame.custom-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
+  border: 1px solid rgba(255, 215, 100, 0.3);
+  background: #1a2332;
+}
+
+.user-emoji {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  z-index: 2;
+  background: #1a2332;
+}
+
+.name-image {
+  height: 35px;
+  max-width: 150px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.message-name-image {
+  height: 30px;
+  max-width: 120px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.owner-name-image {
+  height: 40px;
+  max-width: 180px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+.member-avatar, .message-avatar, .owner-avatar, .banned-avatar {
+  position: relative;
+  overflow: visible !important;
+  border: none !important;
+  background: transparent !important;
+}
   </style>
 </head>
 <body>
@@ -2076,11 +2317,11 @@
 </div>
 
 <div id="toastMsg"></div>
-
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-  import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, arrayUnion, arrayRemove, increment, where, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, orderBy, onSnapshot, addDoc, deleteDoc, arrayUnion, arrayRemove, increment, where, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCPBrZMo6IYCwCDYV3HEfNcUmLUITR6VRc",
   authDomain: "elahbes.firebaseapp.com",
@@ -2091,2265 +2332,1476 @@ const firebaseConfig = {
   measurementId: "G-EFT566SJMP"
 };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  const roomImages = [
-    'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg',
-    'https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg',
-    'https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg',
-    'https://images.pexels.com/photos/15286/pexels-photo.jpg',
-    'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg',
-    'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg',
-    'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg',
-    'https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg',
-    'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg',
-    'https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg'
-  ];
+const roomImages = [
+  'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg',
+  'https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg',
+  'https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg',
+  'https://images.pexels.com/photos/15286/pexels-photo.jpg',
+  'https://images.pexels.com/photos/3244513/pexels-photo-3244513.jpeg',
+  'https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg',
+  'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg',
+  'https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg',
+  'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg',
+  'https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg'
+];
 
-  const iconTypes = ['lion', 'fish', 'crown', 'rainbow', 'tree', 'dark'];
-  const iconNames = { lion: 'أسد', fish: 'سمكة', crown: 'تاج', rainbow: 'قوس قزح', tree: 'شجرة', dark: 'ظلام' };
+const iconTypes = ['lion', 'fish', 'crown', 'rainbow', 'tree', 'dark'];
+const iconNames = { lion: 'أسد', fish: 'سمكة', crown: 'تاج', rainbow: 'قوس قزح', tree: 'شجرة', dark: 'ظلام' };
+const frameNames = ['ذهبي', 'بنفسجي', 'زمردي', 'وردي', 'أزرق', 'أحمر'];
 
-  const frameNames = ['ذهبي', 'بنفسجي', 'زمردي', 'وردي', 'أزرق', 'أحمر'];
+let currentUser = null;
+let currentUserData = null;
+let resources = { gold: 0 };
+let rooms = [];
+let currentRoom = null;
+let currentRoomId = null;
+let unsubscribeMessages = null;
+let unsubscribeRoom = null;
+let searchTerm = '';
+let selectedImage = roomImages[0];
+let currentPanelTab = 'members';
+let bannedUsersData = [];
+let currentSettingsTab = 'general';
+let selectedFrame = 1;
+let selectedShortcutShape = 'square';
+let showMonitorMessages = false;
+let globalAnnouncement = null;
+let dismissedAnnouncements = JSON.parse(localStorage.getItem('dismissedAnnouncements') || '[]');
+let presenceInterval = null;
+let offlineTimer = null;
+let isOnline = true;
 
-  let currentUser = null;
-  let currentUserData = null;
-  let resources = { gold: 0 };
-  let rooms = [];
-  let currentRoom = null;
-  let currentRoomId = null;
-  let unsubscribeMessages = null;
-  let unsubscribeRoom = null;
-  let searchTerm = '';
-  let selectedImage = roomImages[0];
-  let currentPanelTab = 'members';
-  let bannedUsersData = [];
-  let currentSettingsTab = 'general';
-  let selectedFrame = 1;
-  let selectedShortcutShape = 'square';
-  let showMonitorMessages = false;
-  let globalAnnouncement = null;
+// ========== دوال مساعدة ==========
+function showToast(msg, isSuccess = true) {
+  const t = document.getElementById('toastMsg');
+  if (!t) return;
+  t.textContent = msg;
+  t.style.background = isSuccess ? '#10b981' : '#ef4444';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
 
-  function showToast(msg, isSuccess = true) {
-    const t = document.getElementById('toastMsg');
-    if (!t) return;
-    t.textContent = msg;
-    t.style.background = isSuccess ? '#10b981' : '#ef4444';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2800);
+window.goBack = function() {
+  if (document.referrer && document.referrer.includes(window.location.hostname)) {
+    window.history.back();
+  } else {
+    showToast('لا توجد صفحة سابقة للرجوع إليها');
   }
+};
 
-  window.goBack = function() {
-    if (document.referrer && document.referrer.includes(window.location.hostname)) {
-      window.history.back();
+function getIdClass(userId) {
+  if (!userId) return '';
+  const idStr = String(userId);
+  const digitCount = idStr.replace(/\D/g, '').length;
+  if (digitCount === 1) return 'id-1-digit';
+  if (digitCount === 2) return 'id-2-digit';
+  if (digitCount === 3) return 'id-3-digit';
+  return '';
+}
+
+function extractYoutubeId(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60), s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function getIconFA(type) {
+  const icons = { lion: 'paw', fish: 'fish', crown: 'crown', rainbow: 'rainbow', tree: 'tree', dark: 'moon' };
+  return icons[type] || 'star';
+}
+
+// ========== نظام الإطارات والصور (نفس الأثرياء) ==========
+function renderAvatarWithFrame(user, size = 'md') {
+  if (!user) return '';
+  const sizes = { sm: { wrapper: 35, photo: 30, emoji: 18 }, md: { wrapper: 45, photo: 40, emoji: 22 }, lg: { wrapper: 60, photo: 54, emoji: 30 } };
+  const s = sizes[size] || sizes.md;
+  const customFrame = user.colors?.frame;
+  const frameHtml = (customFrame && customFrame !== '#0f172a' && customFrame.startsWith('http')) 
+    ? `<div class="avatar-frame custom-frame"><img src="${customFrame}" alt="frame"></div>`
+    : `<div class="avatar-frame"></div>`;
+  const photoHtml = (user.avatarType === 'image' && user.avatarUrl)
+    ? `<img src="${user.avatarUrl}" class="user-photo" style="width:${s.photo}px;height:${s.photo}px;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`
+    : '';
+  const emojiHtml = `<span class="user-emoji" style="width:${s.photo}px;height:${s.photo}px;font-size:${s.emoji}px;${photoHtml ? 'display:none;' : ''}">${user.emoji || '👤'}</span>`;
+  return `<div class="avatar-wrapper" style="width:${s.wrapper}px;height:${s.wrapper}px;">${frameHtml}${photoHtml}${emojiHtml}</div>`;
+}
+
+function renderUserName(user, type = 'inline') {
+  if (!user) return '';
+  const nameImage = user.nameImage;
+  const displayName = user.username || user.displayName || 'مستخدم';
+  const classes = { inline: 'name-image', owner: 'owner-name-image', message: 'message-name-image' };
+  const imgClass = classes[type] || 'name-image';
+  if (nameImage && nameImage.startsWith('http')) {
+    return `<span class="has-name-image"><span class="text-name" style="display:none;">${displayName}</span><img src="${nameImage}" class="${imgClass}" alt="${displayName}" onerror="this.style.display='none';this.parentElement.querySelector('.text-name').style.display='inline-block';"></span>`;
+  }
+  return `<span class="text-name">${displayName}</span>`;
+}
+
+// ========== تحميل بيانات المستخدم ==========
+async function loadUserData(uid) {
+  try {
+    const userDoc = await getDoc(doc(db, "users", uid));
+    if (userDoc.exists()) currentUserData = userDoc.data();
+    const resDoc = await getDoc(doc(db, "resources", uid));
+    if (resDoc.exists()) resources = resDoc.data();
+  } catch (e) {
+    console.error("خطأ في تحميل بيانات المستخدم:", e);
+  }
+}
+
+async function loadBannedUsersData(bannedUids) {
+  bannedUsersData = [];
+  for (const uid of bannedUids) {
+    const userDoc = await getDoc(doc(db, "users", uid));
+    if (userDoc.exists()) {
+      bannedUsersData.push({ uid, ...userDoc.data() });
     } else {
-      showToast('لا توجد صفحة سابقة للرجوع إليها');
+      bannedUsersData.push({ uid, username: 'مستخدم محظور', emoji: '🚫' });
+    }
+  }
+}
+
+// ========== نظام الحضور والخروج التلقائي ==========
+async function updatePresence(status = 'online') {
+  if (!currentUser) return;
+  const presenceRef = doc(db, "presence", currentUser.uid);
+  await setDoc(presenceRef, { uid: currentUser.uid, status: status, lastSeen: Date.now(), currentRoom: status === 'online' ? currentRoomId : null }, { merge: true });
+}
+
+function startPresenceSystem() {
+  if (presenceInterval) clearInterval(presenceInterval);
+  updatePresence('online');
+  presenceInterval = setInterval(() => { if (isOnline) updatePresence('online'); }, 60000);
+}
+
+function handleOnlineStatus() {
+  window.addEventListener('online', () => {
+    isOnline = true;
+    if (offlineTimer) { clearTimeout(offlineTimer); offlineTimer = null; }
+    updatePresence('online');
+    showToast('تم استعادة الاتصال', true);
+  });
+  window.addEventListener('offline', () => {
+    isOnline = false;
+    showToast('انقطع الاتصال بالإنترنت', false);
+    offlineTimer = setTimeout(() => {
+      autoLogoutFromAllRooms();
+      showToast('تم تسجيل خروجك تلقائياً لانقطاع الاتصال', false);
+    }, 300000);
+  });
+}
+
+async function autoLogoutFromAllRooms() {
+  if (!currentUser) return;
+  try {
+    const roomsSnap = await getDocs(collection(db, "rooms"));
+    const batch = writeBatch(db);
+    roomsSnap.forEach(roomDoc => {
+      const room = roomDoc.data();
+      const members = room.members || [];
+      const updatedMembers = members.filter(m => m.uid !== currentUser.uid);
+      if (members.length !== updatedMembers.length) batch.update(roomDoc.ref, { members: updatedMembers });
+    });
+    await batch.commit();
+    if (currentRoomId) {
+      await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+        uid: 'system', name: currentUserData?.username || 'مستخدم',
+        text: `👋 ${currentUserData?.username || 'مستخدم'} غادر الغرفة (انقطع الاتصال)`,
+        type: 'leave', timestamp: Date.now()
+      });
+    }
+    await updatePresence('offline');
+  } catch (e) {}
+}
+
+async function leaveOtherRooms() {
+  if (!currentUser || !currentRoomId) return;
+  try {
+    const roomsSnap = await getDocs(collection(db, "rooms"));
+    const batch = writeBatch(db);
+    for (const roomDoc of roomsSnap.docs) {
+      if (roomDoc.id === currentRoomId) continue;
+      const room = roomDoc.data();
+      const members = room.members || [];
+      const memberIndex = members.findIndex(m => m.uid === currentUser.uid);
+      if (memberIndex !== -1) {
+        const updatedMembers = members.filter(m => m.uid !== currentUser.uid);
+        batch.update(roomDoc.ref, { members: updatedMembers });
+        await addDoc(collection(db, "rooms", roomDoc.id, "messages"), {
+          uid: 'system', name: currentUserData?.username || 'مستخدم',
+          text: `👋 ${currentUserData?.username || 'مستخدم'} انتقل إلى غرفة أخرى`,
+          type: 'leave', timestamp: Date.now()
+        });
+      }
+    }
+    await batch.commit();
+  } catch (e) {}
+}
+
+// ========== ترتيب الغرف حسب التفاعل ==========
+function subscribeToRooms() {
+  const roomsQuery = query(collection(db, "rooms"));
+  onSnapshot(roomsQuery, (snapshot) => {
+    rooms = [];
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      rooms.push({ id: doc.id, ...data, activityScore: (data.messageCount || 0) + (data.members?.length || 0) * 2 });
+    });
+    rooms.sort((a, b) => {
+      if (b.activityScore !== a.activityScore) return b.activityScore - a.activityScore;
+      return (b.lastMessageTime || b.createdAt || 0) - (a.lastMessageTime || a.createdAt || 0);
+    });
+    renderRooms();
+  });
+}
+
+function renderRooms() {
+  const container = document.getElementById('roomsContainer');
+  let filtered = rooms.filter(r => (r.name || '').includes(searchTerm) || (r.description || '').includes(searchTerm));
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><i class="fas fa-comments"></i><p>لا توجد غرف</p></div>`;
+    return;
+  }
+  let html = '';
+  for (let i = 0; i < filtered.length; i += 2) {
+    html += '<div class="rooms-row">';
+    html += renderRoomCard(filtered[i]);
+    if (filtered[i + 1]) html += renderRoomCard(filtered[i + 1]);
+    html += '</div>';
+  }
+  container.innerHTML = html;
+}
+
+function renderRoomCard(room) {
+  const frameClass = room.frame ? `frame${room.frame}` : '';
+  const customFrameStyle = room.customFrame ? `box-shadow: 0 0 0 3px transparent; border-image: url('${room.customFrame}') 30 round;` : '';
+  const imageUrl = room.roomImage || room.image || roomImages[0];
+  const isActive = (Date.now() - (room.lastMessageTime || room.createdAt)) < 3600000;
+  const inactiveClass = isActive ? '' : 'inactive';
+  return `
+    <div class="room-card ${room.type || 'normal'} ${frameClass} ${inactiveClass}" style="${customFrameStyle}" onclick="requestJoinRoom('${room.id}')">
+      <div class="room-image"><img src="${imageUrl}" onerror="this.src='${roomImages[0]}'"></div>
+      <div class="room-name">${room.name || 'غرفة'}${room.password ? '<i class="fas fa-lock"></i>' : ''}</div>
+      <div class="room-desc">${room.description || 'غرفة للمحادثة'}</div>
+      <div class="room-footer">
+        <span class="room-members"><i class="fas fa-user"></i> ${(room.members || []).length}/${room.capacity || 50}</span>
+        <span class="room-type-badge ${room.type || 'normal'}">${room.type === 'advanced' ? 'متطورة ✨' : 'عادية'}</span>
+      </div>
+    </div>
+  `;
+}
+
+window.filterRooms = () => { searchTerm = document.getElementById('searchRoomsInput')?.value || ''; renderRooms(); };
+window.refreshRooms = () => { renderRooms(); showToast('تم التحديث'); };
+
+// ========== إنشاء غرفة ==========
+window.openCreateRoomModal = () => {
+  const selector = document.getElementById('imageSelector');
+  selector.innerHTML = roomImages.map(img => `<div class="image-option ${selectedImage === img ? 'selected' : ''}" onclick="selectRoomImage('${img}')"><img src="${img}" onerror="this.src='${roomImages[0]}'"></div>`).join('');
+  document.getElementById('createRoomModal')?.classList.add('active');
+};
+
+window.selectRoomImage = (img) => { selectedImage = img; document.querySelectorAll('.image-option').forEach(el => el.classList.remove('selected')); event.target.closest('.image-option')?.classList.add('selected'); };
+window.updateRoomPrice = () => { document.getElementById('roomPrice').textContent = document.getElementById('roomType')?.value === 'normal' ? '25' : '50'; };
+window.closeCreateRoomModal = () => document.getElementById('createRoomModal')?.classList.remove('active');
+
+window.createRoom = async () => {
+  const name = document.getElementById('roomName')?.value.trim();
+  if (!name) { showToast('الرجاء إدخال اسم الغرفة', false); return; }
+  const type = document.getElementById('roomType')?.value || 'normal';
+  const price = type === 'normal' ? 25 : 50;
+  if ((resources.gold || 0) < price) { showToast('رصيد الذهب غير كافٍ', false); return; }
+  const room = {
+    name, image: selectedImage, roomImage: selectedImage,
+    description: document.getElementById('roomDesc')?.value.trim() || '',
+    capacity: parseInt(document.getElementById('roomCapacity')?.value || '50'),
+    welcomeMessage: document.getElementById('welcomeMessage')?.value.trim() || 'مرحباً بك!',
+    password: document.getElementById('roomPassword')?.value.trim() || null,
+    type, ownerId: currentUser.uid, ownerName: currentUserData?.username || 'المالك',
+    ownerAvatar: currentUserData?.avatarUrl || null, ownerAvatarType: currentUserData?.avatarType || 'emoji',
+    ownerEmoji: currentUserData?.emoji || '👑', ownerColors: currentUserData?.colors || {},
+    ownerNameImage: currentUserData?.nameImage || null,
+    moderators: [], bannedUsers: [],
+    members: [{
+      uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+      avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+      nameImage: currentUserData?.nameImage || null, role: 'owner', joinedAt: Date.now()
+    }],
+    background: null, iconOccupants: {}, createdAt: Date.now(),
+    textStyles: { ownerColor: '#4ade80', ownerSize: 16, modColor: '#f87171', modSize: 15, memberColor: '#bae6fd', memberSize: 14, fontFamily: "'Segoe UI', 'Tajawal'" },
+    bannedWords: [], monitoredWords: [], shortcuts: {}, gifts: [], monitorLogs: [], frame: 1, customFrame: null, emojis: []
+  };
+  await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-price) });
+  resources.gold -= price;
+  await addDoc(collection(db, "rooms"), room);
+  closeCreateRoomModal();
+  showToast('تم إنشاء الغرفة!');
+};
+
+// ========== الانضمام للغرفة ==========
+window.requestJoinRoom = (roomId) => {
+  const room = rooms.find(r => r.id === roomId);
+  if (!room) return;
+  if ((room.members || []).length >= (room.capacity || 50)) { showToast('الغرفة ممتلئة', false); return; }
+  if ((room.bannedUsers || []).includes(currentUser.uid)) { showToast('أنت محظور من هذه الغرفة', false); return; }
+  if (room.password) {
+    document.getElementById('targetRoomId').value = roomId;
+    document.getElementById('passwordModal')?.classList.add('active');
+  } else {
+    joinRoom(roomId);
+  }
+};
+
+window.closePasswordModal = () => document.getElementById('passwordModal')?.classList.remove('active');
+
+window.joinWithPassword = () => {
+  const roomId = document.getElementById('targetRoomId')?.value;
+  const password = document.getElementById('roomPasswordInput')?.value;
+  const room = rooms.find(r => r.id === roomId);
+  if (room?.password === password) { closePasswordModal(); joinRoom(roomId); }
+  else { showToast('الرمز السري غير صحيح', false); }
+};
+
+async function joinRoom(roomId) {
+  const room = rooms.find(r => r.id === roomId);
+  if (!room) return;
+  await leaveOtherRooms();
+  const existingMember = (room.members || []).find(m => m.uid === currentUser.uid);
+  if (!existingMember) {
+    let userIP = 'غير معروف', deviceInfo = 'غير معروف';
+    try { const ipRes = await fetch('https://api.ipify.org?format=json'); const ipData = await ipRes.json(); userIP = ipData.ip; deviceInfo = navigator.userAgent; } catch (e) {}
+    await updateDoc(doc(db, "rooms", roomId), {
+      members: arrayUnion({
+        uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+        avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+        emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+        nameImage: currentUserData?.nameImage || null, role: 'member', joinedAt: Date.now(), ip: userIP, device: deviceInfo
+      })
+    });
+    await sendJoinMessage(roomId, currentUserData);
+  }
+  openChatRoom(roomId);
+}
+
+async function sendJoinMessage(roomId, userData) {
+  await addDoc(collection(db, "rooms", roomId, "messages"), {
+    uid: 'system', name: userData.username || 'مستخدم',
+    avatar: userData.avatarType === 'image' ? userData.avatarUrl : null,
+    avatarType: userData.avatarType || 'emoji', emoji: userData.emoji || '👤',
+    colors: userData.colors || { frame: '#fbbf24' }, nameImage: userData.nameImage || null,
+    text: `👑 ${userData.username || 'مستخدم'} انضم إلى الغرفة`, type: 'join', timestamp: Date.now()
+  });
+}
+
+async function sendLeaveMessage(roomId, userData) {
+  await addDoc(collection(db, "rooms", roomId, "messages"), {
+    uid: 'system', name: userData.username || 'مستخدم',
+    avatar: userData.avatarType === 'image' ? userData.avatarUrl : null,
+    avatarType: userData.avatarType || 'emoji', emoji: userData.emoji || '👤',
+    colors: userData.colors || { frame: '#fbbf24' }, nameImage: userData.nameImage || null,
+    text: `👋 ${userData.username || 'مستخدم'} غادر الغرفة`, type: 'leave', timestamp: Date.now()
+  });
+}
+
+// ========== فتح غرفة الدردشة ==========
+function openChatRoom(roomId) {
+  document.querySelector('.rooms-header').style.display = 'none';
+  document.querySelector('.search-section').style.display = 'none';
+  document.querySelector('.rooms-container').style.display = 'none';
+  currentRoomId = roomId;
+  if (unsubscribeRoom) unsubscribeRoom();
+  unsubscribeRoom = onSnapshot(doc(db, "rooms", roomId), async (docSnap) => {
+    if (docSnap.exists()) {
+      currentRoom = { id: roomId, ...docSnap.data() };
+      await loadBannedUsersData(currentRoom.bannedUsers || []);
+      updateRoomUI();
+      renderSpecialIcons();
+      renderPanelList();
+      updateMembersCount();
+      loadSettingsValues();
+      renderEmojiPanel();
+    }
+  });
+  document.getElementById('chatRoomView')?.classList.add('active');
+  subscribeToMessages(roomId);
+}
+
+function updateRoomUI() {
+  if (!currentRoom) return;
+  const bgEl = document.getElementById('roomBackground');
+  if (currentRoom.background) bgEl.style.backgroundImage = `url('${currentRoom.background}')`; else bgEl.style.backgroundImage = 'none';
+  const isOwner = currentRoom.ownerId === currentUser.uid;
+  const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+  document.getElementById('roomSettingsBtn').style.display = (isOwner || isModerator) ? 'block' : 'none';
+  const memberCount = (currentRoom.members || []).length;
+  document.getElementById('currentRoomSubtitle').innerHTML = `<i class="fas fa-user"></i> ${memberCount}`;
+  const ownerCard = document.getElementById('ownerCard');
+  const ownerAvatar = document.getElementById('ownerAvatar');
+  const ownerName = document.getElementById('ownerName');
+  const ownerData = { uid: currentRoom.ownerId, username: currentRoom.ownerName || 'المالك', avatarUrl: currentRoom.ownerAvatar, avatarType: currentRoom.ownerAvatarType || 'emoji', emoji: currentRoom.ownerEmoji || '👑', colors: currentRoom.ownerColors || {}, nameImage: currentRoom.ownerNameImage || null };
+  ownerAvatar.innerHTML = renderAvatarWithFrame(ownerData, 'lg');
+  ownerAvatar.style.border = 'none';
+  ownerAvatar.style.background = 'transparent';
+  ownerAvatar.onclick = () => showMemberProfile(currentRoom.ownerId);
+  const styles = currentRoom.textStyles || {};
+  const ownerNameData = { username: currentRoom.ownerName || 'المالك', nameImage: currentRoom.ownerNameImage };
+  ownerName.innerHTML = `<i class="fas fa-crown"></i><span style="color: ${styles.ownerColor || '#e0f7fa'}; cursor: pointer;" onclick="showMemberProfile('${currentRoom.ownerId}')">${renderUserName(ownerNameData, 'owner')}</span>`;
+  ownerCard.style.display = 'flex';
+  ownerCard.style.position = 'static';
+  ownerCard.style.transform = 'none';
+  ownerCard.style.background = 'transparent';
+  ownerCard.style.padding = '0';
+  ownerCard.style.margin = '0 8px';
+  ownerCard.style.border = 'none';
+  ownerCard.style.gap = '5px';
+  document.getElementById('currentRoomTitle').innerHTML = `<span>${currentRoom.name || 'الغرفة'}</span><span class="room-type-badge ${currentRoom.type || 'normal'}">${currentRoom.type === 'advanced' ? '✨' : ''}</span>`;
+}
+
+window.showOwnerProfile = () => { if (currentRoom?.ownerId) showMemberProfile(currentRoom.ownerId); };
+
+// ========== الأيقونات الخاصة ==========
+function renderSpecialIcons() {
+  const container = document.getElementById('specialIcons');
+  if (!container) return;
+  const isAdvanced = currentRoom?.type === 'advanced';
+  container.style.display = isAdvanced ? 'flex' : 'none';
+  if (!isAdvanced) return;
+  const occupants = currentRoom?.iconOccupants || {};
+  container.innerHTML = iconTypes.map(type => {
+    const occupant = occupants[type];
+    const isOccupied = occupant && occupant.uid;
+    const isMe = isOccupied && occupant.uid === currentUser.uid;
+    const timeLeft = isMe ? Math.max(0, 3600 - Math.floor((Date.now() - occupant.joinedAt) / 1000)) : 0;
+    const earned = isMe ? Math.floor((Date.now() - occupant.joinedAt) / 3600000) : 0;
+    return `<div class="special-icon ${type} ${isOccupied ? 'occupied' : ''}" onclick="${isOccupied && !isMe ? `showMemberProfile('${occupant.uid}')` : `handleIconClick('${type}')`}">${isOccupied ? (occupant.avatar ? `<img src="${occupant.avatar}">` : `<div class="icon-content"><span>${occupant.emoji || '👤'}</span></div>`) : `<i class="fas fa-${getIconFA(type)}"></i>`}${isMe ? `<span class="timer-badge">${formatTime(timeLeft)}</span><span class="reward-badge">+${earned}</span>` : ''}</div>`;
+  }).join('');
+}
+
+window.handleIconClick = async (iconType) => {
+  if (!currentRoom || currentRoom.type !== 'advanced') return;
+  const occupants = currentRoom.iconOccupants || {};
+  const existing = occupants[iconType];
+  if (existing) { showMemberProfile(existing.uid); return; }
+  for (const [type, occupant] of Object.entries(occupants)) {
+    if (occupant?.uid === currentUser.uid) {
+      const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
+      if (earned > 0) { await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) }); resources.gold += earned; showToast(`ربحت ${earned} ذهب!`, true); }
+      const newOccupants = { ...occupants }; delete newOccupants[type];
+      await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+      return;
+    }
+  }
+  const newOccupants = { ...occupants, [iconType]: { uid: currentUser.uid, name: currentUserData?.username, avatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null, emoji: currentUserData?.emoji, joinedAt: Date.now() } };
+  await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+  showToast(`انضممت إلى أيقونة ${iconNames[iconType]}!`, true);
+};
+
+// ========== الرسائل ==========
+function subscribeToMessages(roomId) {
+  if (unsubscribeMessages) unsubscribeMessages();
+  const msgQuery = query(collection(db, "rooms", roomId, "messages"), orderBy("timestamp", "asc"));
+  unsubscribeMessages = onSnapshot(msgQuery, (snapshot) => {
+    const area = document.getElementById('messagesArea');
+    if (snapshot.empty) { area.innerHTML = `<div class="empty-state"><i class="fas fa-comment-dots"></i><p>لا توجد رسائل بعد</p></div>`; return; }
+    let html = '';
+    const styles = currentRoom?.textStyles || {};
+    const bannedWords = currentRoom?.bannedWords || [];
+    const monitoredWords = currentRoom?.monitoredWords || [];
+    const shortcuts = currentRoom?.shortcuts || {};
+    
+    snapshot.forEach(doc => {
+      const msg = doc.data();
+      if (msg.type === 'join' || msg.type === 'leave') {
+        const isJoin = msg.type === 'join';
+        const userData = { uid: msg.uid, username: msg.name, avatarUrl: msg.avatar, avatarType: msg.avatarType || 'emoji', emoji: msg.emoji || '👤', colors: msg.colors || {}, nameImage: msg.nameImage };
+        html += `<div style="display:flex;justify-content:center;margin:10px 0"><div style="display:flex;align-items:center;gap:10px;background:${isJoin?'rgba(34,197,94,0.15)':'rgba(239,68,68,0.15)'};border-right:4px solid ${isJoin?'#22c55e':'#ef4444'};border-radius:50px;padding:6px 15px"><div style="width:35px;height:35px;border-radius:50%;overflow:visible;background:transparent;" onclick="showMemberProfile('${msg.uid}')">${renderAvatarWithFrame(userData, 'sm')}</div><span style="color:gold;font-weight:700">${msg.text}</span><span>${isJoin?'👑':'👋'}</span></div></div>`;
+        return;
+      }
+      
+      const isMsgOwner = msg.uid === currentRoom?.ownerId;
+      const isMsgModerator = (currentRoom?.moderators || []).includes(msg.uid);
+      const isCurrentUser = msg.uid === currentUser?.uid;
+      let nameEffectClass = 'member-name-effect', nameColor = styles.memberColor || '#bae6fd', nameSize = styles.memberSize || 14;
+      if (isMsgOwner) { nameEffectClass = 'owner-name-effect'; nameColor = styles.ownerColor || '#4ade80'; nameSize = styles.ownerSize || 16; }
+      else if (isMsgModerator) { nameEffectClass = 'moderator-name-effect'; nameColor = styles.modColor || '#f87171'; nameSize = styles.modSize || 15; }
+      
+      const userData = { uid: msg.uid, username: msg.name, avatarUrl: msg.avatar, avatarType: msg.avatarType || 'emoji', emoji: msg.emoji || '👤', colors: msg.colors || {}, nameImage: msg.nameImage };
+      
+      let messageContent = msg.text || '';
+      
+      // تطبيق الاختصارات
+      Object.entries(shortcuts).forEach(([key, value]) => {
+        if (messageContent.includes(key)) {
+          if (typeof value === 'object' && value.type === 'image') {
+            const shapeStyle = value.shape === 'circle' ? 'border-radius:50%;' : (value.shape === 'rectangle' ? 'border-radius:5px; width:60px;' : 'border-radius:5px;');
+            messageContent = messageContent.replace(new RegExp(key, 'g'), `<img src="${value.url}" style="width:40px;height:40px;object-fit:cover;${shapeStyle}">`);
+          } else {
+            messageContent = messageContent.replace(new RegExp(key, 'g'), value);
+          }
+        }
+      });
+      
+      // فلترة الكلمات المحظورة
+      bannedWords.forEach(word => {
+        const regex = new RegExp(word, 'gi');
+        messageContent = messageContent.replace(regex, '***');
+      });
+      
+      // مراقبة الكلمات
+      monitoredWords.forEach(word => {
+        if (messageContent.toLowerCase().includes(word.toLowerCase())) {
+          addToMonitorLogs(msg.uid, msg.name, msg.emoji, messageContent, [word]);
+        }
+      });
+      
+      // معالجة الروابط
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      messageContent = messageContent.replace(urlRegex, (url) => {
+        if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+          return `<div class="message-media"><img src="${url}" onclick="window.open('${url}')" onerror="this.style.display='none'"></div>`;
+        } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+          const videoId = extractYoutubeId(url);
+          if (videoId) {
+            return `<div class="message-media"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
+          }
+        }
+        return `<a href="${url}" target="_blank" style="color: #60a5fa;">${url}</a>`;
+      });
+      
+      // إضافة زر الحذف لصاحب الرسالة أو المشرفين
+      const canDelete = isCurrentUser || isMsgOwner || (currentRoom?.ownerId === currentUser?.uid) || (currentRoom?.moderators || []).includes(currentUser?.uid);
+      const deleteButton = canDelete ? `<i class="fas fa-trash" style="cursor:pointer; color:#ef4444; font-size:12px; margin-right:5px;" onclick="deleteMessage('${doc.id}')" title="حذف الرسالة"></i>` : '';
+      window.sendEmoji=async(index)=>{const emojis=currentRoom?.emojis||[];const emoji=emojis[index];if(!emoji)return;document.getElementById('emojiPanel').classList.remove('active');let content=emoji.value;if(emoji.type==='image'){content=`<img src="${emoji.value}" style="width:${emoji.width||40}px;height:${emoji.height||40}px;object-fit:contain;animation:${emoji.animation||'fade'} 0.5s ease;"/>`}await addDoc(collection(db,"rooms",currentRoomId,"messages"),{uid:currentUser.uid,name:currentUserData?.username||'مستخدم',avatar:currentUserData?.avatarUrl||'',avatarType:currentUserData?.avatarType||'emoji',emoji:currentUserData?.emoji||'👤',colors:currentUserData?.colors||{},text:content,timestamp:Date.now()})}
+      html +=
+      `<div class="message-item"><div class="message-avatar" onclick="showMemberProfile('${msg.uid}')">${renderAvatarWithFrame(userData, 'md')}</div><div class="message-content"><div class="message-header"><span class="message-sender ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};" onclick="showMemberProfile('${msg.uid}')">${renderUserName(userData, 'message')}</span>${isMsgOwner?'<span class="message-badge owner"><i class="fas fa-crown"></i> مالك</span>':''}${isMsgModerator&&!isMsgOwner?'<span class="message-badge moderator"><i class="fas fa-shield-alt"></i> مشرف</span>':''}<span class="message-time">${msg.timestamp?new Date(msg.timestamp).toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'}):''}</span>${deleteButton}</div><div class="message-text">${messageContent}</div></div></div>`;
+    });
+    area.innerHTML = html;
+    area.scrollTop = area.scrollHeight;
+  });
+}
+async function sendEmoji(i){const e=currentRoom?.emojis[i];if(!e)return;document.getElementById('emojiPanel')?.classList.remove('active');await addDoc(collection(db,"rooms",currentRoomId,"messages"),{uid:currentUser.uid,name:currentUserData?.username,avatar:currentUserData?.avatarUrl,emoji:currentUserData?.emoji,text:e.type==='image'?`<img src="${e.value}" style="width:${e.width}px;height:${e.height}px;animation:${e.animation} 0.5s;object-fit:contain;border-radius:15px;cursor:pointer;" onclick="window.open(this.src)"/>`:e.value,timestamp:Date.now()})}
+function addToMonitorLogs(uid,name,emoji,message,detectedWords){if(!currentRoom)return;const member=currentRoom.members?.find(m=>m.uid===uid)||{};const log={uid,userName:name,userEmoji:emoji,userAvatar:member.avatar||null,userAvatarType:member.avatarType||'emoji',message,detectedWords:[...new Set(detectedWords)],timestamp:Date.now()};updateDoc(doc(db,"rooms",currentRoomId),{monitorLogs:arrayUnion(log)})}
+window.deleteMessage = async (messageId) => {
+  if (!currentRoomId) return;
+  try {
+    await deleteDoc(doc(db, "rooms", currentRoomId, "messages", messageId));
+    showToast('تم حذف الرسالة');
+  } catch (error) {
+    showToast('فشل حذف الرسالة', false);
+  }
+};
+
+window.sendMessage = async () => {
+  const input = document.getElementById('messageInput');
+  if (!input || !currentRoomId) return;
+  const text = input.value.trim();
+  if (!text) return;
+  
+  // التحقق من الكلمات المحظورة
+  const bannedWords = currentRoom?.bannedWords || [];
+  let filteredText = text;
+  bannedWords.forEach(word => {
+    const regex = new RegExp(word, 'gi');
+    filteredText = filteredText.replace(regex, '***');
+  });
+  
+  const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
+  await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+    uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+    avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+    emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+    nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: filteredText, timestamp: Date.now()
+  });
+  await updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now(), messageCount: increment(1) });
+  input.value = '';
+};
+
+window.handleMessageKeyPress = (e) => { if (e.key === 'Enter') sendMessage(); };
+
+// ========== لوحة الإيموجي ==========
+window.toggleEmojiPanel = () => { document.getElementById('emojiPanel').classList.toggle('active'); };
+
+function renderEmojiPanel() {
+  const grid = document.getElementById('emojiGrid');
+  const emojis = currentRoom?.emojis || [];
+  let html = '';
+  emojis.forEach((emoji, index) => { 
+html += emoji.type === 'text' ? 
+  `<div class="emoji-item" onclick="sendEmoji(${index})">${emoji.value}</div>` : 
+  `<div class="emoji-item" onclick="sendImageEmoji('${emoji.value}','${emoji.width}','${emoji.height}')"><img src="${emoji.value}" style="width:100%;height:100%;object-fit:contain;"></div>`;
+  });
+  
+  if (emojis.length === 0) html = '<div style="grid-column:span 4;text-align:center;color:#64748b;padding:20px;">لا توجد إيموجيات</div>';
+  grid.innerHTML = html;
+}
+
+window.sendEmoji=async(index)=>{const emojis=currentRoom?.emojis||[];const emoji=emojis[index];if(!emoji)return;document.getElementById('emojiPanel').classList.remove('active');await addDoc(collection(db,"rooms",currentRoomId,"messages"),{uid:currentUser.uid,name:currentUserData?.username||'مستخدم',avatar:currentUserData?.avatarUrl||'',avatarType:currentUserData?.avatarType||'emoji',emoji:currentUserData?.emoji||'👤',colors:currentUserData?.colors||{},role:(currentRoom?.members||[]).find(m=>m.uid===currentUser.uid)?.role||'member',text:emoji.type==='text'?emoji.value:`<img src="${emoji.value}" style="width:${emoji.width}px;height:${emoji.height}px;object-fit:contain;"/>`,timestamp:Date.now()})}
+// ========== لوحة الأعضاء ==========
+window.toggleMembersPanel = () => { document.getElementById('membersPanel')?.classList.toggle('active'); };
+
+window.switchPanelTab = (tab) => { 
+  currentPanelTab = tab; 
+  document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active')); 
+  event.target.closest('.panel-tab').classList.add('active'); 
+  renderPanelList(); 
+};
+
+function renderPanelList() { 
+  if (currentPanelTab === 'members') renderMembersList(); 
+  else if (currentPanelTab === 'banned') renderBannedList(); 
+  else if (currentPanelTab === 'ipDetect') renderIPDetectList(); 
+}
+
+function renderMembersList() {
+  const list = document.getElementById('membersList');
+  const members = currentRoom?.members || [];
+  const isOwner = currentRoom?.ownerId === currentUser.uid;
+  const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+  const styles = currentRoom?.textStyles || {};
+  list.innerHTML = members.map(m => {
+    const canPromote = isOwner && m.role === 'member' && (currentRoom.moderators || []).length < 3;
+    const canDemote = isOwner && m.role === 'moderator';
+    const canBan = (isOwner || isModerator) && m.uid !== currentUser.uid && m.role !== 'owner' && (!isModerator || m.role === 'member');
+    let nameEffectClass = 'member-name-effect', nameColor = styles.memberColor || '#bae6fd', nameSize = styles.memberSize || 14;
+    if (m.role === 'owner') { nameEffectClass = 'owner-name-effect'; nameColor = styles.ownerColor || '#4ade80'; nameSize = styles.ownerSize || 16; }
+    else if (m.role === 'moderator') { nameEffectClass = 'moderator-name-effect'; nameColor = styles.modColor || '#f87171'; nameSize = styles.modSize || 15; }
+    const memberData = { uid: m.uid, username: m.name, avatarUrl: m.avatar, avatarType: m.avatarType || 'emoji', emoji: m.emoji || '👤', colors: m.colors || {}, nameImage: m.nameImage };
+    return `<div class="member-item"><div class="member-avatar" onclick="showMemberProfile('${m.uid}')">${renderAvatarWithFrame(memberData, 'md')}</div><div class="member-info" onclick="showMemberProfile('${m.uid}')"><div class="member-name ${nameEffectClass}" style="color:${nameColor};font-size:${nameSize}px;font-family:${styles.fontFamily};">${renderUserName(memberData, 'inline')}${m.role==='owner'?'<i class="fas fa-crown" style="color:#fbbf24;"></i>':''}</div><span class="member-role ${m.role}">${m.role==='owner'?'👑 مالك':(m.role==='moderator'?'🛡️ مشرف':'👤 عضو')}</span></div><div class="member-actions" onclick="event.stopPropagation()">${canPromote?`<i class="fas fa-crown" onclick="promoteToModerator('${m.uid}')" title="ترقية لمشرف"></i>`:''}${canDemote?`<i class="fas fa-level-down-alt" onclick="demoteFromModerator('${m.uid}')" title="إزالة من الإشراف" style="color:#fbbf24;"></i>`:''}${canBan?`<i class="fas fa-ban" onclick="banMember('${m.uid}')" title="حظر"></i>`:''}</div></div>`;
+  }).join('');
+}
+
+function renderBannedList() {
+  const list = document.getElementById('membersList');
+  const bannedCount = bannedUsersData.length;
+  document.getElementById('bannedCount').textContent = bannedCount;
+  if (bannedCount === 0) { list.innerHTML = `<div class="empty-state" style="padding:30px;"><i class="fas fa-ban"></i><p>لا يوجد محظورون</p></div>`; return; }
+  const isOwner = currentRoom?.ownerId === currentUser.uid;
+  const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+  list.innerHTML = bannedUsersData.map(user => {
+    const canUnban = isOwner || isModerator;
+    const bannedData = { uid: user.uid, username: user.username, avatarUrl: user.avatarUrl, avatarType: user.avatarType || 'emoji', emoji: user.emoji || '🚫', colors: user.colors || {}, nameImage: user.nameImage };
+    return `<div class="banned-item"><div class="banned-avatar" onclick="showMemberProfile('${user.uid}')">${renderAvatarWithFrame(bannedData, 'md')}</div><div class="banned-info" onclick="showMemberProfile('${user.uid}')"><div class="banned-name" style="color:${user.colors?.name||'#f8fafc'};">${renderUserName(bannedData, 'inline')}</div><span style="font-size:10px;color:#ef4444;">محظور</span></div>${canUnban?`<span class="unban-btn" onclick="event.stopPropagation();unbanMember('${user.uid}')"><i class="fas fa-undo"></i> إلغاء الحظر</span>`:''}</div>`;
+  }).join('');
+}
+
+function renderIPDetectList() {
+  const list = document.getElementById('membersList');
+  const members = currentRoom?.members || [];
+  const isOwner = currentRoom?.ownerId === currentUser.uid;
+  const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+  if (!isOwner && !isModerator) { list.innerHTML = `<div class="empty-state" style="padding:30px;"><i class="fas fa-lock"></i><p>المشرفون فقط يمكنهم كشف IP</p></div>`; return; }
+  if (members.length === 0) { list.innerHTML = `<div class="empty-state" style="padding:30px;"><i class="fas fa-user"></i><p>لا يوجد أعضاء</p></div>`; return; }
+  const styles = currentRoom?.textStyles || {};
+  list.innerHTML = `<div style="padding:10px;margin-bottom:10px;background:rgba(96,165,250,0.1);border-radius:10px;border-right:3px solid #60a5fa;"><i class="fas fa-info-circle"></i> اضغط على أيقونة العين لكشف الحسابات المرتبطة بنفس IP</div>${members.map(m => {
+    let nameEffectClass = 'member-name-effect', nameColor = styles.memberColor || '#bae6fd', nameSize = styles.memberSize || 14;
+    if (m.role === 'owner') { nameEffectClass = 'owner-name-effect'; nameColor = styles.ownerColor || '#4ade80'; nameSize = styles.ownerSize || 16; }
+    else if (m.role === 'moderator') { nameEffectClass = 'moderator-name-effect'; nameColor = styles.modColor || '#f87171'; nameSize = styles.modSize || 15; }
+    const memberData = { uid: m.uid, username: m.name, avatarUrl: m.avatar, avatarType: m.avatarType || 'emoji', emoji: m.emoji || '👤', colors: m.colors || {}, nameImage: m.nameImage };
+    return `<div class="member-item"><div class="member-avatar" onclick="showMemberProfile('${m.uid}')">${renderAvatarWithFrame(memberData, 'md')}</div><div class="member-info" onclick="showMemberProfile('${m.uid}')"><div class="member-name ${nameEffectClass}" style="color:${nameColor};font-size:${nameSize}px;font-family:${styles.fontFamily};">${renderUserName(memberData, 'inline')}${m.role==='owner'?'<i class="fas fa-crown" style="color:#fbbf24;"></i>':''}</div><span class="member-role ${m.role}">${m.role==='owner'?'مالك':(m.role==='moderator'?'مشرف':'عضو')}</span></div><div class="member-actions" onclick="event.stopPropagation()"><i class="fas fa-eye detect-accounts-btn" onclick="detectAccountsByIP('${m.uid}')" title="كشف الحسابات المرتبطة"></i></div></div>`;
+  }).join('')}`;
+}
+
+window.detectAccountsByIP = async (uid) => {
+  const member = currentRoom?.members?.find(m => m.uid === uid);
+  if (!member) { showToast('العضو غير موجود', false); return; }
+  let memberIP = member.ip, memberDevice = member.device;
+  if (!memberIP) { try { const userDoc = await getDoc(doc(db, "users", uid)); if (userDoc.exists()) { memberIP = userDoc.data().ip; memberDevice = userDoc.data().device; } } catch (e) {} }
+  if (!memberIP || memberIP === 'غير معروف') { showToast('لم يتم العثور على IP لهذا العضو', false); return; }
+  const usersSnap = await getDocs(collection(db, "users"));
+  const sameIPUsers = [], sameDeviceUsers = [];
+  usersSnap.forEach(doc => { const userData = doc.data(); if (userData.ip === memberIP) sameIPUsers.push({ uid: doc.id, ...userData }); if (memberDevice && userData.device === memberDevice) sameDeviceUsers.push({ uid: doc.id, ...userData }); });
+  const content = document.getElementById('ipInfoContent');
+  content.innerHTML = `<div class="ip-header"><div class="member-avatar" style="border-color:${member.colors?.frame||'#8b5cf6'};width:50px;height:50px;font-size:25px;" onclick="showMemberProfile('${uid}');closeIpInfoModal();">${member.avatarType==='image'&&member.avatar?`<img src="${member.avatar}">`:(member.emoji||'👤')}</div><div><div style="font-weight:800;font-size:18px;cursor:pointer;" onclick="showMemberProfile('${uid}');closeIpInfoModal();">${member.name||'مستخدم'}</div><div style="color:#94a3b8;font-size:12px;">IP: ${memberIP}</div><div style="color:#94a3b8;font-size:10px;">الجهاز: ${(memberDevice||'غير معروف').substring(0,30)}...</div></div></div><div class="permissions-title"><i class="fas fa-network-wired"></i> حسابات بنفس IP (${sameIPUsers.length})</div><div class="ip-accounts-list" style="max-height:200px;">${sameIPUsers.map(acc => `<div class="ip-account-item" onclick="showMemberProfile('${acc.uid}');closeIpInfoModal();"><div class="member-avatar" style="border-color:${acc.colors?.frame||'#8b5cf6'};width:35px;height:35px;font-size:18px;">${acc.avatarType==='image'&&acc.avatarUrl?`<img src="${acc.avatarUrl}">`:(acc.emoji||'👤')}</div><div style="flex:1;"><div style="font-weight:600;">${acc.username||'مستخدم'}</div><div style="font-size:10px;color:#94a3b8;">ID: ${acc.uid?.substring(0,8)}...</div></div>${acc.uid===uid?'<span style="background:#10b981;color:white;padding:2px 8px;border-radius:20px;font-size:10px;">الحالي</span>':''}</div>`).join('')}</div><div class="permissions-title" style="margin-top:15px;"><i class="fas fa-mobile-alt"></i> حسابات بنفس الجهاز (${sameDeviceUsers.length})</div><div class="ip-accounts-list" style="max-height:150px;">${sameDeviceUsers.map(acc => `<div class="ip-account-item" onclick="showMemberProfile('${acc.uid}');closeIpInfoModal();"><div class="member-avatar" style="border-color:${acc.colors?.frame||'#8b5cf6'};width:35px;height:35px;font-size:18px;">${acc.avatarType==='image'&&acc.avatarUrl?`<img src="${acc.avatarUrl}">`:(acc.emoji||'👤')}</div><div style="flex:1;"><div style="font-weight:600;">${acc.username||'مستخدم'}</div><div style="font-size:10px;color:#94a3b8;">ID: ${acc.uid?.substring(0,8)}...</div></div>${acc.uid===uid?'<span style="background:#10b981;color:white;padding:2px 8px;border-radius:20px;font-size:10px;">الحالي</span>':''}</div>`).join('')}</div><button class="btn-submit" style="margin-top:20px;" onclick="closeIpInfoModal()">إغلاق</button>`;
+  document.getElementById('ipInfoModal')?.classList.add('active');
+};
+
+window.closeIpInfoModal = () => document.getElementById('ipInfoModal')?.classList.remove('active');
+
+window.promoteToModerator = async (uid) => {
+  if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+  if ((currentRoom.moderators || []).length >= 3) { showToast('لا يمكن تعيين أكثر من 3 مشرفين', false); return; }
+  const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'moderator' } : m);
+  await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers, moderators: arrayUnion(uid) });
+  showToast('تمت الترقية إلى مشرف');
+};
+
+window.demoteFromModerator = async (uid) => {
+  if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+  const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'member' } : m);
+  await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers, moderators: arrayRemove(uid) });
+  showToast('تمت إزالة المشرف');
+};
+
+window.banMember = async (uid) => {
+  if (!currentRoom) return;
+  const isOwner = currentRoom.ownerId === currentUser.uid;
+  const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+  if (!isOwner && !isModerator) return;
+  const targetMember = currentRoom.members.find(m => m.uid === uid);
+  if (targetMember?.role === 'owner') { showToast('لا يمكن حظر المالك', false); return; }
+  if (isModerator && targetMember?.role === 'moderator') { showToast('لا يمكن للمشرف حظر مشرف آخر', false); return; }
+  const occupants = currentRoom.iconOccupants || {};
+  let newOccupants = { ...occupants }, iconUpdated = false;
+  for (const [type, occupant] of Object.entries(occupants)) { if (occupant?.uid === uid) { delete newOccupants[type]; iconUpdated = true; } }
+  const updateData = { bannedUsers: arrayUnion(uid), members: currentRoom.members.filter(m => m.uid !== uid) };
+  if (iconUpdated) updateData.iconOccupants = newOccupants;
+  await updateDoc(doc(db, "rooms", currentRoomId), updateData);
+  showToast('تم حظر العضو');
+};
+
+window.unbanMember = async (uid) => {
+  if (!currentRoom) return;
+  const isOwner = currentRoom.ownerId === currentUser.uid;
+  const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
+  if (!isOwner && !isModerator) return;
+  await updateDoc(doc(db, "rooms", currentRoomId), { bannedUsers: arrayRemove(uid) });
+  showToast('تم إلغاء الحظر');
+};
+
+// ========== الملف الشخصي المصغر ==========
+window.showMemberProfile = async (uid) => {
+  try {
+    const userDoc = await getDoc(doc(db, "users", uid));
+    if (!userDoc.exists()) { showToast('المستخدم غير موجود', false); return; }
+    const user = userDoc.data();
+    const targetUserId = user.userId || uid.slice(0, 6);
+    const isOwnProfile = uid === currentUser.uid;
+    const postsQuery = query(collection(db, "posts"), where("userId", "==", targetUserId));
+    const postsSnap = await getDocs(postsQuery);
+    const userPosts = [];
+    postsSnap.forEach(d => userPosts.push({ id: d.id, ...d.data() }));
+    userPosts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    const followersDoc = await getDoc(doc(db, "social", "followers"));
+    let followersCount = 0;
+    if (followersDoc.exists()) { const followersData = followersDoc.data(); Object.values(followersData).forEach(list => { if (list && list.includes(targetUserId)) followersCount++; }); }
+    const idClass = getIdClass(targetUserId);
+    const content = document.getElementById('profilePopupContent');
+    const profileData = { uid: user.uid, username: user.username, avatarUrl: user.avatarUrl, avatarType: user.avatarType || 'emoji', emoji: user.emoji || '👤', colors: user.colors || {}, nameImage: user.nameImage };
+    content.innerHTML = `<div style="display:flex;align-items:center;gap:15px;margin-bottom:20px;"><div style="width:80px;height:80px;border-radius:50%;overflow:visible;background:transparent;">${renderAvatarWithFrame(profileData, 'lg')}</div><div style="flex:1;"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><h2 style="color:#fff;margin:0;font-size:20px;display:flex;align-items:center;gap:5px;">${renderUserName(profileData, 'inline')}${user.verified?'<i class="fas fa-check-circle" style="color:#3b82f6;"></i>':''}</h2><span class="user-id-badge ${idClass}" style="background:${user.colors?.frame||'#fbbf24'};font-size:14px;padding:4px 12px;border-radius:20px;">#${targetUserId}</span></div>${user.secondaryId?`<p style="font-size:12px;color:#aaa;margin:5px 0 0;">@${user.secondaryId}</p>`:''}</div></div><div style="display:flex;gap:30px;margin:15px 0;justify-content:space-around;border-top:1px solid #333;border-bottom:1px solid #333;padding:12px 0;"><div style="text-align:center;"><i class="fas fa-image" style="font-size:22px;color:#fff;"></i><div style="font-weight:bold;margin-top:5px;">${userPosts.length}</div><div style="font-size:12px;color:#aaa;">منشورات</div></div><div style="text-align:center;"><i class="fas fa-users" style="font-size:22px;color:#fff;"></i><div style="font-weight:bold;margin-top:5px;">${followersCount}</div><div style="font-size:12px;color:#aaa;">متابعين</div></div></div><p style="margin:10px 0;color:#ddd;font-style:italic;">${user.bio||'لا يوجد نبذة'}</p>${!isOwnProfile?`<div style="margin-top:20px;display:flex;gap:10px;"><button onclick="window.startChatWithUserFromRoom('${targetUserId}')" style="flex:1;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;border:none;padding:14px;border-radius:30px;font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="fab fa-facebook-messenger"></i> مراسلة</button></div>`:''}<h4 style="margin:20px 0 10px;color:#ccc;font-size:14px;display:flex;align-items:center;gap:5px;"><i class="fas fa-newspaper"></i> المنشورات</h4><div style="max-height:300px;overflow-y:auto;">${userPosts.map(post => { let mediaHtml = ''; if (post.mediaUrl) { if (post.mediaType === 'image') mediaHtml = `<div style="margin:10px 0;"><img src="${post.mediaUrl}" style="max-width:100%;max-height:200px;border-radius:15px;" onerror="this.style.display='none'"></div>`; else if (post.mediaType === 'youtube') mediaHtml = `<div style="margin:10px 0;"><iframe width="100%" height="200" src="${post.mediaUrl}" frameborder="0" allowfullscreen style="border-radius:15px;"></iframe></div>`; } return `<div style="background:#111;border-radius:20px;padding:15px;margin-bottom:12px;border:1px solid #333;"><div style="color:${post.colors?.postText||'#ddd'};margin-bottom:10px;">${post.content||''}</div>${mediaHtml}<div style="display:flex;gap:20px;margin-top:10px;color:#aaa;font-size:12px;"><span><i class="fas fa-heart"></i> ${post.likes||0}</span><span><i class="fas fa-comment"></i> ${(post.comments||[]).length}</span><span style="margin-right:auto;">${post.timestamp?new Date(post.timestamp).toLocaleDateString('ar-SA'):''}</span></div></div>`; }).join('')}${userPosts.length===0?'<p style="color:#64748b;text-align:center;padding:20px;">لا توجد منشورات</p>':''}</div>`;
+    document.getElementById('profilePopupOverlay')?.classList.add('active');
+    document.getElementById('profilePopup')?.classList.add('active');
+  } catch (e) {}
+};
+
+window.closeProfilePopup = () => { 
+  document.getElementById('profilePopupOverlay')?.classList.remove('active'); 
+  document.getElementById('profilePopup')?.classList.remove('active'); 
+};
+
+function updateMembersCount() { 
+  const count = (currentRoom?.members || []).length; 
+  document.getElementById('currentRoomSubtitle').innerHTML = `<i class="fas fa-user"></i> ${count}`; 
+}
+
+// ========== مغادرة الغرفة ==========
+window.leaveRoom = async () => {
+  if (!currentRoomId) return;
+  const occupants = currentRoom?.iconOccupants || {};
+  for (const [type, occupant] of Object.entries(occupants)) {
+    if (occupant?.uid === currentUser.uid) {
+      const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
+      if (earned > 0) { await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) }); resources.gold += earned; }
+      const newOccupants = { ...occupants }; delete newOccupants[type];
+      await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
+    }
+  }
+  await sendLeaveMessage(currentRoomId, currentUserData);
+  const updatedMembers = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
+  await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers });
+  document.querySelector('.rooms-header').style.display = 'flex';
+  document.querySelector('.search-section').style.display = 'flex';
+  document.querySelector('.rooms-container').style.display = 'block';
+  document.getElementById('chatRoomView')?.classList.remove('active');
+  document.getElementById('membersPanel')?.classList.remove('active');
+  document.getElementById('emojiPanel')?.classList.remove('active');
+  if (unsubscribeMessages) unsubscribeMessages();
+  if (unsubscribeRoom) unsubscribeRoom();
+  currentRoom = null;
+  currentRoomId = null;
+};
+
+window.startChatWithUserFromRoom = async (targetUserId) => {
+  if (!targetUserId) { showToast('معرف المستخدم غير صالح', false); return; }
+  if (!currentUser) { showToast('يجب تسجيل الدخول', false); return; }
+  try {
+    let otherUid = null;
+    const userByIdDoc = await getDoc(doc(db, "users_by_id", targetUserId));
+    if (userByIdDoc.exists()) otherUid = userByIdDoc.data().uid;
+    else { const usersSnap = await getDocs(query(collection(db, "users"), where("userId", "==", targetUserId))); if (!usersSnap.empty) otherUid = usersSnap.docs[0].id; }
+    if (!otherUid) { showToast('المستخدم غير موجود', false); return; }
+    if (otherUid === currentUser.uid) { showToast('لا يمكنك مراسلة نفسك', false); return; }
+    closeProfilePopup();
+    localStorage.setItem('openChatWith', targetUserId);
+    window.open('https://amanhsn55555-eng.github.io/Msgtdy/', '_blank');
+  } catch (error) { showToast('❌ فشل فتح المحادثة', false); }
+};
+
+// ========== تحديث الأيقونات كل ثانية ==========
+setInterval(() => { if (currentRoom?.type === 'advanced') renderSpecialIcons(); }, 1000);
+
+// ========== إعدادات الغرفة ==========
+window.openRoomSettingsModal = () => {
+  const isOwner = currentRoom?.ownerId === currentUser.uid;
+  const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+  if (!isOwner && !isModerator) { showToast('ليس لديك صلاحية للوصول إلى الإعدادات', false); return; }
+  document.getElementById('backgroundUrl').value = currentRoom?.background || '';
+  document.getElementById('roomImageUrl').value = currentRoom?.roomImage || currentRoom?.image || '';
+  document.getElementById('editRoomName').value = currentRoom?.name || '';
+  document.getElementById('editRoomDesc').value = currentRoom?.description || '';
+  document.getElementById('editRoomCapacity').value = currentRoom?.capacity || 50;
+  document.getElementById('editWelcomeMessage').value = currentRoom?.welcomeMessage || '';
+  const isOwnerOnly = !isOwner;
+  document.getElementById('backgroundUrl').disabled = isOwnerOnly;
+  document.getElementById('roomImageUrl').disabled = isOwnerOnly;
+  document.getElementById('editRoomName').disabled = isOwnerOnly;
+  document.getElementById('editRoomDesc').disabled = isOwnerOnly;
+  document.getElementById('editRoomCapacity').disabled = isOwnerOnly;
+  document.getElementById('editWelcomeMessage').disabled = isOwnerOnly;
+  const deleteBtn = document.getElementById('deleteRoomBtn');
+  if (deleteBtn) deleteBtn.style.display = isOwner ? 'block' : 'none';
+  const announcementTab = document.querySelector('[onclick*="announcement"]');
+  if (announcementTab) announcementTab.style.display = (currentUserData?.email === 'ad5@5.com') ? 'block' : 'none';
+  selectedFrame = currentRoom?.frame || 1;
+  document.getElementById('customFrameUrl').value = currentRoom?.customFrame || '';
+  renderFramesGrid();
+  loadSettingsValues();
+  document.getElementById('roomSettingsModal')?.classList.add('active');
+  switchSettingsTab('general');
+};
+
+window.closeRoomSettingsModal = () => document.getElementById('roomSettingsModal')?.classList.remove('active');
+
+function renderFramesGrid() {
+  const grid = document.getElementById('framesGrid');
+  grid.innerHTML = frameNames.map((name, index) => {
+    const frameNum = index + 1;
+    return `
+      <div class="frame-preview frame${frameNum} ${selectedFrame === frameNum ? 'selected' : ''}" onclick="selectFrame(${frameNum})">
+        <span style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; font-size: 12px;">${name}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+window.selectFrame = (frameNum) => {
+  selectedFrame = frameNum;
+  renderFramesGrid();
+};
+
+window.saveRoomFrame = async () => {
+  if (!currentRoom || currentRoom.ownerId !== currentUser.uid) { showToast('فقط المالك يمكنه تغيير الإطار', false); return; }
+  const customFrame = document.getElementById('customFrameUrl').value.trim();
+  await updateDoc(doc(db, "rooms", currentRoomId), { frame: selectedFrame, customFrame: customFrame || null });
+  closeRoomSettingsModal();
+  showToast('تم حفظ الإطار');
+};
+
+window.saveGeneralSettings = async () => {
+  if (!currentRoom || currentRoom.ownerId !== currentUser.uid) { showToast('فقط المالك يمكنه تعديل الإعدادات', false); return; }
+  const updates = {
+    background: document.getElementById('backgroundUrl').value.trim() || null,
+    roomImage: document.getElementById('roomImageUrl').value.trim() || currentRoom.image,
+    name: document.getElementById('editRoomName').value.trim(),
+    description: document.getElementById('editRoomDesc').value.trim(),
+    capacity: parseInt(document.getElementById('editRoomCapacity').value),
+    welcomeMessage: document.getElementById('editWelcomeMessage').value.trim()
+  };
+  await updateDoc(doc(db, "rooms", currentRoomId), updates);
+  closeRoomSettingsModal();
+  showToast('تم حفظ التغييرات');
+};
+
+function loadSettingsValues() {
+  const styles = currentRoom?.textStyles || {};
+  document.getElementById('ownerNameColor').value = styles.ownerColor || '#4ade80';
+  document.getElementById('ownerNameSize').value = styles.ownerSize || 16;
+  document.getElementById('modNameColor').value = styles.modColor || '#f87171';
+  document.getElementById('modNameSize').value = styles.modSize || 15;
+  document.getElementById('memberNameColor').value = styles.memberColor || '#bae6fd';
+  document.getElementById('memberNameSize').value = styles.memberSize || 14;
+  document.getElementById('globalFontFamily').value = styles.fontFamily || "'Segoe UI', 'Tajawal'";
+  renderWordsLists();
+  renderShortcutsList();
+  renderGiftsList();
+  renderMonitorMessages();
+  renderEmojisList();
+}
+
+window.switchSettingsTab = (tab) => {
+  currentSettingsTab = tab;
+  document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  const tabs = ['general', 'styles', 'words', 'shortcuts', 'gifts', 'frame', 'emoji', 'announcement'];
+  tabs.forEach(t => {
+    const el = document.getElementById('settingsTab' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (el) el.style.display = t === tab ? 'block' : 'none';
+  });
+  if (tab === 'emoji') {
+    document.getElementById('emojiType').addEventListener('change', (e) => {
+      document.getElementById('emojiTextGroup').style.display = e.target.value === 'text' ? 'block' : 'none';
+      document.getElementById('emojiImageGroup').style.display = e.target.value === 'image' ? 'block' : 'none';
+    });
+  }
+};
+
+window.saveTextStyles = async () => {
+  if (!currentRoom || (currentUser.uid !== currentRoom.ownerId && !(currentRoom.moderators || []).includes(currentUser.uid))) {
+    showToast('ليس لديك صلاحية لتعديل التنسيقات', false); return;
+  }
+  const styles = {
+    ownerColor: document.getElementById('ownerNameColor').value,
+    ownerSize: parseInt(document.getElementById('ownerNameSize').value),
+    modColor: document.getElementById('modNameColor').value,
+    modSize: parseInt(document.getElementById('modNameSize').value),
+    memberColor: document.getElementById('memberNameColor').value,
+    memberSize: parseInt(document.getElementById('memberNameSize').value),
+    fontFamily: document.getElementById('globalFontFamily').value
+  };
+  await updateDoc(doc(db, "rooms", currentRoomId), { textStyles: styles });
+  showToast('تم حفظ التنسيقات');
+};
+
+window.addBannedWord = async () => {
+  const word = document.getElementById('newBannedWord').value.trim();
+  if (!word) return;
+  await updateDoc(doc(db, "rooms", currentRoomId), { bannedWords: arrayUnion(word) });
+  document.getElementById('newBannedWord').value = '';
+  showToast('تمت إضافة الكلمة المحظورة');
+};
+
+window.addMonitoredWord = async () => {
+  const word = document.getElementById('newMonitoredWord').value.trim();
+  if (!word) return;
+  await updateDoc(doc(db, "rooms", currentRoomId), { monitoredWords: arrayUnion(word) });
+  document.getElementById('newMonitoredWord').value = '';
+  showToast('تمت إضافة كلمة المراقبة');
+};
+
+function renderWordsLists() {
+  const bannedWords = currentRoom?.bannedWords || [];
+  const monitoredWords = currentRoom?.monitoredWords || [];
+  const bannedContainer = document.getElementById('bannedWordsList');
+  bannedContainer.innerHTML = bannedWords.map(word => `
+    <div style="display: flex; justify-content: space-between; background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #ef4444;">
+      <span style="color: #fca5a5;">🚫 ${word}</span>
+      <i class="fas fa-times" style="cursor: pointer; color: #ef4444;" onclick="removeWord('banned', '${word}')"></i>
+    </div>
+  `).join('');
+  const monitoredContainer = document.getElementById('monitoredWordsList');
+  monitoredContainer.innerHTML = monitoredWords.map(word => `
+    <div style="display: flex; justify-content: space-between; background: rgba(251, 191, 36, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #fbbf24;">
+      <span style="color: #fde68a;">👁️ ${word}</span>
+      <i class="fas fa-times" style="cursor: pointer; color: #fbbf24;" onclick="removeWord('monitored', '${word}')"></i>
+    </div>
+  `).join('');
+}
+
+async function removeWord(type,word){const field=type==='banned'?'bannedWords':'monitoredWords';await updateDoc(doc(db,"rooms",currentRoomId),{[field]:arrayRemove(word)});if(type==='monitored'){const logs=currentRoom.monitorLogs||[];const updatedLogs=logs.filter(log=>!(log.detectedWords||[]).includes(word));await updateDoc(doc(db,"rooms",currentRoomId),{monitorLogs:updatedLogs});}showToast('تم حذف الكلمة وسجلاتها')}
+
+window.toggleMonitorMessages = () => {
+  showMonitorMessages = !showMonitorMessages;
+  document.getElementById('monitorMessagesContainer').style.display = showMonitorMessages ? 'block' : 'none';
+};
+
+function renderMonitorMessages() {
+  const logs = currentRoom?.monitorLogs || [];
+  const container = document.getElementById('monitorMessagesContainer');
+  if (logs.length === 0) {
+    container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد رسائل مراقبة</p>';
+    return;
+  }
+  const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
+  if (!isStaff) {
+    container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">المشرفون فقط يمكنهم رؤية رسائل المراقبة</p>';
+    return;
+  }
+  container.innerHTML = logs.slice(-20).reverse().map(log => `
+    <div class="monitor-message-item">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <div style="width:35px;height:35px;border-radius:50%;overflow:hidden;border:2px solid #fbbf24;margin-left:8px;">
+    ${log.userAvatarType==='image'&&log.userAvatar?`<img src="${log.userAvatar}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}
+    <span style="display:${log.userAvatarType==='image'&&log.userAvatar?'none':'flex'};width:100%;height:100%;align-items:center;justify-content:center;background:#1a1a2e;font-size:18px;">${log.userEmoji||'👤'}</span>
+</div>
+        <span style="font-weight: 600;">${log.userName}</span>
+        <span style="font-size: 10px; color: #94a3b8;">${new Date(log.timestamp).toLocaleTimeString('ar-SA')}</span>
+        <i class="fas fa-trash" style="margin-right: auto; cursor: pointer; color: #ef4444;" onclick="deleteMonitorLog(${log.timestamp})"></i>
+      </div>
+      <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 5px;">${log.message}</div>
+      <div style="font-size: 11px; color: #fbbf24;">الكلمات المكتشفة: ${log.detectedWords.join('، ')}</div>
+    </div>
+  `).join('');
+}
+
+window.deleteMonitorLog = async (timestamp) => {
+  const updatedLogs = (currentRoom.monitorLogs || []).filter(log => log.timestamp !== timestamp);
+  await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
+  showToast('تم حذف السجل');
+};
+
+window.selectShortcutShape = (shape) => {
+  selectedShortcutShape = shape;
+  document.querySelectorAll('.shape-option').forEach(el => el.classList.remove('selected'));
+  event.target.closest('.shape-option').classList.add('selected');
+  document.getElementById('shortcutShape').value = shape;
+};
+
+window.addShortcut = async () => {
+  const key = document.getElementById('newShortcutKey').value.trim();
+  const value = document.getElementById('newShortcutValue').value.trim();
+  const imageUrl = document.getElementById('shortcutImageUrl').value.trim();
+  const shape = document.getElementById('shortcutShape').value;
+  if (!key) { showToast('الرجاء إدخال الاختصار', false); return; }
+  if (!value && !imageUrl) { showToast('الرجاء إدخال النص أو رابط الصورة', false); return; }
+  const shortcuts = { ...(currentRoom.shortcuts || {}) };
+  if (imageUrl) shortcuts[key] = { type: 'image', url: imageUrl, shape: shape };
+  else shortcuts[key] = value;
+  await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
+  document.getElementById('newShortcutKey').value = '';
+  document.getElementById('newShortcutValue').value = '';
+  document.getElementById('shortcutImageUrl').value = '';
+  showToast('تم إضافة الاختصار');
+};
+
+function renderShortcutsList() {
+  const shortcuts = currentRoom?.shortcuts || {};
+  const container = document.getElementById('shortcutsList');
+  if (Object.keys(shortcuts).length === 0) {
+    container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد اختصارات</p>';
+    return;
+  }
+  container.innerHTML = Object.entries(shortcuts).map(([key, value]) => {
+    const isImage = typeof value === 'object' && value.type === 'image';
+    const displayValue = isImage ? 
+      `<img src="${value.url}" style="width: 30px; height: 30px; object-fit: cover; ${value.shape === 'circle' ? 'border-radius: 50%;' : (value.shape === 'rectangle' ? 'border-radius: 5px; width: 45px;' : 'border-radius: 5px;')}">` : value;
+    return `
+      <div style="display: flex; justify-content: space-between; background: rgba(139, 92, 246, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #8b5cf6;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="color: #c4b5fd;">${key}</span>
+          <span style="color: #94a3b8;">→</span>
+          <span style="color: #e2e8f0; display: flex; align-items: center;">${displayValue}</span>
+        </div>
+        <i class="fas fa-trash" style="cursor: pointer; color: #ef4444;" onclick="deleteShortcut('${key}')"></i>
+      </div>
+    `;
+  }).join('');
+}
+
+window.deleteShortcut = async (key) => {
+  const shortcuts = { ...currentRoom.shortcuts };
+  delete shortcuts[key];
+  await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
+  showToast('تم حذف الاختصار');
+};
+
+window.addGift = async () => {
+  const name = document.getElementById('giftName').value.trim();
+  const image = document.getElementById('giftImageUrl').value.trim();
+  const price = parseInt(document.getElementById('giftPrice').value);
+  if (!name || !image || !price) { showToast('الرجاء إدخال جميع بيانات الهدية', false); return; }
+  const gift = { id: Date.now().toString(), name, image, price, createdAt: Date.now() };
+  await updateDoc(doc(db, "rooms", currentRoomId), { gifts: arrayUnion(gift) });
+  document.getElementById('giftName').value = '';
+  document.getElementById('giftImageUrl').value = '';
+  document.getElementById('giftPrice').value = '10';
+  showToast('تم إضافة الهدية');
+};
+
+function renderGiftsList(){const gifts=currentRoom?.gifts||[];const container=document.getElementById('giftsList');if(!gifts.length){container.innerHTML='<p style="color:#64748b;text-align:center;padding:10px;">لا توجد هدايا</p>';return}const isOwner=currentRoom?.ownerId===currentUser?.uid;const isModerator=(currentRoom?.moderators||[]).includes(currentUser?.uid);container.innerHTML='<div class="gifts-grid">'+gifts.map(g=>`<div class="gift-item" style="position:relative;"><img src="${g.image}" onerror="this.src=\'https://via.placeholder.com/100?text=🎁\'"><div class="gift-price">${g.price} <i class="fas fa-coins"></i></div><div style="font-size:10px;margin-top:5px;">${g.name}</div>${(isOwner||isModerator||g.createdBy===currentUser?.uid)?'<i class="fas fa-trash" style="position:absolute;top:2px;right:2px;color:#ef4444;cursor:pointer;background:rgba(0,0,0,0.5);padding:3px;border-radius:50%;" onclick="deleteGift(\''+g.id+'\')"></i>':''}</div>`).join('')+'</div>'}
+
+window.deleteGift = async (giftId) => {
+  const updatedGifts = (currentRoom.gifts || []).filter(g => g.id !== giftId);
+  await updateDoc(doc(db, "rooms", currentRoomId), { gifts: updatedGifts });
+  showToast('تم حذف الهدية');
+};
+
+window.addEmoji = async () => {
+  const type = document.getElementById('emojiType').value;
+  const value = type === 'text' ? document.getElementById('emojiText').value.trim() : document.getElementById('emojiImageUrl').value.trim();
+  const width = parseInt(document.getElementById('emojiWidth').value);
+  const height = parseInt(document.getElementById('emojiHeight').value);
+  const animation = document.getElementById('emojiAnimation').value;
+  if (!value) { showToast('الرجاء إدخال الإيموجي', false); return; }
+  const emoji = { type, value, width, height, animation };
+  await updateDoc(doc(db, "rooms", currentRoomId), { emojis: arrayUnion(emoji) });
+  document.getElementById('emojiText').value = '';
+  document.getElementById('emojiImageUrl').value = '';
+  showToast('تم إضافة الإيموجي');
+};
+
+function renderEmojisList() {
+  const emojis = currentRoom?.emojis || [];
+  const container = document.getElementById('emojisList');
+  if (emojis.length === 0) {
+    container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد إيموجيات</p>';
+    return;
+  }
+  const isOwner = currentRoom?.ownerId === currentUser.uid;
+  const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
+  const canDelete = isOwner || isModerator;
+  container.innerHTML = `
+    <div class="gifts-grid">
+      ${emojis.map((emoji, index) => `
+        <div class="gift-item" style="position: relative;">
+          ${emoji.type === 'text' ? `<span style="font-size: 30px;">${emoji.value}</span>` : `<img src="${emoji.value}" style="width: 100%; aspect-ratio: 1; object-fit: contain;">`}
+          <div style="font-size: 9px; margin-top: 5px;">${emoji.width}x${emoji.height}</div>
+          ${canDelete ? `<i class="fas fa-trash" style="position: absolute; top: 2px; right: 2px; color: #ef4444; cursor: pointer; background: rgba(0,0,0,0.5); padding: 3px; border-radius: 50%;" onclick="deleteEmoji(${index})"></i>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+window.deleteEmoji = async (index) => {
+  const emojis = currentRoom.emojis || [];
+  emojis.splice(index, 1);
+  await updateDoc(doc(db, "rooms", currentRoomId), { emojis });
+  showToast('تم حذف الإيموجي');
+};
+
+// ========== الإعلانات ==========
+window.publishAnnouncement = async () => {
+  if (currentUserData?.email !== 'ad5@5.com') { showToast('غير مصرح لك بنشر إعلانات', false); return; }
+  const title = document.getElementById('announcementTitle').value.trim();
+  const description = document.getElementById('announcementDesc').value.trim();
+  const image = document.getElementById('announcementImage').value.trim();
+  const video = document.getElementById('announcementVideo').value.trim();
+  if (!title) { showToast('الرجاء إدخال عنوان الإعلان', false); return; }
+  const announcement = {
+    id: Date.now().toString(), title, description, image: image || null, video: video || null,
+    active: true, createdAt: Date.now(), createdBy: currentUser.uid,
+    createdByData: {
+      username: currentUserData?.username || 'المعلن',
+      avatarUrl: currentUserData?.avatarUrl || null,
+      avatarType: currentUserData?.avatarType || 'emoji',
+      emoji: currentUserData?.emoji || '👤'
     }
   };
+  await setDoc(doc(db, "settings", "announcement"), announcement);
+  document.getElementById('announcementTitle').value = '';
+  document.getElementById('announcementDesc').value = '';
+  document.getElementById('announcementImage').value = '';
+  document.getElementById('announcementVideo').value = '';
+  closeRoomSettingsModal();
+  showToast('تم نشر الإعلان لجميع الغرف');
+};
 
-  function getIdClass(userId) {
-    if (!userId) return '';
-    const idStr = String(userId);
-    const digitCount = idStr.replace(/\D/g, '').length;
-    if (digitCount === 1) return 'id-1-digit';
-    if (digitCount === 2) return 'id-2-digit';
-    if (digitCount === 3) return 'id-3-digit';
-    return '';
-  }
-
-  function extractYoutubeId(url) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  }
-
-  function parseMessageText(text) {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const urls = text.match(urlRegex) || [];
-    
-    let mediaHtml = '';
-    let displayText = text;
-    
-    urls.forEach(url => {
-      if (url.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-        mediaHtml += `<div class="message-media"><img src="${url}" onclick="window.open('${url}')" onerror="this.style.display='none'"></div>`;
-        displayText = displayText.replace(url, '');
-      } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        const videoId = extractYoutubeId(url);
-        if (videoId) {
-          mediaHtml += `<div class="message-media"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
-          displayText = displayText.replace(url, '');
-        }
-      }
-    });
-    
-    return { displayText: displayText.trim(), mediaHtml };
-  }
-
-  async function loadUserData(uid) {
-    try {
-      const userDoc = await getDoc(doc(db, "users", uid));
-      if (userDoc.exists()) currentUserData = userDoc.data();
-      
-      const resDoc = await getDoc(doc(db, "resources", uid));
-      if (resDoc.exists()) resources = resDoc.data();
-    } catch (e) {
-      console.error("خطأ في تحميل بيانات المستخدم:", e);
-    }
-  }
-
-  async function loadBannedUsersData(bannedUids) {
-    bannedUsersData = [];
-    for (const uid of bannedUids) {
-      const userDoc = await getDoc(doc(db, "users", uid));
-      if (userDoc.exists()) {
-        bannedUsersData.push({ uid, ...userDoc.data() });
-      } else {
-        bannedUsersData.push({ uid, username: 'مستخدم محظور', emoji: '🚫' });
+async function loadGlobalAnnouncement() {
+  try {
+    const annDoc = await getDoc(doc(db, "settings", "announcement"));
+    if (annDoc.exists()) {
+      globalAnnouncement = annDoc.data();
+      const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+      if (globalAnnouncement.active && !dismissedAnnouncements.includes(annId)) {
+        showAnnouncementPopup();
       }
     }
+  } catch (e) {}
+}
+
+function showAnnouncementPopup() {
+  if (!globalAnnouncement) return;
+  const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+  if (dismissedAnnouncements.includes(annId)) return;
+  document.getElementById('announcementPopupTitle').textContent = globalAnnouncement.title || '';
+  document.getElementById('announcementPopupDesc').textContent = globalAnnouncement.description || '';
+  const img = document.getElementById('announcementPopupImage');
+  if (globalAnnouncement.image) {
+    img.src = globalAnnouncement.image;
+    img.style.display = 'block';
+  } else {
+    img.style.display = 'none';
   }
-
-  let dismissedAnnouncements = JSON.parse(localStorage.getItem('dismissedAnnouncements') || '[]');
-
-  async function loadGlobalAnnouncement() {
-    try {
-      const annDoc = await getDoc(doc(db, "settings", "announcement"));
-      if (annDoc.exists()) {
-        globalAnnouncement = annDoc.data();
-        const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-        if (globalAnnouncement.active && !dismissedAnnouncements.includes(annId)) {
-          showAnnouncementPopup();
-        }
-      }
-    } catch (e) {}
-  }
-
-  function showAnnouncementPopup() {
-    if (!globalAnnouncement) return;
-    const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-    if (dismissedAnnouncements.includes(annId)) return;
-    
-    document.getElementById('announcementPopupTitle').textContent = globalAnnouncement.title || '';
-    document.getElementById('announcementPopupDesc').textContent = globalAnnouncement.description || '';
-    
-    const img = document.getElementById('announcementPopupImage');
-    if (globalAnnouncement.image) {
-      img.src = globalAnnouncement.image;
-      img.style.display = 'block';
-    } else {
-      img.style.display = 'none';
-    }
-    
-    const videoContainer = document.getElementById('announcementPopupVideo');
-    if (globalAnnouncement.video) {
-      const videoId = extractYoutubeId(globalAnnouncement.video);
-      if (videoId) {
-        videoContainer.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius: 15px;"></iframe>`;
-        videoContainer.style.display = 'block';
-      } else {
-        videoContainer.style.display = 'none';
-      }
+  const videoContainer = document.getElementById('announcementPopupVideo');
+  if (globalAnnouncement.video) {
+    const videoId = extractYoutubeId(globalAnnouncement.video);
+    if (videoId) {
+      videoContainer.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen style="border-radius: 15px;"></iframe>`;
+      videoContainer.style.display = 'block';
     } else {
       videoContainer.style.display = 'none';
     }
-    
-    const creatorDiv = document.getElementById('announcementPopupCreator');
-    const creatorAvatar = document.getElementById('announcementCreatorAvatar');
-    const creatorEmoji = document.getElementById('announcementCreatorEmoji');
-    const creatorName = document.getElementById('announcementCreatorName');
-    
-    if (globalAnnouncement.createdByData) {
-      creatorDiv.style.display = 'flex';
-      creatorName.textContent = globalAnnouncement.createdByData.username || 'المعلن';
-      if (globalAnnouncement.createdByData.avatarType === 'image' && globalAnnouncement.createdByData.avatarUrl) {
-        creatorAvatar.src = globalAnnouncement.createdByData.avatarUrl;
-        creatorAvatar.style.display = 'block';
-        creatorEmoji.style.display = 'none';
-      } else {
-        creatorAvatar.style.display = 'none';
-        creatorEmoji.textContent = globalAnnouncement.createdByData.emoji || '👤';
-        creatorEmoji.style.display = 'inline';
-      }
+  } else {
+    videoContainer.style.display = 'none';
+  }
+  const creatorDiv = document.getElementById('announcementPopupCreator');
+  const creatorAvatar = document.getElementById('announcementCreatorAvatar');
+  const creatorEmoji = document.getElementById('announcementCreatorEmoji');
+  const creatorName = document.getElementById('announcementCreatorName');
+  if (globalAnnouncement.createdByData) {
+    creatorDiv.style.display = 'flex';
+    creatorName.textContent = globalAnnouncement.createdByData.username || 'المعلن';
+    if (globalAnnouncement.createdByData.avatarType === 'image' && globalAnnouncement.createdByData.avatarUrl) {
+      creatorAvatar.src = globalAnnouncement.createdByData.avatarUrl;
+      creatorAvatar.style.display = 'block';
+      creatorEmoji.style.display = 'none';
     } else {
-      creatorDiv.style.display = 'none';
+      creatorAvatar.style.display = 'none';
+      creatorEmoji.textContent = globalAnnouncement.createdByData.emoji || '👤';
+      creatorEmoji.style.display = 'inline';
     }
-    
-    document.getElementById('announcementOverlay').classList.add('active');
-    document.getElementById('announcementPopup').classList.add('active');
+  } else {
+    creatorDiv.style.display = 'none';
   }
-
-  window.closeAnnouncement = () => {
-    if (globalAnnouncement) {
-      const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
-      if (!dismissedAnnouncements.includes(annId)) {
-        dismissedAnnouncements.push(annId);
-        localStorage.setItem('dismissedAnnouncements', JSON.stringify(dismissedAnnouncements));
-      }
-    }
-    document.getElementById('announcementOverlay').classList.remove('active');
-    document.getElementById('announcementPopup').classList.remove('active');
-  };
-
-  function listenForAnnouncements() {
-    onSnapshot(doc(db, "settings", "announcement"), (docSnap) => {
-      if (docSnap.exists()) {
-        const newAnn = docSnap.data();
-        const annId = newAnn.id || newAnn.createdAt;
-        if (newAnn.active && !dismissedAnnouncements.includes(annId)) {
-          globalAnnouncement = newAnn;
-          showAnnouncementPopup();
-        }
-      }
-    });
-  }
-
-  function subscribeToRooms() {
-    const roomsQuery = query(collection(db, "rooms"), orderBy("createdAt", "desc"));
-    onSnapshot(roomsQuery, (snapshot) => {
-      rooms = [];
-      snapshot.forEach(doc => rooms.push({ id: doc.id, ...doc.data() }));
-      renderRooms();
-    });
-  }
-
-  function renderRooms() {
-    const container = document.getElementById('roomsContainer');
-    let filtered = rooms.filter(r => 
-      (r.name || '').includes(searchTerm) || (r.description || '').includes(searchTerm)
-    );
-
-    if (filtered.length === 0) {
-      container.innerHTML = `<div class="empty-state"><i class="fas fa-comments"></i><p>لا توجد غرف</p></div>`;
-      return;
-    }
-
-    let html = '';
-    for (let i = 0; i < filtered.length; i += 2) {
-      html += '<div class="rooms-row">';
-      html += renderRoomCard(filtered[i]);
-      if (filtered[i + 1]) html += renderRoomCard(filtered[i + 1]);
-      html += '</div>';
-    }
-    container.innerHTML = html;
-  }
-
-  function renderRoomCard(room) {
-    const frameClass = room.frame ? `frame${room.frame}` : '';
-    const customFrameStyle = room.customFrame ? `box-shadow: 0 0 0 3px transparent; border-image: url('${room.customFrame}') 30 round;` : '';
-    const imageUrl = room.roomImage || room.image || roomImages[0];
-    const isActive = (Date.now() - (room.lastMessageTime || room.createdAt)) < 3600000;
-    const inactiveClass = isActive ? '' : 'inactive';
-    
-    return `
-      <div class="room-card ${room.type || 'normal'} ${frameClass} ${inactiveClass}" style="${customFrameStyle}" onclick="requestJoinRoom('${room.id}')">
-        <div class="room-image">
-          <img src="${imageUrl}" onerror="this.src='${roomImages[0]}'">
-        </div>
-        <div class="room-name">
-          ${room.name || 'غرفة'}
-          ${room.password ? '<i class="fas fa-lock"></i>' : ''}
-        </div>
-        <div class="room-desc">${room.description || 'غرفة للمحادثة'}</div>
-        <div class="room-footer">
-          <span class="room-members"><i class="fas fa-user"></i> ${(room.members || []).length}/${room.capacity || 50}</span>
-          <span class="room-type-badge ${room.type || 'normal'}">${room.type === 'advanced' ? 'متطورة ✨' : 'عادية'}</span>
-        </div>
-      </div>
-    `;
+  document.getElementById('announcementOverlay').classList.add('active');
+  document.getElementById('announcementPopup').classList.add('active');
 }
 
-  window.filterRooms = () => {
-    searchTerm = document.getElementById('searchRoomsInput')?.value || '';
-    renderRooms();
-  };
-
-  window.refreshRooms = () => { 
-    renderRooms(); 
-    showToast('تم التحديث'); 
-  };
-
-  window.openCreateRoomModal = () => {
-    const selector = document.getElementById('imageSelector');
-    selector.innerHTML = roomImages.map(img => `
-      <div class="image-option ${selectedImage === img ? 'selected' : ''}" onclick="selectRoomImage('${img}')">
-        <img src="${img}" onerror="this.src='${roomImages[0]}'">
-      </div>
-    `).join('');
-    document.getElementById('createRoomModal')?.classList.add('active');
-  };
-
-  window.selectRoomImage = (img) => {
-    selectedImage = img;
-    document.querySelectorAll('.image-option').forEach(el => el.classList.remove('selected'));
-    event.target.closest('.image-option')?.classList.add('selected');
-  };
-
-  window.updateRoomPrice = () => {
-    document.getElementById('roomPrice').textContent = document.getElementById('roomType')?.value === 'normal' ? '25' : '50';
-  };
-
-  window.closeCreateRoomModal = () => document.getElementById('createRoomModal')?.classList.remove('active');
-
-  window.createRoom = async () => {
-    const name = document.getElementById('roomName')?.value.trim();
-    if (!name) { 
-      showToast('الرجاء إدخال اسم الغرفة', false); 
-      return; 
-    }
-    
-    const type = document.getElementById('roomType')?.value || 'normal';
-    const price = type === 'normal' ? 25 : 50;
-    
-    if ((resources.gold || 0) < price) { 
-      showToast('رصيد الذهب غير كافٍ', false); 
-      return; 
-    }
-
-    const room = {
-      name, 
-      image: selectedImage,
-      roomImage: selectedImage,
-      description: document.getElementById('roomDesc')?.value.trim() || '',
-      capacity: parseInt(document.getElementById('roomCapacity')?.value || '50'),
-      welcomeMessage: document.getElementById('welcomeMessage')?.value.trim() || 'مرحباً بك!',
-      password: document.getElementById('roomPassword')?.value.trim() || null,
-      type, 
-      ownerId: currentUser.uid, 
-      ownerName: currentUserData?.username || 'المالك',
-      ownerAvatar: currentUserData?.avatarUrl || null,
-      ownerAvatarType: currentUserData?.avatarType || 'emoji',
-      ownerEmoji: currentUserData?.emoji || '👑',
-      ownerColors: currentUserData?.colors || {},
-      moderators: [], 
-      bannedUsers: [],
-      members: [{
-        uid: currentUser.uid, 
-        name: currentUserData?.username || 'مستخدم',
-        avatar: currentUserData?.avatarUrl || '', 
-        avatarType: currentUserData?.avatarType || 'emoji',
-        emoji: currentUserData?.emoji || '👤', 
-        colors: currentUserData?.colors || {},
-        role: 'owner', 
-        joinedAt: Date.now()
-      }],
-      background: null, 
-      iconOccupants: {}, 
-      createdAt: Date.now(),
-      textStyles: {
-        ownerColor: '#4ade80',
-        ownerSize: 16,
-        modColor: '#f87171',
-        modSize: 15,
-        memberColor: '#bae6fd',
-        memberSize: 14,
-        fontFamily: "'Segoe UI', 'Tajawal'"
-      },
-      bannedWords: [],
-      monitoredWords: [],
-      shortcuts: {},
-      gifts: [],
-      monitorLogs: [],
-      frame: 1,
-      customFrame: null,
-      emojis: []
-    };
-
-    await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-price) });
-    resources.gold -= price;
-    await addDoc(collection(db, "rooms"), room);
-    closeCreateRoomModal();
-    showToast('تم إنشاء الغرفة!');
-  };
-
-  window.requestJoinRoom = (roomId) => {
-    const room = rooms.find(r => r.id === roomId);
-    if (!room) return;
-    if ((room.members || []).length >= (room.capacity || 50)) { 
-      showToast('الغرفة ممتلئة', false); 
-      return; 
-    }
-    if ((room.bannedUsers || []).includes(currentUser.uid)) { 
-      showToast('أنت محظور من هذه الغرفة', false); 
-      return; 
-    }
-    
-    if (room.password) {
-      document.getElementById('targetRoomId').value = roomId;
-      document.getElementById('passwordModal')?.classList.add('active');
-    } else {
-      joinRoom(roomId);
-    }
-  };
-
-  window.closePasswordModal = () => document.getElementById('passwordModal')?.classList.remove('active');
-
-  window.joinWithPassword = () => {
-    const roomId = document.getElementById('targetRoomId')?.value;
-    const password = document.getElementById('roomPasswordInput')?.value;
-    const room = rooms.find(r => r.id === roomId);
-    if (room?.password === password) { 
-      closePasswordModal(); 
-      joinRoom(roomId); 
-    } else {
-      showToast('الرمز السري غير صحيح', false);
-    }
-  };
-
-  async function joinRoom(roomId) {
-    const room = rooms.find(r => r.id === roomId);
-    if (!room) return;
-    
-    const existingMember = (room.members || []).find(m => m.uid === currentUser.uid);
-    if (!existingMember) {
-      let userIP = 'غير معروف';
-      let deviceInfo = 'غير معروف';
-      try {
-        const ipRes = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipRes.json();
-        userIP = ipData.ip;
-        deviceInfo = navigator.userAgent;
-      } catch (e) {}
-      
-      await updateDoc(doc(db, "rooms", roomId), {
-        members: arrayUnion({
-          uid: currentUser.uid, 
-          name: currentUserData?.username || 'مستخدم',
-          avatar: currentUserData?.avatarUrl || '', 
-          avatarType: currentUserData?.avatarType || 'emoji',
-          emoji: currentUserData?.emoji || '👤', 
-          colors: currentUserData?.colors || {},
-          role: 'member', 
-          joinedAt: Date.now(),
-          ip: userIP,
-          device: deviceInfo
-        })
-      });
-      
-      
-      if (userIP !== 'غير معروف') {
-        await updateDoc(doc(db, "users", currentUser.uid), { ip: userIP, device: deviceInfo });
-     // بعد await updateDoc(...) أضف:
-await sendJoinMessage(roomId, currentUserData);
-      }
-    }
-    openChatRoom(roomId);
-  }
-
-  function openChatRoom(roomId) {
-    document.querySelector('.rooms-header').style.display = 'none';
-    document.querySelector('.search-section').style.display = 'none';
-    document.querySelector('.rooms-container').style.display = 'none';
-    
-    currentRoomId = roomId;
-    if (unsubscribeRoom) unsubscribeRoom();
-    unsubscribeRoom = onSnapshot(doc(db, "rooms", roomId), async (docSnap) => {
-      if (docSnap.exists()) {
-        currentRoom = { id: roomId, ...docSnap.data() };
-        await loadBannedUsersData(currentRoom.bannedUsers || []);
-        updateRoomUI();
-        renderSpecialIcons();
-        renderPanelList();
-        updateMembersCount();
-        loadSettingsValues();
-        renderEmojiPanel();
-      }
-    });
-    
-    document.getElementById('chatRoomView')?.classList.add('active');
-    subscribeToMessages(roomId);
-  }
-  function updateRoomUI() {
-    if (!currentRoom) return;
-    
-    const bgEl = document.getElementById('roomBackground');
-    if (currentRoom.background) bgEl.style.backgroundImage = `url('${currentRoom.background}')`;
-    else bgEl.style.backgroundImage = 'none';
-    
-    const isOwner = currentRoom.ownerId === currentUser.uid;
-    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
-    document.getElementById('roomSettingsBtn').style.display = (isOwner || isModerator) ? 'block' : 'none';
-    
-    const memberCount = (currentRoom.members || []).length;
-    document.getElementById('currentRoomSubtitle').innerHTML = `<i class="fas fa-user"></i> ${memberCount}`;
-    
-    const ownerCard = document.getElementById('ownerCard');
-    const ownerAvatar = document.getElementById('ownerAvatar');
-    const ownerName = document.getElementById('ownerName');
-    const ownerInfo = document.querySelector('.owner-info');
-    
-    if (ownerInfo) ownerInfo.style.display = 'flex';
-    
-    if (currentRoom.ownerAvatarType === 'image' && currentRoom.ownerAvatar) {
-        ownerAvatar.innerHTML = `<img src="${currentRoom.ownerAvatar}">`;
-    } else {
-        ownerAvatar.innerHTML = `<span>${currentRoom.ownerEmoji || '👑'}</span>`;
-    }
-    ownerAvatar.style.borderColor = '#fbbf24';
-    ownerAvatar.onclick = () => showMemberProfile(currentRoom.ownerId);
-    
-    const styles = currentRoom.textStyles || {};
-    ownerName.innerHTML = `
-        <i class="fas fa-crown"></i>
-        <span style="color: ${styles.ownerColor || '#e0f7fa'}; cursor: pointer;" onclick="showMemberProfile('${currentRoom.ownerId}')">${currentRoom.ownerName || 'المالك'}</span>
-    `;
-    
-    ownerCard.style.display = 'flex';
-    ownerCard.style.position = 'static';
-    ownerCard.style.transform = 'none';
-    ownerCard.style.background = 'transparent';
-    ownerCard.style.padding = '0';
-    ownerCard.style.margin = '0 8px';
-    ownerCard.style.border = 'none';
-    ownerCard.style.gap = '5px';
-    
-    document.getElementById('currentRoomTitle').innerHTML = `
-        <span>${currentRoom.name || 'الغرفة'}</span>
-        <span class="room-type-badge ${currentRoom.type || 'normal'}">${currentRoom.type === 'advanced' ? '✨' : ''}</span>
-    `;
-}
-window.showOwnerProfile = () => {
-    if (currentRoom?.ownerId) {
-      showMemberProfile(currentRoom.ownerId);
-    }
-  };
-
-  function renderSpecialIcons() {
-    const container = document.getElementById('specialIcons');
-    if (!container) return;
-    
-    const isAdvanced = currentRoom?.type === 'advanced';
-    container.style.display = isAdvanced ? 'flex' : 'none';
-    if (!isAdvanced) return;
-    
-    const occupants = currentRoom?.iconOccupants || {};
-    
-    container.innerHTML = iconTypes.map(type => {
-      const occupant = occupants[type];
-      const isOccupied = occupant && occupant.uid;
-      const isMe = isOccupied && occupant.uid === currentUser.uid;
-      const timeLeft = isMe ? Math.max(0, 3600 - Math.floor((Date.now() - occupant.joinedAt) / 1000)) : 0;
-      const earned = isMe ? Math.floor((Date.now() - occupant.joinedAt) / 3600000) : 0;
-      
-      return `
-        <div class="special-icon ${type} ${isOccupied ? 'occupied' : ''}" onclick="${isOccupied && !isMe ? `showMemberProfile('${occupant.uid}')` : `handleIconClick('${type}')`}">
-          ${isOccupied ? `
-            ${occupant.avatar ? `<img src="${occupant.avatar}">` : `<div class="icon-content"><span>${occupant.emoji || '👤'}</span></div>`}
-          ` : `<i class="fas fa-${getIconFA(type)}"></i>`}
-          ${isMe ? `<span class="timer-badge">${formatTime(timeLeft)}</span><span class="reward-badge">+${earned}</span>` : ''}
-        </div>
-      `;
-    }).join('');
-  }
-
-  function getIconFA(type) {
-    const icons = { lion: 'paw', fish: 'fish', crown: 'crown', rainbow: 'rainbow', tree: 'tree', dark: 'moon' };
-    return icons[type] || 'star';
-  }
-
-  function formatTime(seconds) {
-    const m = Math.floor(seconds / 60), s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, '0')}`;
-  }
-
-  window.handleIconClick = async (iconType) => {
-    if (!currentRoom || currentRoom.type !== 'advanced') return;
-    const occupants = currentRoom.iconOccupants || {};
-    const existing = occupants[iconType];
-    
-    if (existing) {
-      showMemberProfile(existing.uid);
-      return;
-    }
-    
-    for (const [type, occupant] of Object.entries(occupants)) {
-      if (occupant?.uid === currentUser.uid) {
-        const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
-        if (earned > 0) {
-          await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
-          resources.gold += earned;
-          showToast(`ربحت ${earned} ذهب!`, true);
-        }
-        const newOccupants = { ...occupants };
-        delete newOccupants[type];
-        await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
-        return;
-      }
-    }
-    
-    const newOccupants = { ...occupants };
-    newOccupants[iconType] = {
-      uid: currentUser.uid, 
-      name: currentUserData?.username,
-      avatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
-      emoji: currentUserData?.emoji, 
-      joinedAt: Date.now()
-    };
-    await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
-    showToast(`انضممت إلى أيقونة ${iconNames[iconType]}!`, true);
-  };
-
-  function subscribeToMessages(roomId) {
-    
-    if (unsubscribeMessages) unsubscribeMessages();
-    const msgQuery = query(collection(db, "rooms", roomId, "messages"), orderBy("timestamp", "asc"));
-    unsubscribeMessages = onSnapshot(msgQuery, (snapshot) => {
-      const area = document.getElementById('messagesArea');
-      
-      if (snapshot.empty) {
-        area.innerHTML = `<div class="empty-state"><i class="fas fa-comment-dots"></i><p>لا توجد رسائل بعد</p></div>`;
-        return;
-      }
-      
-      let html = '';
-      const styles = currentRoom?.textStyles || {};
-      
-      snapshot.forEach(doc => {
-        const msg = doc.data();
-        if (msg.type === 'join' || msg.type === 'leave') {
-    const isJoin = msg.type === 'join';
-    html += `
-      <div style="display:flex;justify-content:center;margin:10px 0">
-        <div style="display:flex;align-items:center;gap:10px;background:${isJoin?'rgba(34,197,94,0.15)':'rgba(239,68,68,0.15)'};border-right:4px solid ${isJoin?'#22c55e':'#ef4444'};border-radius:50px;padding:6px 15px">
-          <div style="width:35px;height:35px;border-radius:50%;border:3px solid gold;box-shadow:0 0 10px gold;overflow:hidden;background:#1a1a2e" onclick="showMemberProfile('${msg.name}')">
-            ${msg.avatarType==='image'&&msg.avatar?`<img src="${msg.avatar}" style="width:100%;height:100%;object-fit:cover">`:`<span style="font-size:20px">${msg.emoji||'👤'}</span>`}
-          </div>
-          <span style="color:gold;font-weight:700">${msg.text}</span>
-          <span>${isJoin?'👑':'👋'}</span>
-        </div>
-      </div>
-    `;
-    return;
-}
-        const isOwner = currentRoom?.ownerId === currentUser.uid;
-        const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-        const canDelete = msg.uid === currentUser.uid || isOwner || (isModerator && msg.uid !== currentRoom?.ownerId);
-        
-        const parsed = parseMessageText(msg.text || '');
-        const isMsgOwner = msg.uid === currentRoom?.ownerId;
-        const isMsgModerator = (currentRoom?.moderators || []).includes(msg.uid);
-        
-        let nameEffectClass = 'member-name-effect';
-        let senderClass = 'member-sender';
-        let messageClass = 'member-message';
-        let nameColor = styles.memberColor || '#bae6fd';
-        let nameSize = styles.memberSize || 14;
-        
-        if (isMsgOwner) {
-          nameEffectClass = 'owner-name-effect';
-          senderClass = 'owner-sender';
-          messageClass = 'owner-message';
-          nameColor = styles.ownerColor || '#4ade80';
-          nameSize = styles.ownerSize || 16;
-        } else if (isMsgModerator) {
-          nameEffectClass = 'moderator-name-effect';
-          senderClass = 'moderator-sender';
-          messageClass = 'moderator-message';
-          nameColor = styles.modColor || '#f87171';
-          nameSize = styles.modSize || 15;
-        }
-        
-        let messageContent = parsed.displayText;
-        const shortcuts = currentRoom?.shortcuts || {};
-        for (const [key, value] of Object.entries(shortcuts)) {
-          if (typeof value === 'object' && value.type === 'image') {
-            const shapeStyle = value.shape === 'circle' ? 'border-radius: 50%;' : 
-                              (value.shape === 'rectangle' ? 'border-radius: 5px; width: 60px;' : 'border-radius: 5px;');
-            const replacement = `<img src="${value.url}" style="width: 40px; height: 40px; object-fit: cover; ${shapeStyle} margin: 0 3px; vertical-align: middle;">`;
-            const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-            messageContent = messageContent.replace(regex, replacement);
-          } else {
-            const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-            messageContent = messageContent.replace(regex, value);
-          }
-        }
-        
-        html += `
-          <div class="message-item">
-            <div class="message-avatar" style="border-color: ${msg.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${msg.uid}')">
-              ${msg.avatarType === 'image' && msg.avatar ? `<img src="${msg.avatar}">` : (msg.emoji || '👤')}
-            </div>
-            <div class="message-content">
-              <div class="message-header">
-                <span class="message-sender ${nameEffectClass} ${senderClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};" onclick="showMemberProfile('${msg.uid}')">${msg.name || 'مستخدم'}</span>
-                ${isMsgOwner ? '<span class="message-badge owner"><i class="fas fa-crown"></i> مالك</span>' : ''}
-                ${isMsgModerator && !isMsgOwner ? '<span class="message-badge moderator"><i class="fas fa-shield-alt"></i> مشرف</span>' : ''}
-                <span class="message-time">${msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
-                ${msg.gift ? `<span class="gift-inline"><img src="${msg.gift.image}" title="${msg.gift.name} من ${msg.gift.fromName || ''} إلى ${msg.gift.toName || ''}"></span>` : ''}
-              </div>
-              ${messageContent ? `<div class="message-text ${messageClass}">${messageContent}</div>` : ''}
-              ${parsed.mediaHtml}
-              ${canDelete ? `<div class="message-actions"><i class="fas fa-trash" onclick="deleteMessage('${doc.id}')"></i></div>` : ''}
-            </div>
-          </div>
-        `;
-      });
-      area.innerHTML = html;
-      area.scrollTop = area.scrollHeight;
-    });
-  }
-
-  window.sendMessage = async () => {
-    const input = document.getElementById('messageInput');
-    if (!input || !currentRoomId) return;
-    let text = input.value.trim();
-    if (!text) return;
-    
-    const shortcuts = currentRoom?.shortcuts || {};
-    for (const [key, value] of Object.entries(shortcuts)) {
-      if (typeof value === 'string') {
-        const regex = new RegExp(key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
-        text = text.replace(regex, value);
-      }
-    }
-    
-    const bannedWords = currentRoom?.bannedWords || [];
-    const lowerText = text.toLowerCase();
-    for (const word of bannedWords) {
-      if (lowerText.includes(word.toLowerCase())) {
-        showToast(`رسالتك تحتوي على كلمة محظورة: "${word}"`, false);
-        return;
-      }
-    }
-    
-    const monitoredWords = currentRoom?.monitoredWords || [];
-    let hasMonitoredWord = false;
-    let detectedWords = [];
-    
-    for (const word of monitoredWords) {
-      if (lowerText.includes(word.toLowerCase())) {
-        hasMonitoredWord = true;
-        detectedWords.push(word);
-      }
-    }
-    
-    const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
-    const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
-    
-    if (hasMonitoredWord) {
-      const logEntry = {
-        userId: currentUser.uid,
-        userName: currentUserData?.username || 'مستخدم',
-        userAvatar: currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
-        userEmoji: currentUserData?.emoji || '👤',
-        message: text,
-        detectedWords: detectedWords,
-        timestamp: Date.now(),
-        fullMessage: true
-      };
-      
-      const updatedLogs = [...(currentRoom.monitorLogs || []), logEntry].slice(-50);
-      await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
-      
-      if (!isStaff) {
-        showToast(`رسالتك تحتوي على كلمة مراقبة وتم إعلام المشرفين`, false);
-      }
-    }
-    
-    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-      uid: currentUser.uid, 
-      name: currentUserData?.username || 'مستخدم',
-      avatar: currentUserData?.avatarUrl || '', 
-      avatarType: currentUserData?.avatarType || 'emoji',
-      emoji: currentUserData?.emoji || '👤', 
-      colors: currentUserData?.colors || {},
-      role: member?.role || 'member', 
-      text, 
-      timestamp: Date.now()
-    });
-    
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now() });
-    input.value = '';
-  };
-
-  window.handleMessageKeyPress = (e) => { 
-    if (e.key === 'Enter') sendMessage(); 
-  };
-
-  window.deleteMessage = async (messageId) => {
-    await deleteDoc(doc(db, "rooms", currentRoomId, "messages", messageId));
-  };
-
-  window.toggleEmojiPanel = () => {
-    document.getElementById('emojiPanel').classList.toggle('active');
-  };
-
-  function renderEmojiPanel() {
-    const grid = document.getElementById('emojiGrid');
-    const emojis = currentRoom?.emojis || [];
-    
-    let html = '';
-    emojis.forEach((emoji, index) => {
-      if (emoji.type === 'text') {
-        html += `<div class="emoji-item" onclick="sendEmoji(${index})">${emoji.value}</div>`;
-      } else {
-        html += `<div class="emoji-item" onclick="sendEmoji(${index})"><img src="${emoji.value}" style="width: 100%; height: 100%; object-fit: contain;"></div>`;
-      }
-    });
-    
-    if (emojis.length === 0) {
-      html = '<div style="grid-column: span 4; text-align: center; color: #64748b; padding: 20px;">لا توجد إيموجيات</div>';
-    }
-    
-    grid.innerHTML = html;
-  }
-
-  window.sendEmoji = async (index) => {
-    const emojis = currentRoom?.emojis || [];
-    const emoji = emojis[index];
-    if (!emoji) return;
-    
-    const input = document.getElementById('messageInput');
-    if (emoji.type === 'text') {
-      input.value += emoji.value;
-    }
-    
-    document.getElementById('emojiPanel').classList.remove('active');
-    
-    showEmojiEffect(emoji);
-    
-    if (emoji.type === 'image') {
-      return;
-    }
-    
-    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-      uid: currentUser.uid, 
-      name: currentUserData?.username || 'مستخدم',
-      avatar: currentUserData?.avatarUrl || '', 
-      avatarType: currentUserData?.avatarType || 'emoji',
-      emoji: currentUserData?.emoji || '👤', 
-      colors: currentUserData?.colors || {},
-      role: (currentRoom?.members || []).find(m => m.uid === currentUser.uid)?.role || 'member', 
-      text: emoji.value, 
-      timestamp: Date.now()
-    });
-  };
-
-  function showEmojiEffect(emoji) {
-    const effectDiv = document.createElement('div');
-    effectDiv.className = 'floating-emoji';
-    
-    const content = emoji.type === 'text' ? emoji.value : `<img src="${emoji.value}" style="width: ${emoji.width}px; height: ${emoji.height}px;">`;
-    effectDiv.innerHTML = content;
-    
-    effectDiv.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-    effectDiv.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-    effectDiv.style.fontSize = emoji.width + 'px';
-    effectDiv.style.position = 'fixed';
-    effectDiv.style.zIndex = '9999';
-    effectDiv.style.pointerEvents = 'none';
-    
-    const animationMap = {
-      fade: 'fadeIn 1s ease-out',
-      slideUp: 'slideUp 1s ease-out',
-      slideDown: 'slideDown 1s ease-out',
-      zoom: 'zoomIn 0.8s ease-out',
-      bounce: 'bounce 1s ease-out',
-      spin: 'spin 1s ease-out',
-      pulse: 'pulse 1s ease-out',
-      shake: 'shake 0.5s ease-out'
-    };
-    
-    effectDiv.style.animation = animationMap[emoji.animation] || 'fadeIn 1s ease-out';
-    
-    document.body.appendChild(effectDiv);
-    
-    const duration = emoji.type === 'image' ? 4000 : 2000;
-    
-    setTimeout(() => {
-      effectDiv.remove();
-    }, duration);
-  }
-
-  window.toggleMembersPanel = () => {
-    document.getElementById('membersPanel')?.classList.toggle('active');
-  };
-
-  window.switchPanelTab = (tab) => {
-    currentPanelTab = tab;
-    document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
-    event.target.closest('.panel-tab').classList.add('active');
-    renderPanelList();
-  };
-
-  function renderPanelList() {
-    if (currentPanelTab === 'members') {
-      renderMembersList();
-    } else if (currentPanelTab === 'banned') {
-      renderBannedList();
-    } else if (currentPanelTab === 'ipDetect') {
-      renderIPDetectList();
+window.closeAnnouncement = () => {
+  if (globalAnnouncement) {
+    const annId = globalAnnouncement.id || globalAnnouncement.createdAt;
+    if (!dismissedAnnouncements.includes(annId)) {
+      dismissedAnnouncements.push(annId);
+      localStorage.setItem('dismissedAnnouncements', JSON.stringify(dismissedAnnouncements));
     }
   }
-
-  function renderMembersList() {
-    const list = document.getElementById('membersList');
-    const members = currentRoom?.members || [];
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    const styles = currentRoom?.textStyles || {};
-    
-    list.innerHTML = members.map(m => {
-      const canPromote = isOwner && m.role === 'member' && (currentRoom.moderators || []).length < 3;
-      const canDemote = isOwner && m.role === 'moderator';
-      const canBan = (isOwner || isModerator) && m.uid !== currentUser.uid && m.role !== 'owner' && (!isModerator || m.role === 'member');
-      
-      let nameEffectClass = 'member-name-effect';
-      let nameColor = styles.memberColor || '#bae6fd';
-      let nameSize = styles.memberSize || 14;
-      
-      if (m.role === 'owner') {
-        nameEffectClass = 'owner-name-effect';
-        nameColor = styles.ownerColor || '#4ade80';
-        nameSize = styles.ownerSize || 16;
-      } else if (m.role === 'moderator') {
-        nameEffectClass = 'moderator-name-effect';
-        nameColor = styles.modColor || '#f87171';
-        nameSize = styles.modSize || 15;
-      }
-      
-      return `
-        <div class="member-item">
-          <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${m.uid}')">
-            ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
-          </div>
-          <div class="member-info" onclick="showMemberProfile('${m.uid}')">
-            <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
-              ${m.name || 'مستخدم'}
-              ${m.role === 'owner' ? '<i class="fas fa-crown" style="color: #fbbf24;"></i>' : ''}
-            </div>
-            <span class="member-role ${m.role}">${m.role === 'owner' ? '👑 مالك' : (m.role === 'moderator' ? '🛡️ مشرف' : '👤 عضو')}</span>
-          </div>
-          <div class="member-actions" onclick="event.stopPropagation()">
-            ${canPromote ? `<i class="fas fa-crown" onclick="promoteToModerator('${m.uid}')" title="ترقية لمشرف"></i>` : ''}
-            ${canDemote ? `<i class="fas fa-level-down-alt" onclick="demoteFromModerator('${m.uid}')" title="إزالة من الإشراف" style="color: #fbbf24;"></i>` : ''}
-            ${canBan ? `<i class="fas fa-ban" onclick="banMember('${m.uid}')" title="حظر"></i>` : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
-  }
-
-  function renderBannedList() {
-    const list = document.getElementById('membersList');
-    const bannedCount = bannedUsersData.length;
-    document.getElementById('bannedCount').textContent = bannedCount;
-    
-    if (bannedCount === 0) {
-      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-ban"></i><p>لا يوجد محظورون</p></div>`;
-      return;
-    }
-    
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    
-    list.innerHTML = bannedUsersData.map(user => {
-      const canUnban = isOwner || isModerator;
-      
-      return `
-        <div class="banned-item">
-          <div class="banned-avatar" style="border-color: ${user.colors?.frame || '#ef4444'};" onclick="showMemberProfile('${user.uid}')">
-            ${user.avatarType === 'image' && user.avatarUrl ? `<img src="${user.avatarUrl}">` : (user.emoji || '🚫')}
-          </div>
-          <div class="banned-info" onclick="showMemberProfile('${user.uid}')">
-            <div class="banned-name" style="color: ${user.colors?.name || '#f8fafc'};">
-              ${user.username || 'مستخدم محظور'}
-            </div>
-            <span style="font-size: 10px; color: #ef4444;">محظور</span>
-          </div>
-          ${canUnban ? `<span class="unban-btn" onclick="event.stopPropagation(); unbanMember('${user.uid}')"><i class="fas fa-undo"></i> إلغاء الحظر</span>` : ''}
-        </div>
-      `;
-    }).join('');
-  }
-
-  function renderIPDetectList() {
-    const list = document.getElementById('membersList');
-    const members = currentRoom?.members || [];
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    
-    if (!isOwner && !isModerator) {
-      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-lock"></i><p>المشرفون فقط يمكنهم كشف IP</p></div>`;
-      return;
-    }
-    
-    if (members.length === 0) {
-      list.innerHTML = `<div class="empty-state" style="padding: 30px;"><i class="fas fa-user"></i><p>لا يوجد أعضاء</p></div>`;
-      return;
-    }
-    
-    const styles = currentRoom?.textStyles || {};
-    
-    list.innerHTML = `
-      <div style="padding: 10px; margin-bottom: 10px; background: rgba(96, 165, 250, 0.1); border-radius: 10px; border-right: 3px solid #60a5fa;">
-        <i class="fas fa-info-circle"></i> اضغط على أيقونة العين لكشف الحسابات المرتبطة بنفس IP
-      </div>
-      ${members.map(m => {
-        let nameEffectClass = 'member-name-effect';
-        let nameColor = styles.memberColor || '#bae6fd';
-        let nameSize = styles.memberSize || 14;
-        
-        if (m.role === 'owner') {
-          nameEffectClass = 'owner-name-effect';
-          nameColor = styles.ownerColor || '#4ade80';
-          nameSize = styles.ownerSize || 16;
-        } else if (m.role === 'moderator') {
-          nameEffectClass = 'moderator-name-effect';
-          nameColor = styles.modColor || '#f87171';
-          nameSize = styles.modSize || 15;
-        }
-        
-        return `
-          <div class="member-item">
-            <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};" onclick="showMemberProfile('${m.uid}')">
-              ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
-            </div>
-            <div class="member-info" onclick="showMemberProfile('${m.uid}')">
-              <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
-                ${m.name || 'مستخدم'}
-                ${m.role === 'owner' ? '<i class="fas fa-crown" style="color: #fbbf24;"></i>' : ''}
-              </div>
-              <span class="member-role ${m.role}">${m.role === 'owner' ? 'مالك' : (m.role === 'moderator' ? 'مشرف' : 'عضو')}</span>
-            </div>
-            <div class="member-actions" onclick="event.stopPropagation()">
-              <i class="fas fa-eye detect-accounts-btn" onclick="detectAccountsByIP('${m.uid}')" title="كشف الحسابات المرتبطة"></i>
-            </div>
-          </div>
-        `;
-      }).join('')}
-    `;
-  }
-
-  window.detectAccountsByIP = async (uid) => {
-    const member = currentRoom?.members?.find(m => m.uid === uid);
-    if (!member) {
-      showToast('العضو غير موجود', false);
-      return;
-    }
-    
-    let memberIP = member.ip;
-    let memberDevice = member.device;
-    
-    if (!memberIP) {
-      try {
-        const userDoc = await getDoc(doc(db, "users", uid));
-        if (userDoc.exists()) {
-          memberIP = userDoc.data().ip;
-          memberDevice = userDoc.data().device;
-        }
-      } catch (e) {}
-    }
-    
-    if (!memberIP || memberIP === 'غير معروف') {
-      showToast('لم يتم العثور على IP لهذا العضو', false);
-      return;
-    }
-    
-    const usersSnap = await getDocs(collection(db, "users"));
-    const sameIPUsers = [];
-    const sameDeviceUsers = [];
-    
-    usersSnap.forEach(doc => {
-      const userData = doc.data();
-      if (userData.ip === memberIP) {
-        sameIPUsers.push({ uid: doc.id, ...userData });
-      }
-      if (memberDevice && userData.device === memberDevice) {
-        sameDeviceUsers.push({ uid: doc.id, ...userData });
-      }
-    });
-    
-    const content = document.getElementById('ipInfoContent');
-    const memberName = member.name || 'مستخدم';
-    
-    content.innerHTML = `
-      <div class="ip-header">
-        <div class="member-avatar" style="border-color: ${member.colors?.frame || '#8b5cf6'}; width: 50px; height: 50px; font-size: 25px;" onclick="showMemberProfile('${uid}'); closeIpInfoModal();">
-          ${member.avatarType === 'image' && member.avatar ? `<img src="${member.avatar}">` : (member.emoji || '👤')}
-        </div>
-        <div>
-          <div style="font-weight: 800; font-size: 18px; cursor: pointer;" onclick="showMemberProfile('${uid}'); closeIpInfoModal();">${memberName}</div>
-          <div style="color: #94a3b8; font-size: 12px;">IP: ${memberIP}</div>
-          <div style="color: #94a3b8; font-size: 10px;">الجهاز: ${(memberDevice || 'غير معروف').substring(0, 30)}...</div>
-        </div>
-      </div>
-      
-      <div class="permissions-title"><i class="fas fa-network-wired"></i> حسابات بنفس IP (${sameIPUsers.length})</div>
-      <div class="ip-accounts-list" style="max-height: 200px;">
-        ${sameIPUsers.map(acc => `
-          <div class="ip-account-item" onclick="showMemberProfile('${acc.uid}'); closeIpInfoModal();">
-            <div class="member-avatar" style="border-color: ${acc.colors?.frame || '#8b5cf6'}; width: 35px; height: 35px; font-size: 18px;">
-              ${acc.avatarType === 'image' && acc.avatarUrl ? `<img src="${acc.avatarUrl}">` : (acc.emoji || '👤')}
-            </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 600;">${acc.username || 'مستخدم'}</div>
-              <div style="font-size: 10px; color: #94a3b8;">ID: ${acc.uid?.substring(0, 8)}...</div>
-            </div>
-            ${acc.uid === uid ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px;">الحالي</span>' : ''}
-          </div>
-        `).join('')}
-      </div>
-      
-      <div class="permissions-title" style="margin-top: 15px;"><i class="fas fa-mobile-alt"></i> حسابات بنفس الجهاز (${sameDeviceUsers.length})</div>
-      <div class="ip-accounts-list" style="max-height: 150px;">
-        ${sameDeviceUsers.map(acc => `
-          <div class="ip-account-item" onclick="showMemberProfile('${acc.uid}'); closeIpInfoModal();">
-            <div class="member-avatar" style="border-color: ${acc.colors?.frame || '#8b5cf6'}; width: 35px; height: 35px; font-size: 18px;">
-              ${acc.avatarType === 'image' && acc.avatarUrl ? `<img src="${acc.avatarUrl}">` : (acc.emoji || '👤')}
-            </div>
-            <div style="flex: 1;">
-              <div style="font-weight: 600;">${acc.username || 'مستخدم'}</div>
-              <div style="font-size: 10px; color: #94a3b8;">ID: ${acc.uid?.substring(0, 8)}...</div>
-            </div>
-            ${acc.uid === uid ? '<span style="background: #10b981; color: white; padding: 2px 8px; border-radius: 20px; font-size: 10px;">الحالي</span>' : ''}
-          </div>
-        `).join('')}
-      </div>
-      <button class="btn-submit" style="margin-top: 20px;" onclick="closeIpInfoModal()">إغلاق</button>
-    `;
-    
-    document.getElementById('ipInfoModal')?.classList.add('active');
-  };
-
-  window.closeIpInfoModal = () => {
-    document.getElementById('ipInfoModal')?.classList.remove('active');
-  };
-
-  window.promoteToModerator = async (uid) => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
-    if ((currentRoom.moderators || []).length >= 3) { 
-      showToast('لا يمكن تعيين أكثر من 3 مشرفين', false); 
-      return; 
-    }
-    
-    const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'moderator' } : m);
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      members: updatedMembers,
-      moderators: arrayUnion(uid)
-    });
-    showToast('تمت الترقية إلى مشرف');
-  };
-
-  window.demoteFromModerator = async (uid) => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
-    
-    const updatedMembers = currentRoom.members.map(m => m.uid === uid ? { ...m, role: 'member' } : m);
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      members: updatedMembers,
-      moderators: arrayRemove(uid)
-    });
-    showToast('تمت إزالة المشرف');
-  };
-
-  window.banMember = async (uid) => {
-    if (!currentRoom) return;
-    const isOwner = currentRoom.ownerId === currentUser.uid;
-    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
-    if (!isOwner && !isModerator) return;
-    
-    const targetMember = currentRoom.members.find(m => m.uid === uid);
-    if (targetMember?.role === 'owner') { 
-      showToast('لا يمكن حظر المالك', false); 
-      return; 
-    }
-    if (isModerator && targetMember?.role === 'moderator') { 
-      showToast('لا يمكن للمشرف حظر مشرف آخر', false); 
-      return; 
-    }
-    
-    const occupants = currentRoom.iconOccupants || {};
-    let newOccupants = { ...occupants };
-    let iconUpdated = false;
-    for (const [type, occupant] of Object.entries(occupants)) {
-      if (occupant?.uid === uid) {
-        delete newOccupants[type];
-        iconUpdated = true;
-      }
-    }
-    
-    const updateData = {
-      bannedUsers: arrayUnion(uid),
-      members: currentRoom.members.filter(m => m.uid !== uid)
-    };
-    if (iconUpdated) updateData.iconOccupants = newOccupants;
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), updateData);
-    showToast('تم حظر العضو');
-  };
-
-  window.unbanMember = async (uid) => {
-    if (!currentRoom) return;
-    const isOwner = currentRoom.ownerId === currentUser.uid;
-    const isModerator = (currentRoom.moderators || []).includes(currentUser.uid);
-    if (!isOwner && !isModerator) return;
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      bannedUsers: arrayRemove(uid)
-    });
-    showToast('تم إلغاء الحظر');
-  };
-
-  window.showMemberProfile = async (uid) => {
-    try {
-        const userDoc = await getDoc(doc(db, "users", uid));
-        if (!userDoc.exists()) { 
-            showToast('المستخدم غير موجود', false); 
-            return; 
-        }
-        
-        const user = userDoc.data();
-        const targetUserId = user.userId || uid.slice(0, 6);
-        const isOwnProfile = uid === currentUser.uid;
-        
-        const postsQuery = query(collection(db, "posts"), where("userId", "==", targetUserId));
-        const postsSnap = await getDocs(postsQuery);
-        const userPosts = [];
-        postsSnap.forEach(d => userPosts.push({ id: d.id, ...d.data() }));
-        
-        userPosts.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        
-        const followersDoc = await getDoc(doc(db, "social", "followers"));
-        let followersCount = 0;
-        if (followersDoc.exists()) {
-            const followersData = followersDoc.data();
-            Object.values(followersData).forEach(list => {
-                if (list && list.includes(targetUserId)) followersCount++;
-            });
-        }
-        
-        const idClass = getIdClass(targetUserId);
-        
-        const content = document.getElementById('profilePopupContent');
-        content.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; border: 3px solid ${user.colors?.frame || '#fbbf24'}; display: flex; align-items: center; justify-content: center; font-size: 40px; background: #1a1a2e;">
-                    ${user.avatarType === 'image' && user.avatarUrl ? `<img src="${user.avatarUrl}" style="width:100%;height:100%;object-fit:cover;">` : (user.emoji || '👤')}
-                </div>
-                <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                        <h2 style="color: #ffffff; margin: 0; font-size: 20px; display: flex; align-items: center; gap: 5px;">
-                            ${user.username || 'مستخدم'}
-                            ${user.verified ? '<i class="fas fa-check-circle" style="color:#3b82f6;"></i>' : ''}
-                        </h2>
-                        <span class="user-id-badge ${idClass}" style="background: ${user.colors?.frame || '#fbbf24'}; font-size: 14px; padding: 4px 12px; border-radius: 20px;">#${targetUserId}</span>
-                    </div>
-                    ${user.secondaryId ? `<p style="font-size:12px; color:#aaa; margin:5px 0 0;">@${user.secondaryId}</p>` : ''}
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 30px; margin: 15px 0; justify-content: space-around; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 12px 0;">
-                <div style="text-align: center;">
-                    <i class="fas fa-image" style="font-size: 22px; color: #fff;"></i>
-                    <div style="font-weight: bold; margin-top: 5px;">${userPosts.length}</div>
-                    <div style="font-size: 12px; color: #aaa;">منشورات</div>
-                </div>
-                <div style="text-align: center;">
-                    <i class="fas fa-users" style="font-size: 22px; color: #fff;"></i>
-                    <div style="font-weight: bold; margin-top: 5px;">${followersCount}</div>
-                    <div style="font-size: 12px; color: #aaa;">متابعين</div>
-                </div>
-            </div>
-            
-            <p style="margin: 10px 0; color: #ddd; font-style: italic;">${user.bio || 'لا يوجد نبذة'}</p>
-            
-            ${!isOwnProfile ? `
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
-                    <button onclick="window.startChatWithUserFromRoom('${targetUserId}')" style="
-                        flex: 1;
-                        background: linear-gradient(135deg, #0ea5e9, #0284c7);
-                        color: white;
-                        border: none;
-                        padding: 14px;
-                        border-radius: 30px;
-                        font-weight: 700;
-                        font-size: 15px;
-                        cursor: pointer;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 8px;
-                    ">
-                        <i class="fab fa-facebook-messenger"></i> مراسلة
-                    </button>
-                </div>
-            ` : ''}
-            
-            <h4 style="margin: 20px 0 10px; color: #ccc; font-size: 14px; display: flex; align-items: center; gap: 5px;">
-                <i class="fas fa-newspaper"></i> المنشورات
-            </h4>
-            <div style="max-height: 300px; overflow-y: auto;">
-                ${userPosts.map(post => {
-                    let mediaHtml = '';
-                    if (post.mediaUrl) {
-                        if (post.mediaType === 'image') {
-                            mediaHtml = `<div style="margin:10px 0;"><img src="${post.mediaUrl}" style="max-width:100%; max-height:200px; border-radius:15px;" onerror="this.style.display='none'"></div>`;
-                        } else if (post.mediaType === 'youtube') {
-                            mediaHtml = `<div style="margin:10px 0;"><iframe width="100%" height="200" src="${post.mediaUrl}" frameborder="0" allowfullscreen style="border-radius:15px;"></iframe></div>`;
-                        }
-                    }
-                    return `
-                        <div style="background: #111; border-radius: 20px; padding: 15px; margin-bottom: 12px; border: 1px solid #333;">
-                            <div style="color: ${post.colors?.postText || '#ddd'}; margin-bottom: 10px;">${post.content || ''}</div>
-                            ${mediaHtml}
-                            <div style="display: flex; gap: 20px; margin-top: 10px; color: #aaa; font-size: 12px;">
-                                <span><i class="fas fa-heart"></i> ${post.likes || 0}</span>
-                                <span><i class="fas fa-comment"></i> ${(post.comments || []).length}</span>
-                                <span style="margin-right: auto;">${post.timestamp ? new Date(post.timestamp).toLocaleDateString('ar-SA') : ''}</span>
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-                ${userPosts.length === 0 ? '<p style="color: #64748b; text-align: center; padding: 20px;">لا توجد منشورات</p>' : ''}
-            </div>
-        `;
-        
-        document.getElementById('profilePopupOverlay')?.classList.add('active');
-        document.getElementById('profilePopup')?.classList.add('active');
-    } catch (e) {
-        console.error("خطأ في عرض الملف:", e);
-    }
-  };
-
-  window.closeProfilePopup = () => {
-    document.getElementById('profilePopupOverlay')?.classList.remove('active');
-    document.getElementById('profilePopup')?.classList.remove('active');
-  };
-
-  function updateMembersCount() {
-    const count = (currentRoom?.members || []).length;
-    document.getElementById('currentRoomSubtitle').textContent = `${count} عضو متواجد`;
-  }
-
-  window.openRoomSettingsModal = () => {
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    
-    if (!isOwner && !isModerator) {
-      showToast('ليس لديك صلاحية للوصول إلى الإعدادات', false);
-      return;
-    }
-    
-    document.getElementById('backgroundUrl').value = currentRoom?.background || '';
-    document.getElementById('roomImageUrl').value = currentRoom?.roomImage || currentRoom?.image || '';
-    document.getElementById('editRoomName').value = currentRoom?.name || '';
-    document.getElementById('editRoomDesc').value = currentRoom?.description || '';
-    document.getElementById('editRoomCapacity').value = currentRoom?.capacity || 50;
-    document.getElementById('editWelcomeMessage').value = currentRoom?.welcomeMessage || '';
-    
-    const isOwnerOnly = !isOwner;
-    document.getElementById('backgroundUrl').disabled = isOwnerOnly;
-    document.getElementById('roomImageUrl').disabled = isOwnerOnly;
-    document.getElementById('editRoomName').disabled = isOwnerOnly;
-    document.getElementById('editRoomDesc').disabled = isOwnerOnly;
-    document.getElementById('editRoomCapacity').disabled = isOwnerOnly;
-    document.getElementById('editWelcomeMessage').disabled = isOwnerOnly;
-    
-    const deleteBtn = document.getElementById('deleteRoomBtn');
-    if (deleteBtn) deleteBtn.style.display = isOwner ? 'block' : 'none';
-    
-    const announcementTab = document.querySelector('[onclick*="announcement"]');
-    if (announcementTab) {
-      announcementTab.style.display = (currentUserData?.email === 'ad5@5.com') ? 'block' : 'none';
-    }
-    
-    selectedFrame = currentRoom?.frame || 1;
-    document.getElementById('customFrameUrl').value = currentRoom?.customFrame || '';
-    renderFramesGrid();
-    
-    loadSettingsValues();
-    
-    document.getElementById('roomSettingsModal')?.classList.add('active');
-  };
-
-  window.closeRoomSettingsModal = () => {
-    document.getElementById('roomSettingsModal')?.classList.remove('active');
-  };
-
-  function renderFramesGrid() {
-    const grid = document.getElementById('framesGrid');
-    grid.innerHTML = frameNames.map((name, index) => {
-      const frameNum = index + 1;
-      return `
-        <div class="frame-preview frame${frameNum} ${selectedFrame === frameNum ? 'selected' : ''}" onclick="selectFrame(${frameNum})">
-          <span style="background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 20px; font-size: 12px;">${name}</span>
-        </div>
-      `;
-    }).join('');
-  }
-
-  window.selectFrame = (frameNum) => {
-    selectedFrame = frameNum;
-    renderFramesGrid();
-  };
-
-  window.saveRoomFrame = async () => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
-      showToast('فقط المالك يمكنه تغيير الإطار', false);
-      return;
-    }
-    
-    const customFrame = document.getElementById('customFrameUrl').value.trim();
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), { 
-      frame: selectedFrame,
-      customFrame: customFrame || null
-    });
-    closeRoomSettingsModal();
-    showToast('تم حفظ الإطار');
-  };
-
-  window.saveGeneralSettings = async () => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) {
-      showToast('فقط المالك يمكنه تعديل الإعدادات', false);
-      return;
-    }
-    
-    const updates = {
-      background: document.getElementById('backgroundUrl').value.trim() || null,
-      roomImage: document.getElementById('roomImageUrl').value.trim() || currentRoom.image,
-      name: document.getElementById('editRoomName').value.trim(),
-      description: document.getElementById('editRoomDesc').value.trim(),
-      capacity: parseInt(document.getElementById('editRoomCapacity').value),
-      welcomeMessage: document.getElementById('editWelcomeMessage').value.trim()
-    };
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), updates);
-    closeRoomSettingsModal();
-    showToast('تم حفظ التغييرات');
-  };
-
-  function loadSettingsValues() {
-    const styles = currentRoom?.textStyles || {};
-    document.getElementById('ownerNameColor').value = styles.ownerColor || '#4ade80';
-    document.getElementById('ownerNameSize').value = styles.ownerSize || 16;
-    document.getElementById('modNameColor').value = styles.modColor || '#f87171';
-    document.getElementById('modNameSize').value = styles.modSize || 15;
-    document.getElementById('memberNameColor').value = styles.memberColor || '#bae6fd';
-    document.getElementById('memberNameSize').value = styles.memberSize || 14;
-    document.getElementById('globalFontFamily').value = styles.fontFamily || "'Segoe UI', 'Tajawal'";
-    
-    renderWordsLists();
-    renderShortcutsList();
-    renderGiftsList();
-    renderMonitorMessages();
-    renderEmojisList();
-  }
-
-  window.switchSettingsTab = (tab) => {
-    currentSettingsTab = tab;
-    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    const tabs = ['general', 'styles', 'words', 'shortcuts', 'gifts', 'frame', 'emoji', 'announcement'];
-    tabs.forEach(t => {
-      const el = document.getElementById('settingsTab' + t.charAt(0).toUpperCase() + t.slice(1));
-      if (el) el.style.display = t === tab ? 'block' : 'none';
-    });
-    
-    if (tab === 'emoji') {
-      document.getElementById('emojiType').addEventListener('change', (e) => {
-        document.getElementById('emojiTextGroup').style.display = e.target.value === 'text' ? 'block' : 'none';
-        document.getElementById('emojiImageGroup').style.display = e.target.value === 'image' ? 'block' : 'none';
-      });
-    }
-  };
-
-  window.saveTextStyles = async () => {
-    if (!currentRoom || (currentUser.uid !== currentRoom.ownerId && !(currentRoom.moderators || []).includes(currentUser.uid))) {
-      showToast('ليس لديك صلاحية لتعديل التنسيقات', false);
-      return;
-    }
-    
-    const styles = {
-      ownerColor: document.getElementById('ownerNameColor').value,
-      ownerSize: parseInt(document.getElementById('ownerNameSize').value),
-      modColor: document.getElementById('modNameColor').value,
-      modSize: parseInt(document.getElementById('modNameSize').value),
-      memberColor: document.getElementById('memberNameColor').value,
-      memberSize: parseInt(document.getElementById('memberNameSize').value),
-      fontFamily: document.getElementById('globalFontFamily').value
-    };
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), { textStyles: styles });
-    showToast('تم حفظ التنسيقات');
-  };
-
-  window.addBannedWord = async () => {
-    const word = document.getElementById('newBannedWord').value.trim();
-    if (!word) return;
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      bannedWords: arrayUnion(word)
-    });
-    document.getElementById('newBannedWord').value = '';
-    showToast('تمت إضافة الكلمة المحظورة');
-  };
-
-  window.addMonitoredWord = async () => {
-    const word = document.getElementById('newMonitoredWord').value.trim();
-    if (!word) return;
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      monitoredWords: arrayUnion(word)
-    });
-    document.getElementById('newMonitoredWord').value = '';
-    showToast('تمت إضافة كلمة المراقبة');
-  };
-
-  function renderWordsLists() {
-    const bannedWords = currentRoom?.bannedWords || [];
-    const monitoredWords = currentRoom?.monitoredWords || [];
-    
-    const bannedContainer = document.getElementById('bannedWordsList');
-    bannedContainer.innerHTML = bannedWords.map(word => `
-      <div style="display: flex; justify-content: space-between; background: rgba(239, 68, 68, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #ef4444;">
-        <span style="color: #fca5a5;">🚫 ${word}</span>
-        <i class="fas fa-times" style="cursor: pointer; color: #ef4444;" onclick="removeWord('banned', '${word}')"></i>
-      </div>
-    `).join('');
-    
-    const monitoredContainer = document.getElementById('monitoredWordsList');
-    monitoredContainer.innerHTML = monitoredWords.map(word => `
-      <div style="display: flex; justify-content: space-between; background: rgba(251, 191, 36, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #fbbf24;">
-        <span style="color: #fde68a;">👁️ ${word}</span>
-        <i class="fas fa-times" style="cursor: pointer; color: #fbbf24;" onclick="removeWord('monitored', '${word}')"></i>
-      </div>
-    `).join('');
-  }
-
-  window.removeWord = async (type, word) => {
-    const field = type === 'banned' ? 'bannedWords' : 'monitoredWords';
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      [field]: arrayRemove(word)
-    });
-    showToast('تم حذف الكلمة');
-  };
-
-  window.toggleMonitorMessages = () => {
-    showMonitorMessages = !showMonitorMessages;
-    document.getElementById('monitorMessagesContainer').style.display = showMonitorMessages ? 'block' : 'none';
-  };
-
-  function renderMonitorMessages() {
-    const logs = currentRoom?.monitorLogs || [];
-    const container = document.getElementById('monitorMessagesContainer');
-    
-    if (logs.length === 0) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد رسائل مراقبة</p>';
-      return;
-    }
-    
-    const isStaff = currentUser.uid === currentRoom?.ownerId || (currentRoom?.moderators || []).includes(currentUser.uid);
-    if (!isStaff) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">المشرفون فقط يمكنهم رؤية رسائل المراقبة</p>';
-      return;
-    }
-    
-    container.innerHTML = logs.slice(-20).reverse().map(log => `
-      <div class="monitor-message-item">
-        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-          <span>${log.userEmoji || '👤'}</span>
-          <span style="font-weight: 600;">${log.userName}</span>
-          <span style="font-size: 10px; color: #94a3b8;">${new Date(log.timestamp).toLocaleTimeString('ar-SA')}</span>
-          <i class="fas fa-trash" style="margin-right: auto; cursor: pointer; color: #ef4444;" onclick="deleteMonitorLog(${log.timestamp})"></i>
-        </div>
-        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; margin-bottom: 5px;">${log.message}</div>
-        <div style="font-size: 11px; color: #fbbf24;">
-          الكلمات المكتشفة: ${log.detectedWords.join('، ')}
-        </div>
-      </div>
-    `).join('');
-  }
-
-  window.deleteMonitorLog = async (timestamp) => {
-    const updatedLogs = (currentRoom.monitorLogs || []).filter(log => log.timestamp !== timestamp);
-    await updateDoc(doc(db, "rooms", currentRoomId), { monitorLogs: updatedLogs });
-    showToast('تم حذف السجل');
-  };
-
-  window.selectShortcutShape = (shape) => {
-    selectedShortcutShape = shape;
-    document.querySelectorAll('.shape-option').forEach(el => el.classList.remove('selected'));
-    event.target.closest('.shape-option').classList.add('selected');
-    document.getElementById('shortcutShape').value = shape;
-  };
-
-  window.addShortcut = async () => {
-    const key = document.getElementById('newShortcutKey').value.trim();
-    const value = document.getElementById('newShortcutValue').value.trim();
-    const imageUrl = document.getElementById('shortcutImageUrl').value.trim();
-    const shape = document.getElementById('shortcutShape').value;
-    
-    if (!key) {
-      showToast('الرجاء إدخال الاختصار', false);
-      return;
-    }
-    
-    if (!value && !imageUrl) {
-      showToast('الرجاء إدخال النص أو رابط الصورة', false);
-      return;
-    }
-    
-    const shortcuts = { ...(currentRoom.shortcuts || {}) };
-    
-    if (imageUrl) {
-      shortcuts[key] = {
-        type: 'image',
-        url: imageUrl,
-        shape: shape
-      };
-    } else {
-      shortcuts[key] = value;
-    }
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
-    document.getElementById('newShortcutKey').value = '';
-    document.getElementById('newShortcutValue').value = '';
-    document.getElementById('shortcutImageUrl').value = '';
-    showToast('تم إضافة الاختصار');
-  };
-
-  function renderShortcutsList() {
-    const shortcuts = currentRoom?.shortcuts || {};
-    const container = document.getElementById('shortcutsList');
-    
-    if (Object.keys(shortcuts).length === 0) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد اختصارات</p>';
-      return;
-    }
-    
-    container.innerHTML = Object.entries(shortcuts).map(([key, value]) => {
-      const isImage = typeof value === 'object' && value.type === 'image';
-      const displayValue = isImage ? 
-        `<img src="${value.url}" style="width: 30px; height: 30px; object-fit: cover; ${value.shape === 'circle' ? 'border-radius: 50%;' : (value.shape === 'rectangle' ? 'border-radius: 5px; width: 45px;' : 'border-radius: 5px;')}">` : 
-        value;
-      
-      return `
-        <div style="display: flex; justify-content: space-between; background: rgba(139, 92, 246, 0.1); padding: 8px 12px; border-radius: 20px; margin: 5px 0; border-right: 3px solid #8b5cf6;">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="color: #c4b5fd;">${key}</span>
-            <span style="color: #94a3b8;">→</span>
-            <span style="color: #e2e8f0; display: flex; align-items: center;">${displayValue}</span>
-          </div>
-          <i class="fas fa-trash" style="cursor: pointer; color: #ef4444;" onclick="deleteShortcut('${key}')"></i>
-        </div>
-      `;
-    }).join('');
-  }
-
-  window.deleteShortcut = async (key) => {
-    const shortcuts = { ...currentRoom.shortcuts };
-    delete shortcuts[key];
-    await updateDoc(doc(db, "rooms", currentRoomId), { shortcuts });
-    showToast('تم حذف الاختصار');
-  };
-
-  window.addGift = async () => {
-    const name = document.getElementById('giftName').value.trim();
-    const image = document.getElementById('giftImageUrl').value.trim();
-    const price = parseInt(document.getElementById('giftPrice').value);
-    
-    if (!name || !image || !price) {
-      showToast('الرجاء إدخال جميع بيانات الهدية', false);
-      return;
-    }
-    
-    const gift = {
-      id: Date.now().toString(),
-      name,
-      image,
-      price,
-      createdAt: Date.now()
-    };
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      gifts: arrayUnion(gift)
-    });
-    
-    document.getElementById('giftName').value = '';
-    document.getElementById('giftImageUrl').value = '';
-    document.getElementById('giftPrice').value = '10';
-    showToast('تم إضافة الهدية');
-  };
-
-  function renderGiftsList() {
-    const gifts = currentRoom?.gifts || [];
-    const container = document.getElementById('giftsList');
-    
-    if (gifts.length === 0) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد هدايا</p>';
-      return;
-    }
-    
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    const canDelete = isOwner || isModerator;
-    
-    container.innerHTML = `
-      <div class="gifts-grid">
-        ${gifts.map(gift => `
-          <div class="gift-item" style="position: relative;">
-            <img src="${gift.image}" onerror="this.src='https://via.placeholder.com/100?text=🎁'">
-            <div class="gift-price">${gift.price} <i class="fas fa-coins"></i></div>
-            <div style="font-size: 10px; margin-top: 5px;">${gift.name}</div>
-            ${canDelete ? `<i class="fas fa-trash" style="position: absolute; top: 2px; right: 2px; color: #ef4444; cursor: pointer; background: rgba(0,0,0,0.5); padding: 3px; border-radius: 50%;" onclick="deleteGift('${gift.id}')"></i>` : ''}
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  window.deleteGift = async (giftId) => {
-    const updatedGifts = (currentRoom.gifts || []).filter(g => g.id !== giftId);
-    await updateDoc(doc(db, "rooms", currentRoomId), { gifts: updatedGifts });
-    showToast('تم حذف الهدية');
-  };
-
-  window.addEmoji = async () => {
-    const type = document.getElementById('emojiType').value;
-    const value = type === 'text' ? document.getElementById('emojiText').value.trim() : document.getElementById('emojiImageUrl').value.trim();
-    const width = parseInt(document.getElementById('emojiWidth').value);
-    const height = parseInt(document.getElementById('emojiHeight').value);
-    const animation = document.getElementById('emojiAnimation').value;
-    
-    if (!value) {
-      showToast('الرجاء إدخال الإيموجي', false);
-      return;
-    }
-    
-    const emoji = { type, value, width, height, animation };
-    
-    await updateDoc(doc(db, "rooms", currentRoomId), {
-      emojis: arrayUnion(emoji)
-    });
-    
-    document.getElementById('emojiText').value = '';
-    document.getElementById('emojiImageUrl').value = '';
-    showToast('تم إضافة الإيموجي');
-  };
-
-  function renderEmojisList() {
-    const emojis = currentRoom?.emojis || [];
-    const container = document.getElementById('emojisList');
-    
-    if (emojis.length === 0) {
-      container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 10px;">لا توجد إيموجيات</p>';
-      return;
-    }
-    
-    const isOwner = currentRoom?.ownerId === currentUser.uid;
-    const isModerator = (currentRoom?.moderators || []).includes(currentUser.uid);
-    const canDelete = isOwner || isModerator;
-    
-    container.innerHTML = `
-      <div class="gifts-grid">
-        ${emojis.map((emoji, index) => `
-          <div class="gift-item" style="position: relative;">
-            ${emoji.type === 'text' ? `<span style="font-size: 30px;">${emoji.value}</span>` : `<img src="${emoji.value}" style="width: 100%; aspect-ratio: 1; object-fit: contain;">`}
-            <div style="font-size: 9px; margin-top: 5px;">${emoji.width}x${emoji.height}</div>
-            ${canDelete ? `<i class="fas fa-trash" style="position: absolute; top: 2px; right: 2px; color: #ef4444; cursor: pointer; background: rgba(0,0,0,0.5); padding: 3px; border-radius: 50%;" onclick="deleteEmoji(${index})"></i>` : ''}
-          </div>
-        `).join('')}
-      </div>
-    `;
-  }
-
-  window.deleteEmoji = async (index) => {
-    const emojis = currentRoom.emojis || [];
-    emojis.splice(index, 1);
-    await updateDoc(doc(db, "rooms", currentRoomId), { emojis });
-    showToast('تم حذف الإيموجي');
-  };
-
-  window.publishAnnouncement = async () => {
-    if (currentUserData?.email !== 'ad5@5.com') {
-      showToast('غير مصرح لك بنشر إعلانات', false);
-      return;
-    }
-    
-    const title = document.getElementById('announcementTitle').value.trim();
-    const description = document.getElementById('announcementDesc').value.trim();
-    const image = document.getElementById('announcementImage').value.trim();
-    const video = document.getElementById('announcementVideo').value.trim();
-    
-    if (!title) {
-      showToast('الرجاء إدخال عنوان الإعلان', false);
-      return;
-    }
-    
-    const announcement = {
-      id: Date.now().toString(),
-      title,
-      description,
-      image: image || null,
-      video: video || null,
-      active: true,
-      createdAt: Date.now(),
-      createdBy: currentUser.uid,
-      createdByData: {
-        username: currentUserData?.username || 'المعلن',
-        avatarUrl: currentUserData?.avatarUrl || null,
-        avatarType: currentUserData?.avatarType || 'emoji',
-        emoji: currentUserData?.emoji || '👤'
-      }
-    };
-    
-    await setDoc(doc(db, "settings", "announcement"), announcement);
-    
-    document.getElementById('announcementTitle').value = '';
-    document.getElementById('announcementDesc').value = '';
-    document.getElementById('announcementImage').value = '';
-    document.getElementById('announcementVideo').value = '';
-    
-    closeRoomSettingsModal();
-    showToast('تم نشر الإعلان لجميع الغرف');
-  };
-
-  window.openGiftPanel = () => {
-    const gifts = currentRoom?.gifts || [];
-    if (gifts.length === 0) {
-      showToast('لا توجد هدايا متاحة', false);
-      return;
-    }
-    
-    const modal = document.getElementById('giftRecipientModal');
-    document.getElementById('giftModalTitle').textContent = 'اختر هدية';
-    
-    const container = document.getElementById('recipientList');
-    container.innerHTML = `
-      <div class="gifts-grid">
-        ${gifts.map(gift => `
-          <div class="gift-item" onclick="selectGiftForRecipient('${gift.id}')">
-            <img src="${gift.image}" onerror="this.src='https://via.placeholder.com/100?text=🎁'">
-            <div class="gift-price">${gift.price} <i class="fas fa-coins"></i></div>
-            <div style="font-size: 10px; margin-top: 5px;">${gift.name}</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-    
-    modal.classList.add('active');
-  };
-
-  window.closeGiftRecipientModal = () => {
-    document.getElementById('giftRecipientModal')?.classList.remove('active');
-  };
-
-  window.selectGiftForRecipient = (giftId) => {
-    document.getElementById('selectedGiftId').value = giftId;
-    const gift = currentRoom.gifts.find(g => g.id === giftId);
-    
-    const members = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
-    
-    if (members.length === 0) {
-      showToast('لا يوجد أعضاء آخرين في الغرفة', false);
-      return;
-    }
-    
-    document.getElementById('giftModalTitle').textContent = `اختر من تهدي ${gift.name}`;
-    
-    const container = document.getElementById('recipientList');
-    const styles = currentRoom?.textStyles || {};
-    
-    container.innerHTML = members.map(m => {
-      let nameEffectClass = 'member-name-effect';
-      let nameColor = styles.memberColor || '#bae6fd';
-      let nameSize = styles.memberSize || 14;
-      
-      if (m.role === 'owner') {
-        nameEffectClass = 'owner-name-effect';
-        nameColor = styles.ownerColor || '#4ade80';
-        nameSize = styles.ownerSize || 16;
-      } else if (m.role === 'moderator') {
-        nameEffectClass = 'moderator-name-effect';
-        nameColor = styles.modColor || '#f87171';
-        nameSize = styles.modSize || 15;
-      }
-      
-      return `
-        <div class="member-item" onclick="sendGiftToMember('${m.uid}')">
-          <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};">
-            ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
-          </div>
-          <div class="member-info">
-            <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
-              ${m.name || 'مستخدم'}
-            </div>
-            <span class="member-role ${m.role}">${m.role === 'owner' ? 'مالك' : (m.role === 'moderator' ? 'مشرف' : 'عضو')}</span>
-          </div>
-        </div>
-      `;
-    }).join('');
-  };
-
- 
-    window.sendGiftToMember = async (targetUid) => {
-    const giftId = document.getElementById('selectedGiftId').value;
-    const gift = currentRoom.gifts.find(g => g.id === giftId);
-    
-    if (!gift) {
-        showToast('الهدية غير موجودة', false);
-        return;
-    }
-    
-    const targetMember = currentRoom.members.find(m => m.uid === targetUid);
-    if (!targetMember) {
-        showToast('العضو غير موجود', false);
-        return;
-    }
-    
-    if (targetUid === currentUser.uid) {
-        showToast('لا يمكنك إرسال هدية لنفسك', false);
-        return;
-    }
-    
-    if (resources.gold < gift.price) {
-        showToast('رصيدك غير كاف', false);
-        return;
-    }
-    
-    // خصم من المرسل
-    await updateDoc(doc(db, "resources", currentUser.uid), {
-        gold: increment(-gift.price)
-    });
-    resources.gold -= gift.price;
-    
-    // توزيع العملات
-    const recipientAmount = Math.floor(gift.price * 0.4);
-    const ownerAmount = Math.floor(gift.price * 0.4);
-    const adminAmount = gift.price - recipientAmount - ownerAmount;
-    
-    // إضافة للمستلم
-    const targetRef = doc(db, "resources", targetUid);
-    const targetSnap = await getDoc(targetRef);
-    if (targetSnap.exists()) {
-        await updateDoc(targetRef, { gold: increment(recipientAmount) });
-    } else {
-        await setDoc(targetRef, { gold: recipientAmount });
-    }
-    
-    // إضافة لمالك الغرفة
-    const ownerRef = doc(db, "resources", currentRoom.ownerId);
-    const ownerSnap = await getDoc(ownerRef);
-    if (ownerSnap.exists()) {
-        await updateDoc(ownerRef, { gold: increment(ownerAmount) });
-    } else {
-        await setDoc(ownerRef, { gold: ownerAmount });
-    }
-    
-    // إضافة لصاحب البريد
-    try {
-        const adminQuery = query(collection(db, "users"), where("email", "==", "ad5@5.com"));
-        const adminSnap = await getDocs(adminQuery);
-        if (!adminSnap.empty) {
-            const adminUid = adminSnap.docs[0].id;
-            const adminRef = doc(db, "resources", adminUid);
-            const adminResSnap = await getDoc(adminRef);
-            if (adminResSnap.exists()) {
-                await updateDoc(adminRef, { gold: increment(adminAmount) });
-            } else {
-                await setDoc(adminRef, { gold: adminAmount });
-            }
-        }
-    } catch (e) {
-        console.error("خطأ في إضافة الذهب للمسؤول:", e);
-    }
-    
-    // إرسال إشعار للمستلم
-    await sendGiftNotification(
-        targetUid, 
-        gift, 
-        currentUserData?.username || 'مستخدم',
-        currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null,
-        currentUserData?.emoji || '👤',
-        currentUserData?.avatarType || 'emoji'
-    );
-    
-    // إرسال الرسالة في الغرفة
-    await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-        uid: currentUser.uid,
-        name: currentUserData?.username || 'مستخدم',
-        avatar: currentUserData?.avatarUrl || '',
-        avatarType: currentUserData?.avatarType || 'emoji',
-        emoji: currentUserData?.emoji || '👤',
-        colors: currentUserData?.colors || {},
-        text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
-        gift: {
-            name: gift.name,
-            image: gift.image,
-            fromName: currentUserData?.username || 'مستخدم',
-            toName: targetMember.name,
-            toUid: targetUid
-        },
-        timestamp: Date.now()
-    });
-    
-    // إغلاق النافذة
-    document.getElementById('giftRecipientModal').classList.remove('active');
-    showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
-    
-    // إظهار رسالة منبثقة للمرسل
-    showGiftSentPopup(gift, targetMember);
+  document.getElementById('announcementOverlay').classList.remove('active');
+  document.getElementById('announcementPopup').classList.remove('active');
 };
 
-// دالة إظهار رسالة منبثقة للمرسل
-function showGiftSentPopup(gift, targetMember) {
-    const popup = document.createElement('div');
-    popup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(145deg, #1e293b, #0f172a);
-        border-radius: 30px;
-        padding: 25px;
-        text-align: center;
-        z-index: 10000;
-        border: 3px solid gold;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        animation: popIn 0.3s ease;
-        max-width: 300px;
-    `;
-    
-    popup.innerHTML = `
-        <div style="font-size: 50px; margin-bottom: 15px;">🎁</div>
-        <img src="${gift.image}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; border: 3px solid gold;">
-        <h3 style="color: gold; margin-bottom: 10px;">تم إرسال الهدية!</h3>
-        <p style="color: white; margin-bottom: 5px;">${gift.name}</p>
-        <p style="color: #94a3b8; font-size: 14px;">إلى: ${targetMember.name}</p>
-        <button onclick="this.parentElement.remove()" style="
-            margin-top: 20px;
-            background: gold;
-            color: black;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-        ">حسناً</button>
-    `;
-    
-    document.body.appendChild(popup);
-    
-    setTimeout(() => popup.remove(), 3000);
-}
-
-  window.deleteRoom = async () => {
-    if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
-    if (!confirm('هل أنت متأكد من حذف الغرفة؟ لا يمكن التراجع عن هذا الإجراء.')) return;
-    
-    await deleteDoc(doc(db, "rooms", currentRoomId));
-    leaveRoom();
-    showToast('تم حذف الغرفة');
-  };
-
-  window.startChatWithUserFromRoom = async function(targetUserId) {
-    if (!targetUserId) {
-        showToast('معرف المستخدم غير صالح', false);
-        return;
-    }
-    
-    if (!currentUser) {
-        showToast('يجب تسجيل الدخول', false);
-        return;
-    }
-    
-    try {
-        let otherUid = null;
-        
-        const userByIdDoc = await getDoc(doc(db, "users_by_id", targetUserId));
-        if (userByIdDoc.exists()) {
-            otherUid = userByIdDoc.data().uid;
-        } else {
-            const usersSnap = await getDocs(query(collection(db, "users"), where("userId", "==", targetUserId)));
-            if (!usersSnap.empty) {
-                otherUid = usersSnap.docs[0].id;
-            }
-        }
-        
-        if (!otherUid) {
-            showToast('المستخدم غير موجود', false);
-            return;
-        }
-        
-        if (otherUid === currentUser.uid) {
-            showToast('لا يمكنك مراسلة نفسك', false);
-            return;
-        }
-        
-        const existingChats = await getDocs(query(
-            collection(db, "chats"), 
-            where("participants", "array-contains", currentUser.uid)
-        ));
-        
-        let existingChatId = null;
-        existingChats.forEach(doc => {
-            if (doc.data().participants.includes(otherUid)) {
-                existingChatId = doc.id;
-            }
-        });
-        
-        closeProfilePopup();
-        if (document.getElementById('membersPanel')?.classList.contains('active')) {
-            document.getElementById('membersPanel').classList.remove('active');
-        }
-        
-        if (existingChatId) {
-            localStorage.setItem('openChatWith', targetUserId);
-            showToast('💬 جاري فتح المحادثة...');
-            window.open('https://amanhsn55555-eng.github.io/Msgtdy/', '_blank');
-        } else {
-            const chatRef = await addDoc(collection(db, "chats"), {
-                participants: [currentUser.uid, otherUid],
-                createdAt: Date.now(),
-                updatedAt: Date.now(),
-                unreadCount: {},
-                blockedBy: []
-            });
-            
-            localStorage.setItem('openChatWith', targetUserId);
-            showToast('✨ تم إنشاء محادثة جديدة');
-            window.open('https://amanhsn55555-eng.github.io/Msgtdy/', '_blank');
-        }
-        
-    } catch (error) {
-        console.error('خطأ في بدء المحادثة:', error);
-        showToast('❌ فشل فتح المحادثة', false);
-    }
-  };
-
-  window.leaveRoom = async () => {
-    if (!currentRoomId) return;
-    
-    const occupants = currentRoom?.iconOccupants || {};
-    for (const [type, occupant] of Object.entries(occupants)) {
-      if (occupant?.uid === currentUser.uid) {
-        const earned = Math.floor((Date.now() - occupant.joinedAt) / 3600000);
-        if (earned > 0) {
-          await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(earned) });
-          resources.gold += earned;
-        }
-        const newOccupants = { ...occupants };
-        delete newOccupants[type];
-        await updateDoc(doc(db, "rooms", currentRoomId), { iconOccupants: newOccupants });
-      // قبل const updatedMembers = ... أضف:
-}
-    }
-    // قبل const updatedMembers = ... أضف:
-await sendLeaveMessage(currentRoomId, currentUserData);
-    const updatedMembers = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
-    await updateDoc(doc(db, "rooms", currentRoomId), { members: updatedMembers });
-    
-    document.querySelector('.rooms-header').style.display = 'flex';
-    document.querySelector('.search-section').style.display = 'flex';
-    document.querySelector('.rooms-container').style.display = 'block';
-    
-    document.getElementById('chatRoomView')?.classList.remove('active');
-    document.getElementById('membersPanel')?.classList.remove('active');
-    document.getElementById('emojiPanel')?.classList.remove('active');
-    
-    if (unsubscribeMessages) unsubscribeMessages();
-    if (unsubscribeRoom) unsubscribeRoom();
-    currentRoom = null;
-    currentRoomId = null;
-  };
-
-  setInterval(() => {
-    if (currentRoom?.type === 'advanced') {
-      renderSpecialIcons();
-    }
-  }, 1000);
-
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      await loadUserData(user.uid);
-      await loadGlobalAnnouncement();
-      
-      listenForAnnouncements();
-      subscribeToRooms();
-    } else {
-      const container = document.getElementById('roomsContainer');
-      if (container) {
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="fas fa-sign-in-alt"></i>
-            <p>يرجى تسجيل الدخول للوصول إلى الغرف</p>
-          </div>
-        `;
+function listenForAnnouncements() {
+  onSnapshot(doc(db, "settings", "announcement"), (docSnap) => {
+    if (docSnap.exists()) {
+      const newAnn = docSnap.data();
+      const annId = newAnn.id || newAnn.createdAt;
+      if (newAnn.active && !dismissedAnnouncements.includes(annId)) {
+        globalAnnouncement = newAnn;
+        showAnnouncementPopup();
       }
     }
   });
-
-  // دالة منفصلة لإرسال رسالة دخول مميزة
-async function sendJoinMessage(roomId, userData) {
-    const message = {
-        uid: 'system',
-        name: userData.username || 'مستخدم',
-        avatar: userData.avatarType === 'image' ? userData.avatarUrl : null,
-        avatarType: userData.avatarType || 'emoji',
-        emoji: userData.emoji || '👤',
-        colors: userData.colors || { frame: '#fbbf24' },
-        text: `👑 ${userData.username || 'مستخدم'} انضم إلى الغرفة`,
-        type: 'join',
-        timestamp: Date.now()
-    };
-    
-    await addDoc(collection(db, "rooms", roomId, "messages"), message);
 }
 
-// دالة منفصلة لإرسال رسالة خروج مميزة
-async function sendLeaveMessage(roomId, userData) {
-    const message = {
-        uid: 'system',
-        name: userData.username || 'مستخدم',
-        avatar: userData.avatarType === 'image' ? userData.avatarUrl : null,
-        avatarType: userData.avatarType || 'emoji',
-        emoji: userData.emoji || '👤',
-        colors: userData.colors || { frame: '#fbbf24' },
-        text: `👋 ${userData.username || 'مستخدم'} غادر الغرفة`,
-        type: 'leave',
-        timestamp: Date.now()
-    };
-    
-    await addDoc(collection(db, "rooms", roomId, "messages"), message);
-}
-  window.showToast = showToast;
-  // إضافة هذه الدالة بعد دالة showToast
+// ========== الهدايا ==========
+window.openGiftPanel = () => {
+  const gifts = currentRoom?.gifts || [];
+  if (gifts.length === 0) { showToast('لا توجد هدايا متاحة', false); return; }
+  const modal = document.getElementById('giftRecipientModal');
+  document.getElementById('giftModalTitle').textContent = 'اختر هدية';
+  const container = document.getElementById('recipientList');
+  container.innerHTML = `
+    <div class="gifts-grid">
+      ${gifts.map(gift => `
+        <div class="gift-item" onclick="selectGiftForRecipient('${gift.id}')">
+          <img src="${gift.image}" onerror="this.src='https://via.placeholder.com/100?text=🎁'">
+          <div class="gift-price">${gift.price} <i class="fas fa-coins"></i></div>
+          <div style="font-size: 10px; margin-top: 5px;">${gift.name}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  modal.classList.add('active');
+};
+
+window.closeGiftRecipientModal = () => document.getElementById('giftRecipientModal')?.classList.remove('active');
+
+window.selectGiftForRecipient = (giftId) => {
+  document.getElementById('selectedGiftId').value = giftId;
+  const gift = currentRoom.gifts.find(g => g.id === giftId);
+  const members = (currentRoom?.members || []).filter(m => m.uid !== currentUser.uid);
+  if (members.length === 0) { showToast('لا يوجد أعضاء آخرين في الغرفة', false); return; }
+  document.getElementById('giftModalTitle').textContent = `اختر من تهدي ${gift.name}`;
+  const container = document.getElementById('recipientList');
+  const styles = currentRoom?.textStyles || {};
+  container.innerHTML = members.map(m => {
+    let nameEffectClass = 'member-name-effect', nameColor = styles.memberColor || '#bae6fd', nameSize = styles.memberSize || 14;
+    if (m.role === 'owner') { nameEffectClass = 'owner-name-effect'; nameColor = styles.ownerColor || '#4ade80'; nameSize = styles.ownerSize || 16; }
+    else if (m.role === 'moderator') { nameEffectClass = 'moderator-name-effect'; nameColor = styles.modColor || '#f87171'; nameSize = styles.modSize || 15; }
+    return `
+      <div class="member-item" onclick="sendGiftToMember('${m.uid}')">
+        <div class="member-avatar" style="border-color: ${m.colors?.frame || '#8b5cf6'};">
+          ${m.avatarType === 'image' && m.avatar ? `<img src="${m.avatar}">` : (m.emoji || '👤')}
+        </div>
+        <div class="member-info">
+          <div class="member-name ${nameEffectClass}" style="color: ${nameColor}; font-size: ${nameSize}px; font-family: ${styles.fontFamily};">
+            ${m.name || 'مستخدم'}
+          </div>
+          <span class="member-role ${m.role}">${m.role === 'owner' ? 'مالك' : (m.role === 'moderator' ? 'مشرف' : 'عضو')}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+};
+
+window.sendGiftToMember = async (targetUid) => {
+  const giftId = document.getElementById('selectedGiftId').value;
+  const gift = currentRoom.gifts.find(g => g.id === giftId);
+  if (!gift) { showToast('الهدية غير موجودة', false); return; }
+  const targetMember = currentRoom.members.find(m => m.uid === targetUid);
+  if (!targetMember) { showToast('العضو غير موجود', false); return; }
+  if (targetUid === currentUser.uid) { showToast('لا يمكنك إرسال هدية لنفسك', false); return; }
+  if (resources.gold < gift.price) { showToast('رصيدك غير كاف', false); return; }
   
-async function sendGiftNotification(targetUid, gift, senderName, senderAvatar, senderEmoji, senderAvatarType) {
-    try {
-        const notification = {
-            type: 'gift',
-            giftId: gift.id,
-            giftName: gift.name,
-            giftImage: gift.image,
-            giftPrice: gift.price,
-            senderName: senderName,
-            senderAvatar: senderAvatar,
-            senderEmoji: senderEmoji,
-            senderAvatarType: senderAvatarType,
-            roomId: currentRoomId,
-            roomName: currentRoom?.name || 'غرفة الدردشة',
-            timestamp: Date.now(),
-            read: false
-        };
-        
-        // حفظ الإشعار في مجموعة الإشعارات الخاصة بالمستخدم
-        await addDoc(collection(db, "users", targetUid, "notifications"), notification);
-        
-        console.log('تم إرسال إشعار الهدية بنجاح');
-    } catch (error) {
-        console.error('خطأ في إرسال إشعار الهدية:', error);
+  await updateDoc(doc(db, "resources", currentUser.uid), { gold: increment(-gift.price) });
+  resources.gold -= gift.price;
+  
+  const recipientAmount = Math.floor(gift.price * 0.4);
+  const ownerAmount = Math.floor(gift.price * 0.4);
+  const adminAmount = gift.price - recipientAmount - ownerAmount;
+  
+  const targetRef = doc(db, "resources", targetUid);
+  const targetSnap = await getDoc(targetRef);
+  if (targetSnap.exists()) await updateDoc(targetRef, { gold: increment(recipientAmount) });
+  else await setDoc(targetRef, { gold: recipientAmount });
+  
+  const ownerRef = doc(db, "resources", currentRoom.ownerId);
+  const ownerSnap = await getDoc(ownerRef);
+  if (ownerSnap.exists()) await updateDoc(ownerRef, { gold: increment(ownerAmount) });
+  else await setDoc(ownerRef, { gold: ownerAmount });
+  
+  try {
+    const adminQuery = query(collection(db, "users"), where("email", "==", "ad5@5.com"));
+    const adminSnap = await getDocs(adminQuery);
+    if (!adminSnap.empty) {
+      const adminUid = adminSnap.docs[0].id;
+      const adminRef = doc(db, "resources", adminUid);
+      const adminResSnap = await getDoc(adminRef);
+      if (adminResSnap.exists()) await updateDoc(adminRef, { gold: increment(adminAmount) });
+      else await setDoc(adminRef, { gold: adminAmount });
     }
-}
-  window.closeModal = (id) => document.getElementById(id)?.classList.remove('active');
-  window.openModal = (id) => document.getElementById(id)?.classList.add('active');
-
+  } catch (e) {}
   
-  </script>
+  await sendGiftNotification(targetUid, gift, currentUserData?.username || 'مستخدم', currentUserData?.avatarType === 'image' ? currentUserData?.avatarUrl : null, currentUserData?.emoji || '👤', currentUserData?.avatarType || 'emoji');
+  
+  await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+    uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+    avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+    emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+    text: `🎁 أهدى ${targetMember.name} هدية: ${gift.name}`,
+    gift: { name: gift.name, image: gift.image, fromName: currentUserData?.username || 'مستخدم', toName: targetMember.name, toUid: targetUid },
+    timestamp: Date.now()
+  });
+  
+  document.getElementById('giftRecipientModal').classList.remove('active');
+  showToast(`تم إرسال ${gift.name} إلى ${targetMember.name}`);
+  showGiftSentPopup(gift, targetMember);
+};
+
+function showGiftSentPopup(gift, targetMember) {
+  const popup = document.createElement('div');
+  popup.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(145deg,#1e293b,#0f172a);border-radius:30px;padding:25px;text-align:center;z-index:10000;border:3px solid gold;box-shadow:0 20px 50px rgba(0,0,0,0.5);max-width:300px;`;
+  popup.innerHTML = `
+    <div style="font-size:50px;margin-bottom:15px;">🎁</div>
+    <img src="${gift.image}" style="width:100px;height:100px;object-fit:cover;border-radius:20px;margin-bottom:15px;border:3px solid gold;">
+    <h3 style="color:gold;margin-bottom:10px;">تم إرسال الهدية!</h3>
+    <p style="color:white;margin-bottom:5px;">${gift.name}</p>
+    <p style="color:#94a3b8;font-size:14px;">إلى: ${targetMember.name}</p>
+    <button onclick="this.parentElement.remove()" style="margin-top:20px;background:gold;color:black;border:none;padding:10px 30px;border-radius:30px;font-weight:bold;cursor:pointer;">حسناً</button>
+  `;
+  document.body.appendChild(popup);
+  setTimeout(() => popup.remove(), 3000);
+}
+
+async function sendGiftNotification(targetUid, gift, senderName, senderAvatar, senderEmoji, senderAvatarType) {
+  try {
+    const notification = {
+      type: 'gift', giftId: gift.id, giftName: gift.name, giftImage: gift.image, giftPrice: gift.price,
+      senderName: senderName, senderAvatar: senderAvatar, senderEmoji: senderEmoji, senderAvatarType: senderAvatarType,
+      roomId: currentRoomId, roomName: currentRoom?.name || 'غرفة الدردشة', timestamp: Date.now(), read: false
+    };
+    await addDoc(collection(db, "users", targetUid, "notifications"), notification);
+  } catch (error) {}
+}
+
+// ========== حذف الغرفة ==========
+window.deleteRoom = async () => {
+  if (!currentRoom || currentRoom.ownerId !== currentUser.uid) return;
+  if (!confirm('هل أنت متأكد من حذف الغرفة؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+  await deleteDoc(doc(db, "rooms", currentRoomId));
+  leaveRoom();
+  showToast('تم حذف الغرفة');
+};
+
+// ========== دوال عامة ==========
+window.showToast = showToast;
+window.closeModal = (id) => document.getElementById(id)?.classList.remove('active');
+window.openModal = (id) => document.getElementById(id)?.classList.add('active');
+
+// ========== مراقبة حالة المصادقة ==========
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    await loadUserData(user.uid);
+    startPresenceSystem();
+    handleOnlineStatus();
+    subscribeToRooms();
+    loadGlobalAnnouncement();
+    listenForAnnouncements();
+  } else {
+    const container = document.getElementById('roomsContainer');
+    if (container) container.innerHTML = `<div class="empty-state"><i class="fas fa-sign-in-alt"></i><p>يرجى تسجيل الدخول للوصول إلى الغرف</p></div>`;
+  }
+});
+
+// ========== تنظيف قبل مغادرة الصفحة ==========
+window.addEventListener('beforeunload', () => {
+  if (currentRoomId && currentUserData) sendLeaveMessage(currentRoomId, currentUserData);
+  updatePresence('offline');
+  if (presenceInterval) clearInterval(presenceInterval);
+  if (offlineTimer) clearTimeout(offlineTimer);
+});
+
+// سطر واحد: خروج عند إغلاق الصفحة + انقطاع النت
+window.addEventListener('beforeunload',()=>{if(currentRoomId&&currentUserData){const d={uid:'system',name:currentUserData?.username||'مستخدم',text:`📴 ${currentUserData?.username||'مستخدم'} خرج من الغرفة (أغلق الصفحة)`,type:'leave',timestamp:Date.now()};fetch(`https://firestore.googleapis.com/v1/projects/elahbes/databases/(default)/documents/rooms/${currentRoomId}/messages`,{method:'POST',body:JSON.stringify({fields:Object.fromEntries(Object.entries(d).map(([k,v])=>[k,typeof v==='string'?{stringValue:v}:{integerValue:v}]))})});navigator.sendBeacon(`https://us-central1-elahbes.cloudfunctions.net/leaveRoom?uid=${currentUser.uid}&roomId=${currentRoomId}`)}});window.addEventListener('offline',()=>{currentRoomId&&leaveRoom()});window.addEventListener('pagehide',()=>{currentRoomId&&leaveRoom()});document.addEventListener('visibilitychange',()=>{document.hidden&&currentRoomId&&leaveRoom()});
+// ========== تصدير الدوال للنافذة ==========
+window.requestJoinRoom = requestJoinRoom;
+window.joinWithPassword = joinWithPassword;
+window.handleIconClick = handleIconClick;
+window.sendMessage = sendMessage;
+window.handleMessageKeyPress = handleMessageKeyPress;
+window.deleteMessage = deleteMessage;
+window.toggleEmojiPanel = toggleEmojiPanel;
+window.sendEmoji = sendEmoji;
+window.toggleMembersPanel = toggleMembersPanel;
+window.switchPanelTab = switchPanelTab;
+window.promoteToModerator = promoteToModerator;
+window.demoteFromModerator = demoteFromModerator;
+window.banMember = banMember;
+window.unbanMember = unbanMember;
+window.showMemberProfile = showMemberProfile;
+window.closeProfilePopup = closeProfilePopup;
+window.leaveRoom = leaveRoom;
+window.openRoomSettingsModal = openRoomSettingsModal;
+window.closeRoomSettingsModal = closeRoomSettingsModal;
+window.switchSettingsTab = switchSettingsTab;
+window.saveTextStyles = saveTextStyles;
+window.addBannedWord = addBannedWord;
+window.addMonitoredWord = addMonitoredWord;
+window.removeWord = removeWord;
+window.toggleMonitorMessages = toggleMonitorMessages;
+window.deleteMonitorLog = deleteMonitorLog;
+window.selectShortcutShape = selectShortcutShape;
+window.addShortcut = addShortcut;
+window.deleteShortcut = deleteShortcut;
+window.addGift = addGift;
+window.deleteGift = deleteGift;
+window.addEmoji = addEmoji;
+window.deleteEmoji = deleteEmoji;
+window.selectFrame = selectFrame;
+window.saveRoomFrame = saveRoomFrame;
+window.saveGeneralSettings = saveGeneralSettings;
+window.publishAnnouncement = publishAnnouncement;
+window.closeAnnouncement = closeAnnouncement;
+window.openGiftPanel = openGiftPanel;
+window.closeGiftRecipientModal = closeGiftRecipientModal;
+window.selectGiftForRecipient = selectGiftForRecipient;
+window.sendGiftToMember = sendGiftToMember;
+window.deleteRoom = deleteRoom;
+window.detectAccountsByIP = detectAccountsByIP;
+window.closeIpInfoModal = closeIpInfoModal;
+window.startChatWithUserFromRoom = startChatWithUserFromRoom;
+window.showOwnerProfile = showOwnerProfile;
+
+</script>
 </body>
 </html>

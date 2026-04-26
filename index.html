@@ -2549,6 +2549,75 @@ function getIconFA(type) {
   return icons[type] || 'star';
 }
 
+    // ========== مركز الإعدادات ==========
+async function loadGlobalSettings() {
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "allow_posting"));
+    if (snap.exists()) window.GLOBAL_allowPosting = snap.data().value;
+    else window.GLOBAL_allowPosting = true;
+  } catch(e) { window.GLOBAL_allowPosting = true; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "allow_comments"));
+    window.GLOBAL_allowComments = snap.exists() ? snap.data().value : true;
+  } catch(e) { window.GLOBAL_allowComments = true; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "allow_stories"));
+    window.GLOBAL_allowStories = snap.exists() ? snap.data().value : true;
+  } catch(e) { window.GLOBAL_allowStories = true; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "allow_create_rooms"));
+    window.GLOBAL_allowCreateRooms = snap.exists() ? snap.data().value : true;
+  } catch(e) { window.GLOBAL_allowCreateRooms = true; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "registration_open"));
+    window.GLOBAL_registrationOpen = snap.exists() ? snap.data().value : true;
+  } catch(e) { window.GLOBAL_registrationOpen = true; }
+
+  // القيود
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "min_email_len"));
+    window.GLOBAL_minEmailLen = snap.exists() ? snap.data().value : 5;
+  } catch(e) { window.GLOBAL_minEmailLen = 5; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "min_pass_len"));
+    window.GLOBAL_minPassLen = snap.exists() ? snap.data().value : 6;
+  } catch(e) { window.GLOBAL_minPassLen = 6; }
+
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "banned_passwords"));
+    window.GLOBAL_bannedPasswords = snap.exists() ? snap.data().value : [];
+  } catch(e) { window.GLOBAL_bannedPasswords = []; }
+
+  // الموارد الافتراضية
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "default_money"));
+    window.GLOBAL_defaultMoney = snap.exists() ? snap.data().value : 1000;
+  } catch(e) { window.GLOBAL_defaultMoney = 1000; }
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "default_gold"));
+    window.GLOBAL_defaultGold = snap.exists() ? snap.data().value : 10;
+  } catch(e) { window.GLOBAL_defaultGold = 10; }
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "default_elixir"));
+    window.GLOBAL_defaultElixir = snap.exists() ? snap.data().value : 10;
+  } catch(e) { window.GLOBAL_defaultElixir = 10; }
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "default_oil"));
+    window.GLOBAL_defaultOil = snap.exists() ? snap.data().value : 10;
+  } catch(e) { window.GLOBAL_defaultOil = 10; }
+  try {
+    const snap = await getDoc(doc(db, "admin_settings", "default_ddo"));
+    window.GLOBAL_defaultDdo = snap.exists() ? snap.data().value : 0;
+  } catch(e) { window.GLOBAL_defaultDdo = 0; }
+}
+
+// استدعها عند بداية التطبيق
+loadGlobalSettings();
 // ========== نظام الإطارات والصور (نفس الأثرياء) ==========
 function renderAvatarWithFrame(user, size = 'md') {
   if (!user) return '';
@@ -2746,6 +2815,13 @@ window.updateRoomPrice = () => { document.getElementById('roomPrice').textConten
 window.closeCreateRoomModal = () => document.getElementById('createRoomModal')?.classList.remove('active');
 
 window.createRoom = async () => {
+        try {
+      const snap = await getDoc(doc(db, "admin_settings", "allow_create_rooms"));
+      if (snap.exists() && snap.data().value === false) {
+        showToast('🚫 إنشاء الغرف معلق حالياً من قبل الإدارة', false);
+        return;
+      }
+    } catch(e) {}
   const name = document.getElementById('roomName')?.value.trim();
   if (!name) { showToast('الرجاء إدخال اسم الغرفة', false); return; }
   const type = document.getElementById('roomType')?.value || 'normal';

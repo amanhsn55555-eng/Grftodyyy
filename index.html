@@ -3129,8 +3129,19 @@ window.sendMessage = async () => {
     emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
     nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: filteredText, timestamp: Date.now()
   });
-  await updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now(), messageCount: increment(1) });
-  input.value = '';
+// ⚡ امسح الحقل فوراً قبل أي شيء
+input.value = '';
+input.focus();
+
+// أرسل البيانات بصمت في الخلفية
+addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+  uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
+  avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+  emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+  nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: filteredText, timestamp: Date.now()
+});
+
+updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now(), messageCount: increment(1) });    
 };
 
 window.handleMessageKeyPress = (e) => { if (e.key === 'Enter') sendMessage(); };
@@ -4069,6 +4080,35 @@ window.closeIpInfoModal = closeIpInfoModal;
 window.startChatWithUserFromRoom = startChatWithUserFromRoom;
 window.showOwnerProfile = showOwnerProfile;
 
+    // ⚡ إرسال فوري مع Enter
+document.addEventListener('DOMContentLoaded', function() {
+  var inputCheck = setInterval(function() {
+    var inp = document.getElementById('messageInput');
+    if (inp) {
+      clearInterval(inputCheck);
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          var txt = this.value.trim();
+          if (txt && currentRoomId) {
+            // امسح فوراً
+            this.value = '';
+            this.focus();
+            // أرسل
+            var member = (currentRoom?.members || []).find(m => m.uid === currentUser?.uid);
+            addDoc(collection(db, "rooms", currentRoomId, "messages"), {
+              uid: currentUser?.uid, name: currentUserData?.username || 'مستخدم',
+              avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
+              emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
+              nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: txt, timestamp: Date.now()
+            });
+            updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now(), messageCount: increment(1) });
+          }
+        }
+      });
+    }
+  }, 300);
+});
 </script>
 </body>
 </html>

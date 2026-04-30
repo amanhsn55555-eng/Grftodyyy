@@ -3108,40 +3108,40 @@ window.deleteMessage = async (messageId) => {
   }
 };
 
+
+
+// ✅ الكود الصحيح - إرسال مرة واحدة
 window.sendMessage = async () => {
   const input = document.getElementById('messageInput');
   if (!input || !currentRoomId) return;
   const text = input.value.trim();
   if (!text) return;
   
-  // التحقق من الكلمات المحظورة
-  const bannedWords = currentRoom?.bannedWords || [];
-  let filteredText = text;
-  bannedWords.forEach(word => {
-    const regex = new RegExp(word, 'gi');
-    filteredText = filteredText.replace(regex, '***');
-  });
-  
   const member = (currentRoom?.members || []).find(m => m.uid === currentUser.uid);
+  
+  // ✅ إرسال مرة واحدة فقط
   await addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-    uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
-    avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
-    emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
-    nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: filteredText, timestamp: Date.now()
+    uid: currentUser.uid,
+    name: currentUserData?.username || 'مستخدم',
+    avatar: currentUserData?.avatarUrl || '',
+    avatarType: currentUserData?.avatarType || 'emoji',
+    emoji: currentUserData?.emoji || '👤',
+    colors: currentUserData?.colors || {},
+    nameImage: currentUserData?.nameImage || null,
+    role: member?.role || 'member',
+    text: text,
+    timestamp: Date.now()
   });
-// ⚡ امسح الحقل فوراً قبل أي شيء
-input.value = '';
-input.focus();
 
-// أرسل البيانات بصمت في الخلفية
-addDoc(collection(db, "rooms", currentRoomId, "messages"), {
-  uid: currentUser.uid, name: currentUserData?.username || 'مستخدم',
-  avatar: currentUserData?.avatarUrl || '', avatarType: currentUserData?.avatarType || 'emoji',
-  emoji: currentUserData?.emoji || '👤', colors: currentUserData?.colors || {},
-  nameImage: currentUserData?.nameImage || null, role: member?.role || 'member', text: filteredText, timestamp: Date.now()
-});
+  // مسح الحقل بعد الإرسال
+  input.value = '';
+  input.focus();
 
-updateDoc(doc(db, "rooms", currentRoomId), { lastMessageTime: Date.now(), messageCount: increment(1) });    
+  // تحديث عداد الرسائل مرة واحدة
+  updateDoc(doc(db, "rooms", currentRoomId), {
+    lastMessageTime: Date.now(),
+    messageCount: increment(1)
+  });
 };
 
 window.handleMessageKeyPress = (e) => { if (e.key === 'Enter') sendMessage(); };

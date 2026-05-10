@@ -2466,6 +2466,38 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+    // ========== نظام الكاش التلقائي للغرف ==========
+const ROOMS_CACHE_KEY = 'rooms_ui_cache';
+const ROOMS_CACHE_DURATION = 24 * 60 * 60 * 1000;
+
+const RoomsCache = {
+  save(roomsHTML) {
+    try {
+      const cache = { html: roomsHTML, timestamp: Date.now() };
+      localStorage.setItem(ROOMS_CACHE_KEY, JSON.stringify(cache));
+    } catch (e) {}
+  },
+  load() {
+    try {
+      const cached = localStorage.getItem(ROOMS_CACHE_KEY);
+      if (!cached) return null;
+      const { html, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp > ROOMS_CACHE_DURATION) {
+        localStorage.removeItem(ROOMS_CACHE_KEY);
+        return null;
+      }
+      return html;
+    } catch (e) { return null; }
+  }
+};
+
+// ✅ عرض الكاش فوراً عند فتح الصفحة
+(function() {
+  const cachedHTML = RoomsCache.load();
+  if (cachedHTML) {
+    document.getElementById('roomsContainer').innerHTML = cachedHTML;
+  }
+})();
 const roomImages = [
   'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg',
   'https://images.pexels.com/photos/2478248/pexels-photo-2478248.jpeg',
@@ -2779,6 +2811,11 @@ function renderRooms() {
     html += '</div>';
   }
   container.innerHTML = html;
+
+// ✅ حفظ تلقائي في الكاش
+if (!searchTerm) {
+  RoomsCache.save(html);
+}
 }
 
 function renderRoomCard(room) {
@@ -4029,6 +4066,19 @@ window.addEventListener('beforeunload', () => {
   if (offlineTimer) clearTimeout(offlineTimer);
 });
 
+    // ✅ تجديد الكاش تلقائياً كل 24 ساعة
+setInterval(() => {
+  if (rooms.length > 0 && !searchTerm) {
+    let html = '';
+    for (let i = 0; i < rooms.length; i += 2) {
+      html += '<div class="rooms-row">';
+      html += renderRoomCard(rooms[i]);
+      if (rooms[i + 1]) html += renderRoomCard(rooms[i + 1]);
+      html += '</div>';
+    }
+    RoomsCache.save(html);
+  }
+}, 86400000);
 // سطر واحد: خروج عند إغلاق الصفحة + انقطاع النت
 window.addEventListener('beforeunload',()=>{if(currentRoomId&&currentUserData){const d={uid:'system',name:currentUserData?.username||'مستخدم',text:`📴 ${currentUserData?.username||'مستخدم'} خرج من الغرفة (أغلق الصفحة)`,type:'leave',timestamp:Date.now()};fetch(`https://firestore.googleapis.com/v1/projects/elahbes/databases/(default)/documents/rooms/${currentRoomId}/messages`,{method:'POST',body:JSON.stringify({fields:Object.fromEntries(Object.entries(d).map(([k,v])=>[k,typeof v==='string'?{stringValue:v}:{integerValue:v}]))})});navigator.sendBeacon(`https://us-central1-elahbes.cloudfunctions.net/leaveRoom?uid=${currentUser.uid}&roomId=${currentRoomId}`)}});window.addEventListener('offline',()=>{currentRoomId&&leaveRoom()});window.addEventListener('pagehide',()=>{currentRoomId&&leaveRoom()});document.addEventListener('visibilitychange',()=>{document.hidden&&currentRoomId&&leaveRoom()});
 // ========== تصدير الدوال للنافذة ==========
@@ -4109,6 +4159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }, 300);
 });
+    
 </script>
 </body>
 </html>
